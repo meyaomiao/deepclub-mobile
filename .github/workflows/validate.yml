@@ -1,0 +1,56 @@
+name: Mobile validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-validation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  source-and-flutter:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Reconstruct the pinned adaptation
+        run: |
+          python3 -m py_compile scripts/*.py
+          python3 scripts/prepare.py --checkout .work/dsh-go
+          git -C .work/dsh-go diff --check
+      - name: Install pinned Flutter
+        env:
+          FLUTTER_ARCHIVE_SHA256: af7455f540df951184c7953fbe3cf884766e7541dacf8571f9f582db03dd6230
+        run: |
+          curl --fail --location --output "$RUNNER_TEMP/flutter.tar.xz" https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.47.7-stable.tar.xz
+          echo "$FLUTTER_ARCHIVE_SHA256  $RUNNER_TEMP/flutter.tar.xz" | sha256sum --check -
+          tar -xf "$RUNNER_TEMP/flutter.tar.xz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/flutter/bin/flutter" --disable-analytics
+      - name: Resolve the original dependency lock
+        working-directory: .work/dsh-go/app
+        run: flutter pub get --enforce-lockfile
+      - name: Generate and verify localization
+        working-directory: .work/dsh-go/app
+        run: |
+          python3 tool/l10n_merge.py
+          python3 tool/l10n_merge.py --check
+      - name: Analyze the complete application
+        working-directory: .work/dsh-go/app
+        run: flutter analyze --no-pub
+      - name: Verify account and first-release behavior
+        working-directory: .work/dsh-go/app
+        run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart
+      - name: Check local conversation viewer
+        working-directory: .work/dsh-go
+        run: |
+          python3 app/tool/make_replay_viewer.py --check
+          node --test app/test/deepclub_surface/replay_viewer_test.mjs

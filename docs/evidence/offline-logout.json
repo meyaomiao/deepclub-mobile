@@ -1,0 +1,7 @@
+{
+  "engine_was_stopped_before_logout": true,
+  "local_deepclub_key_removed": true,
+  "server_session_revoked": true,
+  "old_model_key_http_status": 401,
+  "credential_values_disclosed": false
+}

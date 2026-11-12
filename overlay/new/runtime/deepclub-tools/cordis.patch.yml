@@ -1,0 +1,7 @@
+# 仅供 profile 的 bundle 层引用，或在 profile patch 中置于配置覆盖项之前。
+# 禁止用 CLI --patch 直接插入；迁移时移除旧 CLI 插入项，避免重复 ID。
+# Use as a profile bundle layer, or insert before overrides in the profile patch.
+# Never pass this insertion through CLI --patch; remove the old CLI insertion.
+- insert:
+    - id: deepclub-tools
+      name: file:///opt/dsh-go/deepclub-tools/src/index.js
