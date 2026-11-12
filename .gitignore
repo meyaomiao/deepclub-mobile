@@ -6,3 +6,6 @@ dist/
 *.keystore
 key.properties
 .env
+__pycache__/
+*.pyc
+.DS_Store
