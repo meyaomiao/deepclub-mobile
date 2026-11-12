@@ -1,0 +1,8 @@
+.work/
+.cache/
+dist/
+*.apk
+*.jks
+*.keystore
+key.properties
+.env
