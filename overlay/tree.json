@@ -3,7 +3,9 @@
     "app/android/app/src/main/res/drawable-nodpi/companion_widget_happy.png": "5a38b286cbd697bd66c75fcde99f98f6980a0f7a8a53cfeeb6598bc979356212",
     "app/android/app/src/main/res/drawable-nodpi/companion_widget_idle.png": "bf74542a15023639efe5c6a3fd8afb907595564fef3e6fe6ef79f1dc49b5ab1f",
     "app/android/app/src/main/res/drawable-nodpi/companion_widget_sleeping.png": "8b01ea8d16721e08205bc3024c46af8d1be0326db5d18d0a529b4f0e493a10a4",
-    "app/android/app/src/main/res/drawable/companion_widget_bg.xml": "a45f0b0f66585f0cd18d6c412f1701373ba3593df90b36ebe0fd9618a78dff81"
+    "app/android/app/src/main/res/drawable/companion_widget_bg.xml": "a45f0b0f66585f0cd18d6c412f1701373ba3593df90b36ebe0fd9618a78dff81",
+    "app/android/app/src/main/res/xml-v33/phone_accessibility_service.xml": "fe82ab1dae271be0debe07562630fafe062ef16c18a0ed8bec0f29f556ca2bc9",
+    "app/android/app/src/main/res/xml/phone_accessibility_service.xml": "c26aa3779ea8cb2b995827c1265a5661a15a7d6a0a09e1093edd1fe1ffc591e2"
   },
   "replacements": {
     "app/android/app/src/main/res/drawable/ic_launcher_background.xml": {

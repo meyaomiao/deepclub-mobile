@@ -44,7 +44,7 @@ def main():
         added, removed, raw_path = row.split(b"\t", 2)
         value = raw_path.decode()
         suffix = PurePosixPath(value).suffix.lower()
-        if added == b"-" or removed == b"-" or suffix in {".svg", ".png", ".webp", ".gif", ".ico", ".icns"} or value.endswith("brand_glyph.g.dart") or "/res/drawable" in value or "/res/mipmap" in value:
+        if added == b"-" or removed == b"-" or suffix in {".svg", ".png", ".webp", ".gif", ".ico", ".icns"} or value.endswith(("brand_glyph.g.dart", "/phone_accessibility_service.xml")) or "/res/drawable" in value or "/res/mipmap" in value:
             assets.append(value)
     for directory in ("new", "replace"):
         target = overlay / directory

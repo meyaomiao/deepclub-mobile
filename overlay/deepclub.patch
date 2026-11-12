@@ -1910,27 +1910,6 @@ index 833448e..b15f662 100644
 +    <string name="phone_prompt_result_title">DeepClub Agent · Task complete</string>
      <string name="phone_prompt_result_text">View results</string>
  </resources>
-diff --git a/app/android/app/src/main/res/xml-v33/phone_accessibility_service.xml b/app/android/app/src/main/res/xml-v33/phone_accessibility_service.xml
-deleted file mode 100644
-index 1270aaf..0000000
---- a/app/android/app/src/main/res/xml-v33/phone_accessibility_service.xml
-+++ /dev/null
-@@ -1,15 +0,0 @@
--<?xml version="1.0" encoding="utf-8"?>
--<!-- Portions derived from Phase (https://github.com/CikeSeven/phase), used with the author's permission. See THIRD_PARTY_NOTICES.md. -->
--<!-- DSH 手机操控 (phone/a11y/PhoneA11yService).
--     Not an accessibility tool (isAccessibilityTool=false): Play / Play Protect rules, and
--     accessibilityDataSensitive views stay hidden from us, which is the safe side. -->
--<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
--    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeWindowsChanged|typeViewTextChanged|typeViewScrolled"
--    android:accessibilityFeedbackType="feedbackGeneric"
--    android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews|flagInputMethodEditor"
--    android:canRetrieveWindowContent="true"
--    android:canPerformGestures="true"
--    android:canTakeScreenshot="true"
--    android:notificationTimeout="100"
--    android:description="@string/phone_a11y_description"
--    android:isAccessibilityTool="false" />
 diff --git a/app/android/app/src/main/res/xml/companion_widget_info.xml b/app/android/app/src/main/res/xml/companion_widget_info.xml
 deleted file mode 100644
 index 9eda2a4..0000000
@@ -1953,27 +1932,6 @@ index 9eda2a4..0000000
 -    android:targetCellHeight="1"
 -    android:updatePeriodMillis="1800000"
 -    android:widgetCategory="home_screen" />
-diff --git a/app/android/app/src/main/res/xml/phone_accessibility_service.xml b/app/android/app/src/main/res/xml/phone_accessibility_service.xml
-deleted file mode 100644
-index c43184c..0000000
---- a/app/android/app/src/main/res/xml/phone_accessibility_service.xml
-+++ /dev/null
-@@ -1,15 +0,0 @@
--<?xml version="1.0" encoding="utf-8"?>
--<!-- Portions derived from Phase (https://github.com/CikeSeven/phase), used with the author's permission. See THIRD_PARTY_NOTICES.md. -->
--<!-- DSH 手机操控 (phone/a11y/PhoneA11yService).
--     Not an accessibility tool (isAccessibilityTool=false): Play / Play Protect rules, and
--     accessibilityDataSensitive views stay hidden from us, which is the safe side. -->
--<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
--    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeWindowsChanged|typeViewTextChanged|typeViewScrolled"
--    android:accessibilityFeedbackType="feedbackGeneric"
--    android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
--    android:canRetrieveWindowContent="true"
--    android:canPerformGestures="true"
--    android:canTakeScreenshot="true"
--    android:notificationTimeout="100"
--    android:description="@string/phone_a11y_description"
--    android:isAccessibilityTool="false" />
 diff --git a/app/android/app/src/main/res/xml/shortcuts.xml b/app/android/app/src/main/res/xml/shortcuts.xml
 index 3540cb2..922e19f 100644
 --- a/app/android/app/src/main/res/xml/shortcuts.xml
@@ -16380,29 +16338,47 @@ index 1962f4e..e750aa9 100644
  
  if __name__ == '__main__':
 diff --git a/app/tool/make_replay_viewer.py b/app/tool/make_replay_viewer.py
-index 27076af..c640561 100644
+index 27076af..e02519c 100644
 --- a/app/tool/make_replay_viewer.py
 +++ b/app/tool/make_replay_viewer.py
-@@ -9,8 +9,8 @@ Outputs:
+@@ -9,9 +9,8 @@ Outputs:
        inlined, `__DSHGO_TITLE__` / `__DSHGO_DATA__` left for the app, no network
        (`connect-src 'none'`).
    <out>/ (default site/build/share, or --out DIR)
 -      What the share host publishes: c.html (the hosted viewer, the same page
 -      with `connect-src 'self'`, served for /c/<id>), and the landing page
-+      Local preview assets: c.html (the local file viewer, the same page
-+      with `connect-src 'none'`), and the legacy landing sources
-       (index.html, share.js, viewer.js, viewer.css, icons) as is.
+-      (index.html, share.js, viewer.js, viewer.css, icons) as is.
++      c.html: the self-contained local file viewer, with
++      `connect-src 'none'`.
  
  The inline script is pinned by a CSP hash, so a page can't run anything else.
-@@ -99,7 +99,7 @@ def main():
+ 
+@@ -22,14 +21,12 @@ The inline script is pinned by a CSP hash, so a page can't run anything else.
+ import argparse
+ import base64
+ import hashlib
+-import shutil
+ import sys
+ from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+ SITE = ROOT / 'site' / 'share'
+ DART = ROOT / 'app' / 'lib' / 'share_code' / 'replay_viewer.g.dart'
+-LANDING = ['index.html', 'share.js', 'viewer.js', 'viewer.css', 'favicon.svg', 'apple-touch-icon.png']
+ 
+ 
+ def sources():
+@@ -99,9 +96,7 @@ def main():
      DART.write_text(generated, encoding='utf-8')
      out = args.out
      out.mkdir(parents=True, exist_ok=True)
 -    (out / 'c.html').write_text(page(src, connect="'self'", title='dsh-go 对话', data=''), encoding='utf-8')
+-    for name in LANDING:
+-        shutil.copyfile(SITE / name, out / name)
 +    (out / 'c.html').write_text(page(src, connect="'none'", title='DeepClub 对话', data=''), encoding='utf-8')
-     for name in LANDING:
-         shutil.copyfile(SITE / name, out / name)
      print(f'wrote {DART.relative_to(ROOT)} and {out}')
+ 
+ 
 diff --git a/site/share/viewer.js b/site/share/viewer.js
 index 6eb6527..9237af1 100644
 --- a/site/share/viewer.js

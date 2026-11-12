@@ -50,7 +50,10 @@ def main():
     package = re.search(r"^package: name='([^']+)' versionCode='(\d+)' versionName='([^']+)'", badging, re.M)
     assert package and package[1] == "net.deepclub.agent", "Wrong Android package identity"
     assert package[3] == "0.1.0", "Wrong product version"
-    assert "sdkVersion:'26'" in badging
+    minimum = re.search(r"^(?:minSdkVersion|sdkVersion):'(\d+)'$", badging, re.M)
+    assert minimum and int(minimum[1]) == 26, "Wrong minimum Android SDK"
+    assert "targetSdkVersion:'28'" in badging
+    assert "native-code: 'arm64-v8a'" in badging
     signature = subprocess.check_output([str(args.build_tools / "apksigner"), "verify", "--verbose", "--print-certs", str(apk)], text=True)
     assert "Verified using v2 scheme (APK Signature Scheme v2): true" in signature
     forbidden_prefixes = (
@@ -67,13 +70,20 @@ def main():
         assert "assets/flutter_assets/assets/engine/deepclub/prepare-profile.mjs" in names
         assert "assets/flutter_assets/assets/engine/deepclub/clear-credentials.mjs" in names
         definitions = []
+        mapping_ids = set()
         for name in names:
             if re.fullmatch(r"classes\d*\.dex", name):
-                definitions.extend(dex_classes(archive.read(name)))
+                dex = archive.read(name)
+                definitions.extend(dex_classes(dex))
+                mapping_ids.update(value.decode("ascii") for value in re.findall(rb'"pg-map-id"\s*:\s*"([0-9a-f]+)"', dex))
         forbidden = [name for name in definitions if name.startswith(forbidden_classes)]
         assert not forbidden, forbidden
         mapping = args.mapping.read_text() if args.mapping else ""
+        mapping_id = re.search(r"^# pg_map_id: ([0-9a-f]+)$", mapping, re.M) if mapping else None
+        if mapping_ids:
+            assert mapping_id and mapping_ids == {mapping_id[1]}, "R8 mapping does not belong to this APK"
         if mapping:
+            assert mapping_id and mapping_ids, "No matching R8 marker in the APK"
             assert not re.search(r"\bio\.github\.ccch1mneyyy\.dsh_app\.(?:phone\.|pet\.|companion\.|update\.privileged\.|runtime\.PhoneSkill)", mapping), "Excluded implementation occurs in the release mapping"
         shim_found = any("/disabled/PhonePlugin;" in name for name in definitions) or "io.github.ccch1mneyyy.dsh_app.disabled.PhonePlugin ->" in mapping
         assert shim_found, "Supply the exact R8 mapping if the unavailable-only shim was renamed"
@@ -91,6 +101,7 @@ def main():
         "signer_certificate_sha256": certificate[1] if certificate else None,
         "restricted_art_entries": 0, "excluded_native_class_definitions": 0,
         "dex_class_definitions_checked": len(definitions), "release_mapping_checked": bool(mapping),
+        "r8_mapping_id": mapping_id[1] if mapping_id else None,
         "runtime_version": runtime["runtimeVersion"],
         "runtime_archive_sha256": runtime["rootfsSha256"], "preset_patches": runtime["deepclub"]["presetPatches"],
     }

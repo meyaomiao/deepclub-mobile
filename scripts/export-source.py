@@ -15,11 +15,13 @@ NATIVE = "app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/"
 EXCLUDED = (
     "app/assets/whale/", "app/assets/pets/", "app/assets/star/", "app/assets/companion/",
     "app/tool/pet_src/", "app/tool/whale_src/", "docs/assets/", "site/home/",
+    "site/share/index.html", "site/share/share.js",
     NATIVE + "phone/", NATIVE + "pet/", NATIVE + "companion/", NATIVE + "update/privileged/",
     NATIVE + "runtime/PhoneSkill",
 )
 EXCLUDED_BRAND = {"app/assets/brand/glyph-dark.svg", "app/assets/brand/glyph-light.svg",
-                  "app/assets/brand/glyph-mono.svg", "app/assets/brand/tile.svg"}
+                  "app/assets/brand/glyph-mono.svg", "app/assets/brand/tile.svg",
+                  "site/share/favicon.svg", "site/share/apple-touch-icon.png"}
 
 
 def files(root: Path) -> list[str]:
@@ -54,6 +56,8 @@ def main():
         for name in files(checkout):
             path = checkout / name
             if name.startswith(EXCLUDED) or name in EXCLUDED_BRAND or not path.exists():
+                continue
+            if name.startswith("app/test/") and "/goldens/" in name and path.suffix.lower() in {".png", ".webp", ".jpg", ".jpeg", ".gif", ".svg"}:
                 continue
             if any(part in {"node_modules", ".dart_tool", ".cache", "build"} for part in Path(name).parts):
                 continue
