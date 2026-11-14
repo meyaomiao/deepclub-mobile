@@ -19,7 +19,7 @@ Map<String, Object?> configJson({String revision = 'sha256:first', bool empty = 
             'api': 'anthropic-messages',
             'baseURL': 'https://deepclub.net',
             'apiKeyEnv': 'DEEPCLUB_API_KEY',
-            'compat': {'supportsToolChoice': false},
+            'compat': {'forceAdaptiveThinking': true, 'supportsStrictTools': true},
             'models': [
               {
                 'id': 'claude-sonnet-5.5',

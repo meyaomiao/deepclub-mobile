@@ -22,7 +22,7 @@ void main() {
     expect(merged['custom-local'], {
       'models': ['mine'],
     });
-    expect((merged['deepclub-claude'] as Map)['compat'], {'supportsToolChoice': false});
+    expect((merged['deepclub-claude'] as Map)['compat'], {'forceAdaptiveThinking': true, 'supportsStrictTools': true});
     expect(((merged['deepclub-claude'] as Map)['models'] as List).single['reasoningEfforts'], {
       'low': 'low',
       'high': 'high',
