@@ -38,7 +38,9 @@ python3 scripts/prepare-runtime.py --checkout .work/dsh-go --apk /path/to/verifi
 
 [验证记录](docs/verification.md)区分本地自动检查、真实 DSH 协议测试、Android 模拟器和未验证环境。模拟器通过真实浏览器授权、本机 PRoot/DSH、真实 Go relay 与受控模型响应，执行了实际文件工具和取消链路；没有真实付费模型调用。
 
-方案索引：[deepclub#444](https://github.com/meyaomiao/deepclub/issues/444)。本仓库执行单：[mobile#1](https://github.com/meyaomiao/deepclub-mobile/issues/1)。
+完整适配方案见 [docs/adaptation-plan.md](docs/adaptation-plan.md)，包括扫码连接电脑和读取电脑已有项目。界面改动按 [UI 检查规范](docs/ui-review.md) 自查并附截图。
+
+方案索引：[deepclub#444](https://github.com/meyaomiao/deepclub/issues/444)、[deepclub#480](https://github.com/meyaomiao/deepclub/issues/480)。本仓库执行单：[mobile#1](https://github.com/meyaomiao/deepclub-mobile/issues/1)、[mobile#3](https://github.com/meyaomiao/deepclub-mobile/issues/3)。
 
 ---
 
