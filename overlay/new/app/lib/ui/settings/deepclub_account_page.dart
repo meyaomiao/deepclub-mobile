@@ -320,143 +320,170 @@ class _DeepClubLoginPanelState extends ConsumerState<DeepClubLoginPanel> {
     final controller = ref.read(deepClubAccountProvider.notifier);
     final service = controller.service;
     final error = _error ?? account.error;
+    final cleanupFailed = account.cleanupBlocked && !account.busy && account.error != null;
     return DeepClubLoading(
-      active: account.busy,
-      builder: (context, visible) => AutofillGroup(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(l10n.deepClubLoginTitle, style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: AppSpace.md),
-            Text(l10n.deepClubLoginDescription),
-            const SizedBox(height: AppSpace.xxl),
-            if (account.serverNotRevoked)
-              Padding(
-                padding: const EdgeInsets.only(bottom: AppSpace.lg),
-                child: Text(l10n.deepClubServerNotRevoked),
-              ),
-            if (account.cleanupBlocked) ...[
-              Text(l10n.deepClubCleanupFailed),
-              FilledButton.icon(
-                onPressed: account.busy ? null : () => _run(service.retryCleanup),
-                icon: DeepClubBusyIcon(visible: visible, idle: AppIcons.retry, button: true),
-                label: Text(l10n.deepClubRetry),
-              ),
-            ] else ...[
-              FilledButton.icon(
-                onPressed: account.busy ? null : () => _run(controller.browserLogin),
-                icon: DeepClubBusyIcon(
-                  visible: visible && !_passwordMode && !account.require2fa,
-                  idle: AppIcons.browser,
-                  button: true,
-                ),
-                label: Text(account.awaitingBrowser ? l10n.deepClubRestartBrowserLogin : l10n.deepClubBrowserLogin),
-              ),
-              if (account.awaitingBrowser) ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpace.md),
-                  child: Text(l10n.deepClubWaitingBrowser),
-                ),
-                TextButton(
-                  onPressed: account.busy ? null : () => _run(service.cancelBrowserLogin),
-                  child: Text(l10n.deepClubCancel),
-                ),
-              ],
-              TextButton(
-                onPressed: account.busy ? null : () => setState(() => _passwordMode = !_passwordMode),
-                child: Text(l10n.deepClubPasswordLogin),
-              ),
-              if (_passwordMode || account.require2fa) ...[
-                if (!account.require2fa) ...[
-                  TextField(
-                    controller: _username,
-                    enabled: !account.busy,
-                    autofillHints: const [AutofillHints.username],
-                    decoration: InputDecoration(labelText: l10n.deepClubUsername),
-                    textInputAction: TextInputAction.next,
+      // A real failure takes over immediately and resets the delay for a retry.
+      // Successful cleanup keeps this presentation for the remaining minimum
+      // interval without carrying its spinner into the sign-in button.
+      key: ValueKey(cleanupFailed),
+      active: account.cleanupBlocked && account.busy,
+      builder: (context, clearingVisible) {
+        final clearing = !cleanupFailed && (account.cleanupBlocked || clearingVisible);
+        return DeepClubLoading(
+          active: account.busy && !clearing,
+          builder: (context, visible) => AutofillGroup(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(l10n.deepClubLoginTitle, style: Theme.of(context).textTheme.headlineSmall),
+                const SizedBox(height: AppSpace.md),
+                Text(l10n.deepClubLoginDescription),
+                const SizedBox(height: AppSpace.xxl),
+                if (account.serverNotRevoked)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpace.lg),
+                    child: Text(l10n.deepClubServerNotRevoked),
                   ),
-                  const SizedBox(height: AppSpace.md),
-                  TextField(
-                    controller: _password,
-                    enabled: !account.busy,
-                    obscureText: true,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    autofillHints: const [AutofillHints.password],
-                    decoration: InputDecoration(labelText: l10n.deepClubPassword),
+                if (clearing)
+                  Semantics(
+                    container: true,
+                    liveRegion: true,
+                    child: Row(
+                      key: const ValueKey('deepclub-clearing'),
+                      children: [
+                        SizedBox.square(
+                          dimension: AppSpace.xl,
+                          child: clearingVisible ? const DeepClubBusyIcon(visible: true, idle: AppIcons.loading) : null,
+                        ),
+                        const SizedBox(width: AppSpace.md),
+                        Expanded(child: Text(l10n.deepClubClearing)),
+                      ],
+                    ),
+                  )
+                else if (cleanupFailed) ...[
+                  Text(l10n.deepClubCleanupFailed),
+                  FilledButton.icon(
+                    onPressed: () => _run(service.retryCleanup),
+                    icon: const DeepClubBusyIcon(visible: false, idle: AppIcons.retry, button: true),
+                    label: Text(l10n.deepClubRetry),
                   ),
-                ] else
-                  TextField(
-                    controller: _code,
-                    enabled: !account.busy,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    decoration: InputDecoration(labelText: l10n.deepClubTwoFactorCode),
+                ] else ...[
+                  FilledButton.icon(
+                    onPressed: account.busy ? null : () => _run(controller.browserLogin),
+                    icon: DeepClubBusyIcon(
+                      visible: visible && !_passwordMode && !account.require2fa,
+                      idle: AppIcons.browser,
+                      button: true,
+                    ),
+                    label: Text(account.awaitingBrowser ? l10n.deepClubRestartBrowserLogin : l10n.deepClubBrowserLogin),
                   ),
-                for (final device in _limitedDevices)
-                  CheckboxListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text('${device['device_name'] ?? device['platform'] ?? ''}'),
-                    value: _revokeIds.contains(device['id']),
-                    onChanged: account.busy
-                        ? null
-                        : (checked) {
-                            final id = device['id'];
-                            if (id is int) {
-                              setState(() {
-                                if (checked == true) {
-                                  _revokeIds.add(id);
-                                } else {
-                                  _revokeIds.remove(id);
-                                }
-                              });
-                            }
-                          },
-                  ),
-                if (account.require2fa)
+                  if (account.awaitingBrowser) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: AppSpace.md),
+                      child: Text(l10n.deepClubWaitingBrowser),
+                    ),
+                    TextButton(
+                      onPressed: account.busy ? null : () => _run(service.cancelBrowserLogin),
+                      child: Text(l10n.deepClubCancel),
+                    ),
+                  ],
                   TextButton(
-                    onPressed: account.busy ? null : () => _run(service.cancelBrowserLogin),
-                    child: Text(l10n.deepClubCancel),
+                    onPressed: account.busy ? null : () => setState(() => _passwordMode = !_passwordMode),
+                    child: Text(l10n.deepClubPasswordLogin),
+                  ),
+                  if (_passwordMode || account.require2fa) ...[
+                    if (!account.require2fa) ...[
+                      TextField(
+                        controller: _username,
+                        enabled: !account.busy,
+                        autofillHints: const [AutofillHints.username],
+                        decoration: InputDecoration(labelText: l10n.deepClubUsername),
+                        textInputAction: TextInputAction.next,
+                      ),
+                      const SizedBox(height: AppSpace.md),
+                      TextField(
+                        controller: _password,
+                        enabled: !account.busy,
+                        obscureText: true,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        autofillHints: const [AutofillHints.password],
+                        decoration: InputDecoration(labelText: l10n.deepClubPassword),
+                      ),
+                    ] else
+                      TextField(
+                        controller: _code,
+                        enabled: !account.busy,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        decoration: InputDecoration(labelText: l10n.deepClubTwoFactorCode),
+                      ),
+                    for (final device in _limitedDevices)
+                      CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text('${device['device_name'] ?? device['platform'] ?? ''}'),
+                        value: _revokeIds.contains(device['id']),
+                        onChanged: account.busy
+                            ? null
+                            : (checked) {
+                                final id = device['id'];
+                                if (id is int) {
+                                  setState(() {
+                                    if (checked == true) {
+                                      _revokeIds.add(id);
+                                    } else {
+                                      _revokeIds.remove(id);
+                                    }
+                                  });
+                                }
+                              },
+                      ),
+                    if (account.require2fa)
+                      TextButton(
+                        onPressed: account.busy ? null : () => _run(service.cancelBrowserLogin),
+                        child: Text(l10n.deepClubCancel),
+                      ),
+                    const SizedBox(height: AppSpace.lg),
+                    FilledButton.tonalIcon(
+                      icon: DeepClubBusyIcon(visible: visible, idle: AppIcons.lock, button: true),
+                      onPressed: account.busy
+                          ? null
+                          : () => _run(() async {
+                              if (account.require2fa) {
+                                await service.verify2fa(_code.text.trim(), revokeSessionIds: _revokeIds.toList());
+                                _code.clear();
+                              } else {
+                                await service.loginWithPassword(
+                                  _username.text.trim(),
+                                  _password.text,
+                                  revokeSessionIds: _revokeIds.toList(),
+                                );
+                                _password.clear();
+                              }
+                            }),
+                      label: Text(account.require2fa ? l10n.deepClubVerify : l10n.deepClubLogin),
+                    ),
+                  ],
+                ],
+                if (error != null && !account.cleanupBlocked)
+                  Padding(
+                    padding: const EdgeInsets.only(top: AppSpace.lg),
+                    child: Text(
+                      deepClubErrorText(l10n, error),
+                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    ),
                   ),
                 const SizedBox(height: AppSpace.lg),
-                FilledButton.tonalIcon(
-                  icon: DeepClubBusyIcon(visible: visible, idle: AppIcons.lock, button: true),
-                  onPressed: account.busy
-                      ? null
-                      : () => _run(() async {
-                          if (account.require2fa) {
-                            await service.verify2fa(_code.text.trim(), revokeSessionIds: _revokeIds.toList());
-                            _code.clear();
-                          } else {
-                            await service.loginWithPassword(
-                              _username.text.trim(),
-                              _password.text,
-                              revokeSessionIds: _revokeIds.toList(),
-                            );
-                            _password.clear();
-                          }
-                        }),
-                  label: Text(account.require2fa ? l10n.deepClubVerify : l10n.deepClubLogin),
+                TextButton(
+                  onPressed: () =>
+                      launchUrl(Uri.parse('$deepClubServiceOrigin/profile'), mode: LaunchMode.externalApplication),
+                  child: Text(l10n.deepClubManageOnWeb),
                 ),
               ],
-            ],
-            if (error != null && !account.cleanupBlocked)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpace.lg),
-                child: Text(
-                  deepClubErrorText(l10n, error),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
-              ),
-            const SizedBox(height: AppSpace.lg),
-            TextButton(
-              onPressed: () =>
-                  launchUrl(Uri.parse('$deepClubServiceOrigin/profile'), mode: LaunchMode.externalApplication),
-              child: Text(l10n.deepClubManageOnWeb),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

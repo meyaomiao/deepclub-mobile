@@ -51,10 +51,104 @@ void main() {
         expect(find.text(appL10n.deepClubCleanupFailed), findsOneWidget);
         expect(find.text(appL10n.deepClubRuntimeFailed), findsNothing);
       }
+      if (scene == DeepClubUiScene.clearing) {
+        expect(find.text(appL10n.deepClubClearing), findsOneWidget);
+        expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+        expect(find.text(appL10n.deepClubRetry), findsNothing);
+        expect(progress, findsOneWidget);
+      }
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
     });
   }
+
+  for (final accountPage in [false, true]) {
+    Widget? surface() => accountPage ? const DeepClubAccountPage() : null;
+    final entry = accountPage ? 'account' : 'gate';
+
+    testWidgets('$entry clearing: neutral progress waits 300 ms and holds for 500 ms after success', (tester) async {
+      final fixture = await mount(tester, DeepClubUiScene.login, home: surface());
+      fixture.account.emit(const DeepClubAccountState(loaded: true, cleanupBlocked: true, busy: true));
+      await tester.pump();
+      final row = find.byKey(const ValueKey('deepclub-clearing'));
+      final before = tester.getRect(row);
+      expect(find.text(appL10n.deepClubClearing), findsOneWidget);
+      expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+      expect(find.text(appL10n.deepClubRetry), findsNothing);
+      expect(progress, findsNothing);
+      await tester.pump(const Duration(milliseconds: 299));
+      expect(progress, findsNothing);
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(progress, findsOneWidget);
+      expect(tester.getRect(row), before);
+
+      fixture.account.emit(const DeepClubAccountState(loaded: true));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 499));
+      expect(find.text(appL10n.deepClubClearing), findsOneWidget);
+      expect(find.text(appL10n.deepClubBrowserLogin), findsNothing);
+      expect(progress, findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 1));
+      expect(find.text(appL10n.deepClubClearing), findsNothing);
+      expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+      expect(find.text(appL10n.deepClubRetry), findsNothing);
+      expect(progress, findsNothing);
+      expect(find.text(appL10n.deepClubBrowserLogin), findsOneWidget);
+    });
+
+    testWidgets('$entry clearing: a quick success never flashes loading or retry', (tester) async {
+      final fixture = await mount(tester, DeepClubUiScene.login, home: surface());
+      fixture.account.emit(const DeepClubAccountState(loaded: true, cleanupBlocked: true, busy: true));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      fixture.account.emit(const DeepClubAccountState(loaded: true));
+      await tester.pump();
+      expect(find.text(appL10n.deepClubClearing), findsNothing);
+      expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+      expect(find.text(appL10n.deepClubRetry), findsNothing);
+      expect(find.text(appL10n.deepClubBrowserLogin), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(progress, findsNothing);
+    });
+  }
+
+  testWidgets('clearing: only a settled failure enables retry and retry starts a new delay', (tester) async {
+    final fixture = await mount(tester, DeepClubUiScene.clearing);
+    await tester.pump(const Duration(milliseconds: 300));
+    fixture.account.emit(const DeepClubAccountState(loaded: true, cleanupBlocked: true, error: 'cleanup_failed'));
+    await tester.pump();
+    expect(find.text(appL10n.deepClubClearing), findsNothing);
+    expect(find.text(appL10n.deepClubCleanupFailed), findsOneWidget);
+    expect(progress, findsNothing);
+    final retry = find.widgetWithText(FilledButton, appL10n.deepClubRetry);
+    expect(retry, findsOneWidget);
+    expect(tester.widget<FilledButton>(retry).onPressed, isNotNull);
+
+    // Even a stale error cannot turn an in-flight retry back into a failure.
+    fixture.account.emit(
+      const DeepClubAccountState(loaded: true, cleanupBlocked: true, busy: true, error: 'cleanup_failed'),
+    );
+    await tester.pump();
+    expect(find.text(appL10n.deepClubClearing), findsOneWidget);
+    expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+    expect(find.text(appL10n.deepClubRetry), findsNothing);
+    expect(progress, findsNothing);
+    await tester.pump(const Duration(milliseconds: 299));
+    expect(progress, findsNothing);
+    await tester.pump(const Duration(milliseconds: 1));
+    expect(progress, findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('clearing: reduced motion keeps a static neutral status without retry', (tester) async {
+    await mount(tester, DeepClubUiScene.clearing, reduced: true);
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text(appL10n.deepClubClearing), findsOneWidget);
+    expect(progress, findsNothing);
+    expect(find.text(appL10n.deepClubCleanupFailed), findsNothing);
+    expect(find.text(appL10n.deepClubRetry), findsNothing);
+    await tester.pumpWidget(const SizedBox());
+  });
 
   testWidgets('quick preparation never flashes a spinner; shown work stays 500 ms', (tester) async {
     final fixture = DeepClubUiFixture(DeepClubUiScene.syncing);

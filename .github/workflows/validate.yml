@@ -26,6 +26,20 @@ jobs:
           python3 -m py_compile scripts/*.py
           python3 scripts/prepare.py --checkout .work/dsh-go
           git -C .work/dsh-go diff --check
+          python3 - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          source = Path('.work/dsh-go')
+          expected = json.loads(Path('overlay/source-state.json').read_text())
+          changed = subprocess.check_output(['git', 'diff', '--name-only', '--no-renames', '-z', 'HEAD'], cwd=source)
+          added = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '-z'], cwd=source)
+          assert {p.decode() for p in (changed + added).split(b'\0') if p} == set(expected)
+          for name, digest in expected.items():
+              path = source / name
+              actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+              assert actual == digest, name
+          print(f'Clean source reconstruction verified: {len(expected)} entries')
+          PY
       - name: Install pinned Flutter
         env:
           FLUTTER_ARCHIVE_SHA256: af7455f540df951184c7953fbe3cf884766e7541dacf8571f9f582db03dd6230

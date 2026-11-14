@@ -41,6 +41,7 @@
   "deepClubAuthorizationExpired": "本次授权已过期或已使用。请重新登录。",
   "deepClubAuthorizationDenied": "已取消本次授权。你可以重新登录。",
   "deepClubBrowserUnavailable": "无法打开系统浏览器。请使用密码登录，或安装浏览器后重试。",
+  "deepClubClearing": "正在清除本机登录信息",
   "deepClubCleanupFailed": "本机凭据清理尚未完成。请重试清理后再登录。",
   "deepClubSessionExpired": "设备授权已失效或受限。已停止使用旧凭据，请重新登录或在网页检查设备授权。",
   "deepClubDeviceLimit": "已达到设备上限。请选择要退出的旧设备，或在深云网页管理设备后重新授权。",

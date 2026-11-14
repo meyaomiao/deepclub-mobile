@@ -41,6 +41,7 @@
   "deepClubAuthorizationExpired": "This authorization has expired or was already used. Sign in again.",
   "deepClubAuthorizationDenied": "Authorization was cancelled. You can sign in again.",
   "deepClubBrowserUnavailable": "Cannot open the system browser. Use password sign-in or install a browser and retry.",
+  "deepClubClearing": "Clearing sign-in data on this phone",
   "deepClubCleanupFailed": "Local credential cleanup is incomplete. Retry cleanup before signing in.",
   "deepClubSessionExpired": "Device authorization has expired or is restricted. Old credentials are no longer used. Sign in again or check device authorization on the website.",
   "deepClubDeviceLimit": "Device limit reached. Select old devices to sign out, or manage devices on the DeepClub website and authorize again.",

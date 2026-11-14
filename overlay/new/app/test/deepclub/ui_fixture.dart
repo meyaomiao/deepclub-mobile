@@ -71,6 +71,7 @@ enum DeepClubUiScene {
   revoked,
   reauthorize,
   cleanup,
+  clearing,
   account,
   accountBusy,
   accountOffline,
@@ -128,6 +129,11 @@ enum DeepClubUiScene {
         account: const DeepClubAccountState(loaded: true, cleanupBlocked: true, error: 'cleanup_failed'),
         runtime: fixtureRuntime(RuntimePhase.error),
         accountPage: false,
+      ),
+      DeepClubUiScene.clearing => (
+        account: const DeepClubAccountState(loaded: true, cleanupBlocked: true, busy: true),
+        runtime: fixtureRuntime(RuntimePhase.installed),
+        accountPage: true,
       ),
       DeepClubUiScene.account => (
         account: fixtureAccount(ready: true),
