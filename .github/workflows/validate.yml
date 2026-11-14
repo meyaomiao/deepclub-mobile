@@ -46,9 +46,23 @@ jobs:
       - name: Analyze the complete application
         working-directory: .work/dsh-go/app
         run: flutter analyze --no-pub
-      - name: Verify account and first-release behavior
+      - name: Install real fonts for UI and icon checks
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-cjk-extra
+      - name: Verify account, preparation UI, icons and architecture
         working-directory: .work/dsh-go/app
-        run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart
+        env:
+          DSH_TEST_FONT_DIR: /usr/share/fonts/opentype/noto
+        run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart test/icons/app_icons_test.dart test/arch/import_direction_test.dart
+      - name: Keep icon golden comparison evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: icon-golden-failures
+          path: .work/dsh-go/app/test/icons/failures/*.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Check local conversation viewer
         working-directory: .work/dsh-go
         run: |

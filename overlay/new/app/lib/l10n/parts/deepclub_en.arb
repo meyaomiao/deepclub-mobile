@@ -1,11 +1,11 @@
 {
   "deepClubAccount": "DeepClub account",
   "deepClubAnnouncement": "Announcement",
-  "deepClubLoginTitle": "Sign in to DeepClub to use your Agent",
-  "deepClubLoginDescription": "Authorize this phone with your DeepClub account. Models and tools are configured automatically while the local runtime is prepared.",
+  "deepClubLoginTitle": "Sign in to DeepClub",
+  "deepClubLoginDescription": "Sign in to configure models and tools automatically.",
   "deepClubBrowserLogin": "Sign in with your browser",
   "deepClubRestartBrowserLogin": "Restart browser sign-in",
-  "deepClubWaitingBrowser": "Complete authorization in your system browser, then return to this app.",
+  "deepClubWaitingBrowser": "Finish authorization in your browser, then return to DeepClub.",
   "deepClubPasswordLogin": "Sign in with username and password",
   "deepClubUsername": "Username",
   "deepClubPassword": "Password",
@@ -15,11 +15,17 @@
   "deepClubCancel": "Cancel",
   "deepClubRetry": "Retry",
   "deepClubRefresh": "Refresh account and models",
-  "deepClubConnected": "Local Agent configured",
-  "deepClubPreparing": "Preparing your local Agent",
+  "deepClubConnected": "This phone · Engine ready",
+  "deepClubPreparing": "Preparing this phone",
   "deepClubLocalCredentialsOnly": "DeepClub credentials are used only by this phone's local engine. Remote hosts keep their own configuration.",
   "deepClubBalance": "Available balance: {amount} billing units",
-  "@deepClubBalance": {"placeholders": {"amount": {"type": "String"}}},
+  "@deepClubBalance": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "deepClubDevices": "Signed-in devices",
   "deepClubThisDevice": "This device",
   "deepClubRevokeDevice": "Revoke device",
@@ -42,8 +48,32 @@
   "deepClubRequestFailed": "The operation failed. Check your input and network, then retry.",
   "deepClubModelsUnavailable": "No models available. Refresh authorization in your DeepClub account.",
   "deepClubCurrentModelUnavailable": "The current model is unavailable. Refresh your account or choose another model.",
-  "deepClubInstalling": "Installing the local runtime in the background…",
-  "deepClubLocalRuntime": "Your Agent runs on this phone by default",
-  "deepClubRuntimeFailed": "Could not prepare the local runtime. Retry or connect your own host in remote settings.",
-  "deepClubRemoteSettings": "Remote host settings"
+  "deepClubInstalling": "Preparing the runtime",
+  "deepClubLocalRuntime": "Your Agent runs on this phone",
+  "deepClubRuntimeFailed": "Runtime preparation failed. Retry to continue.",
+  "deepClubRemoteSettings": "Remote host settings",
+  "deepClubAppName": "DeepClub",
+  "deepClubInstallingPercent": "Preparing the runtime · {percent}%",
+  "deepClubMore": "More options",
+  "deepClubRestoring": "Reading your DeepClub account",
+  "deepClubPreparationDescription": "These steps finish automatically before you reach home.",
+  "deepClubKeepOpen": "First-time setup can take a few minutes. Keep DeepClub open.",
+  "deepClubSignedIn": "Signed in to DeepClub",
+  "deepClubPrepareRuntime": "Prepare runtime",
+  "deepClubStartEngine": "Start engine",
+  "deepClubSyncModels": "Sync models",
+  "deepClubStepWaiting": "Waiting",
+  "deepClubStepActive": "In progress",
+  "deepClubStepComplete": "Complete",
+  "deepClubStepFailed": "Failed",
+  "deepClubSignInToContinue": "Sign in to get started",
+  "deepClubNeedsAttention": "Action needed",
+  "deepClubNoDevices": "No signed-in devices",
+  "@deepClubInstallingPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }
