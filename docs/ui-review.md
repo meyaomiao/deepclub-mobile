@@ -2,6 +2,8 @@
 
 适用于本仓库新增或修改的所有界面（`overlay/new/`、`overlay/replace/` 及补丁涉及的上游页面）。基础规范沿用上游 [polish-guide.md](https://github.com/ccch1mneyyy/dsh-Go/blob/288234ae52fdfcfc2b0a0388763c371d0b09ea7d/docs/design/polish-guide.md) 和 [page-design.md](https://github.com/ccch1mneyyy/dsh-Go/blob/288234ae52fdfcfc2b0a0388763c371d0b09ea7d/docs/design/page-design.md)。本文补充深云的品牌约定，并把加载状态写成可逐条检查的规则；两者冲突时，品牌相关以本文为准。
 
+iOS 改造层（基于 Whaleness，见[适配方案 §7](adaptation-plan.md#7-ios-端基于-whaleness)）同样遵守本文。控件用平台原生实现，颜色、间距阶梯、图标风格、文案、状态用词和加载规则保持一致。
+
 每条规则都应能回答「是 / 否」。PR 必须附 §11 要求的截图和检查结果。
 
 ## 1. 每屏检查顺序
