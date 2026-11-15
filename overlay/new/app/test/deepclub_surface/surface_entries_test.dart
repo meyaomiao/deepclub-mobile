@@ -141,7 +141,7 @@ void main() {
     // The computer-management route remains available through the host picker.
     await tester.tap(find.byKey(const ValueKey('identity-host-switcher')));
     await pumpFrames(tester);
-    await tester.tap(find.text(appL10n.remoteConnectComputer));
+    await tester.tap(find.text(appL10n.remoteManageHosts));
     await pumpFrames(tester);
     expect(destinations.last, DrawerDestination.remote);
     expect(tester.takeException(), isNull);

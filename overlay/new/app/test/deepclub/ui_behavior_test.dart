@@ -314,6 +314,9 @@ void main() {
     await tester.pumpWidget(fixture.app(home: const DeepClubGate()));
     fixture.runtime.emit(fixtureRuntime(RuntimePhase.notInstalled, installed: false));
     await tester.pump();
+    expect(fixture.runtime.installs, 0, reason: 'the user can choose remote-only before preparation');
+    fixture.account.emit(const DeepClubAccountState(loaded: true, awaitingBrowser: true));
+    await tester.pump();
     expect(fixture.runtime.installs, 1);
     for (var i = 0; i < 4; i++) {
       await tester.pumpWidget(fixture.app(home: const DeepClubGate(), textScale: i.isEven ? 1.0 : 1.3));

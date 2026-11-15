@@ -225,9 +225,9 @@ class UiSkillInstaller extends UiSkillAutoInstaller {
 }
 
 class DeepClubUiFixture {
-  DeepClubUiFixture(DeepClubUiScene scene) {
+  DeepClubUiFixture(DeepClubUiScene scene, {DeepClubAccountState? accountState}) {
     final data = sceneState(scene);
-    account = UiAccountController(data.account, rig);
+    account = UiAccountController(accountState ?? data.account, rig);
     runtime = UiRuntimeController(data.runtime);
     accountPage = data.accountPage;
   }

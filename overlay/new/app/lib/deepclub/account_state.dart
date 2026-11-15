@@ -91,8 +91,11 @@ class DeepClubAccountController extends Notifier<DeepClubAccountState> {
     return service.state;
   }
 
-  Future<void> browserLogin() async {
-    final uri = await service.beginBrowserLogin();
+  Future<void> browserLogin() async => _openAuthorization(await service.beginBrowserLogin());
+
+  Future<void> enableLocal() async => _openAuthorization(await service.enableLocal());
+
+  Future<void> _openAuthorization(Uri uri) async {
     try {
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
         throw const DeepClubFailure('browser_unavailable');

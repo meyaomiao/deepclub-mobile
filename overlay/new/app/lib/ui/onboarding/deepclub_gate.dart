@@ -11,6 +11,8 @@ import '../../l10n/l10n.dart';
 import '../../runtime/runtime_bridge.dart';
 import '../../runtime/runtime_state.dart';
 import '../../state/hosts_state.dart';
+import '../../state/gateway_state.dart';
+import '../remote/gateway_pairing_page.dart';
 import '../../state/settings_state.dart';
 import '../../ui_config/ui_skill.dart';
 import '../common/app_sheet.dart';
@@ -33,7 +35,7 @@ class DeepClubGate extends ConsumerStatefulWidget {
 
 class _DeepClubGateState extends ConsumerState<DeepClubGate> with WidgetsBindingObserver {
   bool _installAttempted = false, _startAttempted = false, _preparing = false;
-  bool _runtimeFailed = false, _hostReady = false;
+  bool _runtimeFailed = false, _hostReady = false, _openingPair = false;
 
   @override
   void initState() {
@@ -47,6 +49,8 @@ class _DeepClubGateState extends ConsumerState<DeepClubGate> with WidgetsBinding
       _changed();
     });
     ref.listenManual(uiSkillAutoInstallProvider, (_, _) {});
+    ref.listenManual(gatewayPairProvider, (_, _) => _openPendingPair());
+    ref.listenManual(gatewayHostsProvider, (_, _) {});
     unawaited(
       ref.read(activeHostProvider.notifier).ready.then((_) {
         if (!mounted) return;
@@ -62,6 +66,24 @@ class _DeepClubGateState extends ConsumerState<DeepClubGate> with WidgetsBinding
       LaunchController.active.value?.ready(waitsForEngine: false);
     }
     unawaited(_prepare());
+    _openPendingPair();
+  }
+
+  void _openPendingPair() {
+    if (!mounted ||
+        _openingPair ||
+        !ref.read(deepClubAccountProvider).signedIn ||
+        !ref.read(gatewayPairProvider).hasLink ||
+        ref.read(gatewayPairProvider.notifier).presented) {
+      return;
+    }
+    _openingPair = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted && !ref.read(gatewayPairProvider.notifier).presented) {
+        await openGatewayPairing(context);
+      }
+      _openingPair = false;
+    });
   }
 
   @override
@@ -105,7 +127,10 @@ class _DeepClubGateState extends ConsumerState<DeepClubGate> with WidgetsBinding
       while (mounted && ref.read(activeHostProvider).isLocal) {
         final account = ref.read(deepClubAccountProvider);
         final runtime = ref.read(localRuntimeProvider);
-        if (!runtime.loaded || !account.loaded || account.cleanupBlocked) break;
+        if (!runtime.loaded || !account.loaded || account.cleanupBlocked || account.remoteOnly) break;
+        // Give the remote-only choice a chance before extracting anything.
+        // Default browser authorization still runs in parallel with extraction.
+        if (!account.signedIn && !account.awaitingBrowser && !account.require2fa) break;
         final status = runtime.status;
         final outdated = status.installedVersion != status.bundledVersion || status.installedVersion == null;
         if (!_installAttempted &&
@@ -164,7 +189,10 @@ class _DeepClubGateState extends ConsumerState<DeepClubGate> with WidgetsBinding
     final runtime = ref.watch(localRuntimeProvider);
     final settings = ref.watch(settingsProvider);
     final host = ref.watch(activeHostProvider);
-    if (_hostReady && settings.loaded && !host.isLocal) return const HomeShell();
+    if (_hostReady && settings.loaded && account.loaded && !account.cleanupBlocked) {
+      if (!host.isLocal && (host.kind != HostKind.gateway || account.signedIn)) return const HomeShell();
+      if (host.isLocal && account.signedIn && account.remoteOnly) return const GatewayPairingPage(initial: true);
+    }
     return DeepClubGateView(
       account: account,
       runtime: runtime,
@@ -259,7 +287,7 @@ class DeepClubGateView extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 children: [
                   const Padding(padding: EdgeInsets.all(AppSpace.lg), child: DeepClubLoginPanel()),
-                  if (!account.cleanupBlocked)
+                  if (!account.cleanupBlocked && !account.remoteOnly)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(AppSpace.lg, 0, AppSpace.lg, AppSpace.lg),
                       child: Column(
