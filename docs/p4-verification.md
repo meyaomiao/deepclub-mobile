@@ -67,7 +67,7 @@
 
 ## 证据索引
 
-真实 App 主链使用 PKCE 修复 APK `4d37f7550c70d6961363c2d64a5d46b7b3d9c715`，versionCode 11161219，SHA-256 `6ef057ba78e0a1fcb827b9d6f76c23f3b5a9ac8e44cf69a34e3a9d42d093b7ea`。后续网络/错误提示修复包：源码 `fc8c150d824707f4e6db2e444a7490c4c3ceb747`，versionCode 11161501，SHA-256 `fe68d357e882ac2517c1b353043d1f11e81b77f2731288ebc91d3a208e8e20ab`。该包构建、artifact 校验和保数据更新安装通过，但其最终状态页与 B 403 复验被系统 ANR 阻塞，不能混用旧包截图冒充新 UI。
+初次空安装、remote-only 与首张 consent 截图来自原点修复包 `7985e17`（versionCode 11161112），它真实暴露 400 换码失败。后续成功主链（扫码至退出冷启）使用 PKCE 修复 APK `4d37f7550c70d6961363c2d64a5d46b7b3d9c715`，versionCode 11161219，SHA-256 `6ef057ba78e0a1fcb827b9d6f76c23f3b5a9ac8e44cf69a34e3a9d42d093b7ea`。后续网络/错误提示修复包：源码 `fc8c150d824707f4e6db2e444a7490c4c3ceb747`，versionCode 11161501，SHA-256 `fe68d357e882ac2517c1b353043d1f11e81b77f2731288ebc91d3a208e8e20ab`。该包构建、artifact 校验和保数据更新安装通过，但其最终状态页与 B 403 复验被系统 ANR 阻塞，不能混用旧包截图冒充新 UI。
 
 | 类型 | 证据 |
 |---|---|
