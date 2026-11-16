@@ -80,6 +80,7 @@ void main() {
     expect(jsonDecode(exchange.body), {
       'grant_type': 'authorization_code',
       'client_id': 'deepclub-agent',
+      'client_type': 'agent',
       'redirect_uri': deepClubRedirect,
       'code': 'once',
       'code_verifier': pending.verifier,

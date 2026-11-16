@@ -58,14 +58,23 @@ void main() {
     expect(uri.queryParameters['client_type'], 'android_remote');
     expect(uri.queryParameters['redirect_uri'], deepClubRedirect);
     final pending = PendingAuthorization.decode(rig.store.values['pkce']!);
-    rig.handler = (request) async => request.url.path == '/api/client/token'
-        ? ServiceRig.ok({...sessionJson(withKey: false, token: fixturePhoneSession), 'client_type': 'android_remote'})
-        : null;
+    rig.handler = (request) async {
+      if (request.url.path != '/api/client/token') return null;
+      final body = jsonDecode(request.body) as Map;
+      if (body['client_type'] != 'android_remote') {
+        return http.Response(jsonEncode({'success': false, 'code': 'invalid_grant'}), 400);
+      }
+      return ServiceRig.ok({
+        ...sessionJson(withKey: false, token: fixturePhoneSession),
+        'client_type': 'android_remote',
+      });
+    };
     await rig.service.acceptCallback(
       Uri.parse(deepClubRedirect).replace(queryParameters: {'code': 'fixture-code', 'state': pending.state}),
     );
     final exchange = jsonDecode(rig.requests.first.body) as Map;
     expect(exchange['client_id'], 'deepclub-android-remote');
+    expect(exchange['client_type'], 'android_remote');
     final binding = rig.service.state.binding;
     final restarted = ServiceRig(storage: rig.store);
     addTearDown(restarted.close);
@@ -77,6 +86,31 @@ void main() {
       isEmpty,
     );
     expect(restarted.engine.calls, isEmpty);
+  });
+
+  test('a rejected browser exchange remains visible after the resume refresh', () async {
+    final rig = ServiceRig(sessionToken: fixturePhoneSession);
+    addTearDown(rig.close);
+    await rig.service.restore();
+    await rig.service.setRemoteOnly(true);
+    await rig.service.beginBrowserLogin();
+    final pending = PendingAuthorization.decode(rig.store.values['pkce']!);
+    rig.handler = (request) async => request.url.path == '/api/client/token'
+        ? http.Response(jsonEncode({'success': false, 'code': 'invalid_grant'}), 400)
+        : null;
+    final exchange = rig.service.acceptCallback(
+      Uri.parse(deepClubRedirect).replace(queryParameters: {'code': 'rejected-code', 'state': pending.state}),
+    );
+    // Android resumes while the callback is still exchanging its one-use code.
+    final resume = rig.service.synchronize();
+    await expectLater(exchange, throwsA(isA<DeepClubFailure>()));
+    await resume;
+    expect(rig.service.state.signedIn, isFalse);
+    expect(rig.service.state.awaitingBrowser, isFalse);
+    expect(rig.service.state.error, 'invalid_grant');
+    expect(rig.requests.where((request) => request.url.path.endsWith('/bootstrap')), isEmpty);
+    await rig.service.beginBrowserLogin();
+    expect(rig.service.state.error, isNull, reason: 'an explicit retry clears the prior failure');
   });
 
   test('remote response cannot import a model key or another platform client type', () async {

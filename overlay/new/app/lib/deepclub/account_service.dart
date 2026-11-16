@@ -286,7 +286,7 @@ class DeepClubAccountService {
       body: {
         'grant_type': 'authorization_code',
         'client_id': pending.clientId,
-        if (pending.isUpgrade) 'client_type': 'agent',
+        'client_type': pending.remoteOnly ? 'android_remote' : 'agent',
         'redirect_uri': deepClubRedirect,
         'code': code,
         'code_verifier': pending.verifier,
@@ -364,7 +364,13 @@ class DeepClubAccountService {
     await _synchronize();
   }
 
-  Future<void> synchronize() => _run(_synchronize);
+  Future<void> synchronize() {
+    // Returning from the browser can race the queued callback. With no session
+    // there is nothing to refresh; a no-op must not erase its exchange error.
+    if (_session == null) return Future<void>.value();
+    return _run(_synchronize);
+  }
+
   Future<void> _synchronize() async {
     if (_session == null) return;
     if (!_session!.remoteOnly && _session!.apiKey == null) {
