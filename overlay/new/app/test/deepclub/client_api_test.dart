@@ -52,6 +52,21 @@ void main() {
     }
   });
 
+  test('empty HTTP 429 keeps a safe rate-limit code without invalidating a session', () async {
+    final api = DeepClubApi(client: MockClient((_) async => http.Response('', 429)));
+    addTearDown(api.close);
+    await expectLater(
+      api.call('POST', '/api/client/remote/assertion', body: {}),
+      throwsA(
+        isA<DeepClubFailure>()
+            .having((e) => e.code, 'code', 'rate_limited')
+            .having((e) => e.invalidSession, 'invalidSession', isFalse),
+      ),
+    );
+    expect(const DeepClubFailure('remote_identity_denied', status: 403).invalidSession, isFalse);
+    expect(const DeepClubFailure('invalid_session', status: 403).invalidSession, isTrue);
+  });
+
   for (final headers in [true, false]) {
     test(
       'timeout aborts a hanging ${headers ? 'DNS/connect/headers' : 'response body'} and releases local logout',

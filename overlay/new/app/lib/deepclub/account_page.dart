@@ -2,6 +2,7 @@ import '../l10n/l10n.dart';
 
 String deepClubErrorText(L10n l10n, String? code) => switch (code) {
   'network_unavailable' => l10n.deepClubNetworkError,
+  'rate_limited' => l10n.deepClubRateLimited,
   'invalid_state' || 'invalid_callback' => l10n.deepClubInvalidCallback,
   'authorization_expired' || 'invalid_grant' => l10n.deepClubAuthorizationExpired,
   'authorization_denied' => l10n.deepClubAuthorizationDenied,

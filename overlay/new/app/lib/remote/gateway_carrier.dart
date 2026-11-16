@@ -8,6 +8,9 @@ import '../deepclub/client_api.dart';
 import '../deepclub/secure_store.dart' show secureDeviceId;
 import 'gateway_pairing.dart';
 
+/// Safe route metadata; never exposes an endpoint, account proof or token.
+enum GatewayRoute { lan, relay }
+
 // Intersect desktop-advertised support with this client's known protocol. An
 // unknown release cannot opt the phone into settings or credential management.
 const _nativeUnary = {
@@ -115,6 +118,8 @@ class GatewayCarrier extends DshCarrier {
   bool _closed = false;
   DshCarrierRefusedException? _refused;
   String? _version;
+  GatewayRoute? _route;
+  GatewayRoute? get route => _socket == null ? null : _route;
   Set<String>? _capabilities, _allowlist;
 
   @override
@@ -140,6 +145,7 @@ class GatewayCarrier extends DshCarrier {
     try {
       return await opening;
     } on DeepClubFailure catch (error) {
+      if (error.code == 'rate_limited') rethrow;
       if (error.invalidSession || error.code == 'login_required') {
         _refuse('DEVICE_REVOKED');
         throw _refused!;
@@ -239,11 +245,17 @@ class GatewayCarrier extends DshCarrier {
         );
         _allowlist = {...safeUnary, ...safeStreams};
         physical.streams = safeStreams;
+        _route = isGatewayRelay(endpoint) ? GatewayRoute.relay : GatewayRoute.lan;
         _socket = physical;
         _authenticating = null;
         return physical;
       } on DeepClubFailure catch (error) {
         await physical?.close(1000, 'authorization failed');
+        if (error.code == 'rate_limited') rethrow;
+        if (error.code == 'remote_identity_denied') {
+          _refuse(error.code);
+          throw _refused!;
+        }
         if (error.invalidSession || error.code == 'login_required') {
           _refuse('DEVICE_REVOKED');
           throw _refused!;

@@ -26,6 +26,8 @@ String gatewayPairError(L10n l10n, String? code) => switch (code) {
   'pairing_expired' || 'remote_assertion_expired' => l10n.deepClubGatewayExpired,
   'version_incompatible' || 'PROTOCOL_MISMATCH' => l10n.deepClubGatewayIncompatible,
   'host_key_mismatch' || 'PEER_IDENTITY_MISMATCH' => l10n.deepClubGatewayHostChanged,
+  'rate_limited' => l10n.deepClubRateLimited,
+  'remote_identity_denied' ||
   'remote_account_mismatch' ||
   'remote_gateway_account_mismatch' ||
   'DEVICE_REVOKED' => l10n.deepClubGatewayWrongAccount,

@@ -147,6 +147,25 @@ void main() {
     expect(restarted.requests.where((r) => r.url.path.endsWith('/provision')), isEmpty);
   });
 
+  test('a different computer account is denied without clearing the valid phone session', () async {
+    final rig = ServiceRig(sessionToken: fixturePhoneSession);
+    addTearDown(rig.close);
+    await rig.service.setRemoteOnly(true);
+    await rig.login();
+    final binding = rig.service.state.binding;
+    rig.handler = (request) async => request.url.path == '/api/client/remote/assertion'
+        ? http.Response(jsonEncode({'success': false, 'code': 'remote_identity_denied'}), 403)
+        : null;
+    await expectLater(
+      rig.service.remoteAssertion(fixtureGatewayId, fixtureHostKey, 'pair'),
+      throwsA(isA<DeepClubFailure>()),
+    );
+    expect(rig.service.state.signedIn, isTrue);
+    expect(rig.service.state.binding, binding);
+    expect(rig.store.values['session'], isNotNull);
+    expect(rig.engine.calls, isEmpty);
+  });
+
   test('assertions use current session, exact snake_case request and bounded UTC expiry', () async {
     final rig = ServiceRig(sessionToken: fixturePhoneSession);
     addTearDown(rig.close);

@@ -49,7 +49,8 @@ class DeepClubFailure implements Exception {
   final String code;
   final int? status;
   final Object? data;
-  bool get invalidSession => status == 401 || status == 403;
+  // A valid phone account can be denied access to a different account's Host.
+  bool get invalidSession => status == 401 || status == 403 && code != 'remote_identity_denied';
   @override
   String toString() => 'DeepClubFailure($code)';
 }
@@ -109,6 +110,7 @@ class DeepClubApi {
       try {
         payload = jsonObject(jsonDecode(response.body));
       } catch (_) {
+        if (response.statusCode == 429) throw const DeepClubFailure('rate_limited', status: 429);
         throw DeepClubFailure('invalid_response', status: response.statusCode);
       }
       if (response.statusCode < 200 || response.statusCode >= 300 || payload['success'] != true) {

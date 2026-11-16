@@ -47,35 +47,18 @@ class GatewayHostLink implements HostLink {
   }
 
   Future<DshClient> _open() async {
+    final existing = _client;
+    if (existing != null && existing.mux.state == DshConnectionState.connected) {
+      _publishMux(existing, existing.mux.state);
+      return existing;
+    }
     _publish(const HostLinkStatus(HostLinkPhase.connecting, step: HostLinkStep.connect));
     final client = _client ??= DshClient.withCarrier(carrier);
-    _mux ??= client.mux.states.listen((value) {
-      final phase = switch (value) {
-        DshConnectionState.connected => HostLinkPhase.connected,
-        DshConnectionState.unauthorized => HostLinkPhase.failed,
-        DshConnectionState.reconnecting => HostLinkPhase.reconnecting,
-        DshConnectionState.closed || DshConnectionState.idle => HostLinkPhase.idle,
-        _ => HostLinkPhase.connecting,
-      };
-      final failure = client.mux.lastError;
-      final refused = failure is DshCarrierRefusedException ? failure.code : null;
-      _publish(
-        HostLinkStatus(
-          phase,
-          error: phase == HostLinkPhase.failed
-              ? HostLinkError(
-                  HostLinkErrorKind.authFailed,
-                  refused == 'PROTOCOL_MISMATCH' ? appL10n.deepClubGatewayIncompatible : appL10n.deepClubGatewayRevoked,
-                  diagnosticCode: refused == 'PROTOCOL_MISMATCH'
-                      ? HostLinkDiagnosticCode.remoteProtocolMismatch
-                      : HostLinkDiagnosticCode.remoteDeviceRevoked,
-                )
-              : null,
-        ),
-      );
-    });
+    _mux ??= client.mux.states.listen((value) => _publishMux(client, value));
     try {
       await client.mux.ready(timeout: const Duration(seconds: 40));
+      // ready() may reuse an already-connected mux without another state event.
+      _publishMux(client, client.mux.state);
       return client;
     } on DshException {
       if (client.mux.state != DshConnectionState.unauthorized) {
@@ -83,6 +66,39 @@ class GatewayHostLink implements HostLink {
       }
       throw HostLinkError(HostLinkErrorKind.authFailed, appL10n.deepClubGatewayRevoked);
     }
+  }
+
+  void _publishMux(DshClient client, DshConnectionState value) {
+    final phase = switch (value) {
+      DshConnectionState.connected => HostLinkPhase.connected,
+      DshConnectionState.unauthorized => HostLinkPhase.failed,
+      DshConnectionState.reconnecting => HostLinkPhase.reconnecting,
+      DshConnectionState.closed || DshConnectionState.idle => HostLinkPhase.idle,
+      _ => HostLinkPhase.connecting,
+    };
+    final failure = client.mux.lastError;
+    final refused = failure is DshCarrierRefusedException ? failure.code : null;
+    _publish(
+      HostLinkStatus(
+        phase,
+        path: phase == HostLinkPhase.connected
+            ? switch (carrier.route) {
+                GatewayRoute.lan => RelayPath.lan,
+                GatewayRoute.relay => RelayPath.relay,
+                null => null,
+              }
+            : null,
+        error: phase == HostLinkPhase.failed
+            ? HostLinkError(
+                HostLinkErrorKind.authFailed,
+                refused == 'PROTOCOL_MISMATCH' ? appL10n.deepClubGatewayIncompatible : appL10n.deepClubGatewayRevoked,
+                diagnosticCode: refused == 'PROTOCOL_MISMATCH'
+                    ? HostLinkDiagnosticCode.remoteProtocolMismatch
+                    : HostLinkDiagnosticCode.remoteDeviceRevoked,
+              )
+            : null,
+      ),
+    );
   }
 
   @override
