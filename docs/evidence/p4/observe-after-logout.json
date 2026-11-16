@@ -1,0 +1,18 @@
+{
+  "label": "android-after-logout",
+  "observed_at": "2026-11-16T05:54:04.117Z",
+  "hostPid": 30501,
+  "online": "online",
+  "connectedClients": 0,
+  "model": {
+    "requests": 15,
+    "completed": 13,
+    "cancelled": 2,
+    "active": 0,
+    "toolCalls": 2,
+    "catalogReads": 81
+  },
+  "goCompletedRelayRequests": 3,
+  "goCompletedRelayStreams": 3,
+  "note": "Go access entries are written when a WebSocket finishes; compare snapshots around App connection/close. Model counters reset on manager restart."
+}

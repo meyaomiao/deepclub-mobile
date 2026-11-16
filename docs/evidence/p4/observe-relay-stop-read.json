@@ -1,0 +1,18 @@
+{
+  "label": "android-relay-stop-read",
+  "observed_at": "2026-11-16T05:41:35.515Z",
+  "hostPid": 30501,
+  "online": "online",
+  "connectedClients": 3,
+  "model": {
+    "requests": 13,
+    "completed": 11,
+    "cancelled": 2,
+    "active": 0,
+    "toolCalls": 2,
+    "catalogReads": 75
+  },
+  "goCompletedRelayRequests": 2,
+  "goCompletedRelayStreams": 2,
+  "note": "Go access entries are written when a WebSocket finishes; compare snapshots around App connection/close. Model counters reset on manager restart."
+}

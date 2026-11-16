@@ -16,7 +16,7 @@
 - 统一二维码、相册识别、粘贴与深链配对；使用受限原生通道复用电脑上的工作区、会话、文件、终端与审批。只连接电脑登录跳过本机运行环境和模型配置。
 - 只连接电脑的 Android 设备可通过浏览器明确授权启用本机 Agent：保持同一 installation ID；取消/失败保留远程账号和配对，成功兑换后更新账户绑定、清旧配对并准备本机。依赖下述新后端与桌面版本。
 
-尚未提供跨设备会话同步、云端音频/重排工具或手机操控。扫码功能的本地源码、真实桌面 Host 协议测试与 debug APK 已验证；相机/相册/系统回调、真实异网和实体设备验收尚未完成。视频任务的客户端句柄不跨引擎重启恢复；取消本地轮询不代表供应商取消或退款。
+尚未提供跨设备会话同步、云端音频/重排工具或手机操控。P4 专属 Android 模拟器已执行真实 Go 网页授权与系统回调、相册二维码、实际桌面 Host 工作区/会话、直连与 Go relay、流式/停止/文件工具和退出冷启；网络通过 ADB reverse，外部相机、真实异网和实体设备验收尚未完成。视频任务的客户端句柄不跨引擎重启恢复；取消本地轮询不代表供应商取消或退款。
 
 ## 后端要求
 
@@ -43,9 +43,9 @@ python3 scripts/prepare-runtime.py --checkout .work/dsh-go --apk /path/to/verifi
 
 [验证记录](docs/verification.md)区分本地自动检查、真实 DSH 协议测试、Android 模拟器和未验证环境。模拟器通过真实浏览器授权、本机 PRoot/DSH、真实 Go relay 与受控模型响应，执行了实际文件工具和取消链路；没有真实付费模型调用。
 
-完整适配方案见 [docs/adaptation-plan.md](docs/adaptation-plan.md)，包括扫码连接电脑和读取电脑已有项目。界面改动按 [UI 检查规范](docs/ui-review.md) 自查并附截图。P0 的品牌、加载和账户界面结果及截图矩阵见 [P0 验证记录](docs/p0-verification.md)。本次功能整合的源码快照、协议、72 张组件截图与实际验证边界见 [P3 验证记录](docs/p3-verification.md)。
+完整适配方案见 [docs/adaptation-plan.md](docs/adaptation-plan.md)，包括扫码连接电脑和读取电脑已有项目。界面改动按 [UI 检查规范](docs/ui-review.md) 自查并附截图。P0 的品牌、加载和账户界面结果及截图矩阵见 [P0 验证记录](docs/p0-verification.md)。功能整合的源码快照、协议与 72 张组件截图见 [P3 验证记录](docs/p3-verification.md)；独立真实服务、实际 Android UI 证据、修复与未验范围见 [P4 验证记录](docs/p4-verification.md)。
 
-方案索引：[deepclub#444](https://github.com/meyaomiao/deepclub/issues/444)、[deepclub#480](https://github.com/meyaomiao/deepclub/issues/480)。本仓库执行单：[mobile#1](https://github.com/meyaomiao/deepclub-mobile/issues/1)、[mobile#3](https://github.com/meyaomiao/deepclub-mobile/issues/3)。
+方案索引：[deepclub#444](https://github.com/meyaomiao/deepclub/issues/444)、[deepclub#480](https://github.com/meyaomiao/deepclub/issues/480)。本仓库执行单：[mobile#1](https://github.com/meyaomiao/deepclub-mobile/issues/1)、[mobile#3](https://github.com/meyaomiao/deepclub-mobile/issues/3)、[P4 mobile#11](https://github.com/meyaomiao/deepclub-mobile/issues/11)。
 
 ---
 
@@ -55,4 +55,4 @@ DeepClub for Android is an adaptation of DSH Go. The display name is DeepClub in
 
 The application is not an official DeepSeek product. Code is available under AGPL-3.0 with upstream notices preserved. This repository contains the reproducible adaptation layer and pinned inputs; see [BUILD.md](BUILD.md), [NOTICE.md](NOTICE.md) and the [verification record](docs/verification.md).
 
-The required backend login flow was integrated and deployed through [deepclub#477](https://github.com/meyaomiao/deepclub/issues/477). Android acceptance uses synthetic identities and a local mock provider, not paid upstream calls. The P3 integration adds QR/photo/paste/deep-link pairing, native desktop sessions/workspaces/files/approvals, and remote-only login. Enabling a local Android Agent requires explicit browser consent through backend #508 while retaining the same installation identity; cancellation or failed exchange preserves the remote session. Remote features require backend #501 and desktop #43. Actual Dart carrier → real desktop Host checks, a local debug APK and the synthetic component matrix are recorded in [P3 verification](docs/p3-verification.md). Physical-device camera, album, callbacks and real cross-network acceptance remain unverified; the backend Drafts are not production deployment evidence.
+The required backend login flow was integrated and deployed through [deepclub#477](https://github.com/meyaomiao/deepclub/issues/477). Android acceptance uses synthetic identities and a local mock provider, not paid upstream calls. The P3 integration adds QR/photo/paste/deep-link pairing, native desktop sessions/workspaces/files/approvals, and remote-only login. Enabling a local Android Agent requires explicit browser consent through backend #508 while retaining the same installation identity; cancellation or failed exchange preserves the remote session. Remote features require backend #501 and desktop #43. Actual Dart carrier → real desktop Host checks, a local debug APK and the synthetic component matrix are recorded in [P3 verification](docs/p3-verification.md). [P4 verification](docs/p4-verification.md) records actual Android emulator UI with real Go browser PKCE/callback, photo QR pairing, desktop projects/chat, direct and Go relay transport, streaming/stop, file tools and logout/restart. The task uses ADB reverse; physical-device camera/ROM and real cross-network acceptance remain unverified. Backend Drafts are not production deployment evidence.
