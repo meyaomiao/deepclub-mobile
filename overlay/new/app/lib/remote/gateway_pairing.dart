@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../deepclub/client_api.dart' show deepClubServiceOrigin;
+
 /// Public QR metadata. The one-use code is kept only for the pairing attempt.
 /// Neither a URL nor this object is suitable for diagnostics.
 class GatewayPairing {
@@ -95,7 +97,26 @@ class GatewayPairing {
 }
 
 bool validGatewayHostKey(String key) => RegExp(r'^sha256:[0-9a-f]{64}$').hasMatch(key);
-bool isGatewayRelay(Uri uri) => uri.scheme == 'wss' && uri.host == 'deepclub.net' && (!uri.hasPort || uri.port == 443);
+
+/// Relay credentials follow the same fixed trust boundary as account HTTP.
+/// Only the existing debug-only loopback define can select a local Go relay.
+/// LAN sockets never match this gateway-specific relay path.
+bool isGatewayRelay(Uri uri) {
+  final origin = Uri.parse(deepClubServiceOrigin);
+  return uri.scheme == (origin.scheme == 'https' ? 'wss' : 'ws') &&
+      uri.host == origin.host &&
+      (uri.hasPort
+              ? uri.port
+              : uri.scheme == 'wss'
+              ? 443
+              : 80) ==
+          origin.port &&
+      uri.userInfo.isEmpty &&
+      !uri.hasQuery &&
+      !uri.hasFragment &&
+      RegExp(r'^/ws/mobile/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$')
+          .hasMatch(uri.path);
+}
 
 Uri gatewayEndpoint(String raw, String gatewayId) {
   final uri = Uri.parse(raw);
