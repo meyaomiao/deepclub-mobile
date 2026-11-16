@@ -33,6 +33,7 @@
 | 网络 UI 24 组合 + 既有 SSH 分支 | 25 passed；组件截图不代替实际 APK |
 | 修改的 relay/account/网络 UI 源码与相关测试静态分析 | passed；l10n_merge --check 7418 keys |
 | `check_runtime_bundle.py arm64` | passed，schema 1、5 files |
+| 新干净准备树重建 overlay | passed；共享只读固定上游对象、重新 prepare，692 个源码摘要全部匹配；不复制运行时/构建 cache |
 | PKCE 修复包与网络/错误修复包 APK artifact 校验 | passed；均签名 v2、受限资产 0、排除的原生 class definitions 0 |
 
 不重新运行 P3 全量截图与全套检查。既有 72 张组件矩阵属于 P3 的合成组件证据；本次主体执行截图来自真实 Android UI。网络详情修复另附 24 张明确标记的组件矩阵：LAN/relay × 中英 × 浅深 × 360dp/360dp@1.3/840dp，25 个 UI 检查（含既有 SSH 分支）通过。组件使用真实 Noto Light 300 / Regular 400 / Bold 700，人工抽看英文 360dp@1.3 与中文深色；不把组件结果当作修复后 APK 的实际设备结果。未宣称新增真机覆盖。
@@ -41,7 +42,7 @@
 
 ## 执行环境问题
 
-初始数据卷不足 1 GiB，AVD 拒绝启动；首次 APK 构建在 `mergeArm64DebugNativeLibs` 因 ENOSPC 失败。Root 清理已完成任务的可重建缓存，串行构建/VM；本任务 Gradle 限制 JVM 2 GiB、单 worker、Kotlin in-process。初始软件 GPU 下 SystemUI/系统浏览器出现 ANR；本轮专属 AVD 改为 host GPU，内存压力解除后实际网页登录正常。失败与恢复均不归为 App 成功。
+初始数据卷不足 1 GiB，AVD 拒绝启动；首次 APK 构建在 `mergeArm64DebugNativeLibs` 因 ENOSPC 失败。Root 清理已完成任务的可重建缓存，串行构建/VM；本任务 Gradle 限制 JVM 2 GiB、单 worker、Kotlin in-process。初始软件 GPU 下 SystemUI/系统浏览器出现 ANR；本轮专属 AVD 改为 host GPU，内存压力解除后实际网页登录正常。失败与恢复均不归为 App 成功。最后在唯一 Android UI 窗口以 `install -r` 安装网络/错误修复包后，B 扫码页已恢复，但出现明确的 `Process system isn't responding` 系统 ANR；未刷新二维码、未发新配对请求，即正常关闭任务 App/AVD 保留数据。系统 ANR 阻塞 B 403 与新网络状态页复验，未把它归因 App 或用组件通过替代实际结果。
 
 ## 实际执行进度
 
@@ -58,14 +59,15 @@
 | 保存配对的 relay 冷启动 | passed；移除仅本 AVD 的 reverse 18342、force-stop + launch，保留 18340，未重登/未扫描，恢复原任务会话/模型/历史并实际发送新消息 |
 | relay 真实停止与工具 | passed；长流再次在 2.3 秒 Stop；精确 p4-tool-read 实际触发 Read hello.txt，UI 展开 Lines 1–1 与 marker，2 steps / 112 tokens。Host 持久 tool/result isError=false 且 marker=true |
 | 当前手机退出及冷启 | passed；只点击账户页 Sign out 并确认，未操作其他设备撤销；重新冷启仍为 remote 登录页，无旧项目/配对自动恢复。Go relay 完成连接计数 2→3 |
-| 账户 B 错账号隔离 | 待单次冷却复验；B 已通过真实网页 PKCE 登录，但本轮扫码先被共享 IP critical 限流的空体 HTTP 429 拦截，未到 Host verify，不能当成跨账号 403 已验证 |
+| 账户 B 错账号隔离 | 未完成；B 已通过真实网页 PKCE 登录，首轮扫码先被共享 IP critical 限流的空体 HTTP 429 拦截，未到 Host verify。自然冷却后最终修复包 install-r 恢复 B 扫码页，但 Android Process system ANR，按资源门槛在 fresh/配对前停止；不能当成跨账号 403 已验证 |
+| 网络详情修复后的实际 UI | 未完成；新包已构建/校验/安装并保留 B session，但同一次系统 ANR 阻塞最终 LAN/relay 状态页复验。25 项核心回归与 24 张组件矩阵 + SSH 回归均已通过，不能替代此项 |
 | 审批 | 未验；当前会话权限 UI 仅有 Read only / Workspace write / Full access，没有 Ask；未改全局/会话权限，未用协议探针替代审批 UI |
 
 凭据、授权码、verifier、Cookie、手机 session、设备 token 和有效二维码不进入本记录或截图。测试账号密码与短效二维码只在任务私有文件中。
 
 ## 证据索引
 
-真实 App 主链使用 PKCE 修复 APK `4d37f7550c70d6961363c2d64a5d46b7b3d9c715`，versionCode 11161219，SHA-256 `6ef057ba78e0a1fcb827b9d6f76c23f3b5a9ac8e44cf69a34e3a9d42d093b7ea`。后续网络/错误提示修复包的实际复验单列，不能混用旧包截图冒充新 UI。
+真实 App 主链使用 PKCE 修复 APK `4d37f7550c70d6961363c2d64a5d46b7b3d9c715`，versionCode 11161219，SHA-256 `6ef057ba78e0a1fcb827b9d6f76c23f3b5a9ac8e44cf69a34e3a9d42d093b7ea`。后续网络/错误提示修复包：源码 `fc8c150d824707f4e6db2e444a7490c4c3ceb747`，versionCode 11161501，SHA-256 `fe68d357e882ac2517c1b353043d1f11e81b77f2731288ebc91d3a208e8e20ab`。该包构建、artifact 校验和保数据更新安装通过，但其最终状态页与 B 403 复验被系统 ANR 阻塞，不能混用旧包截图冒充新 UI。
 
 | 类型 | 证据 |
 |---|---|
@@ -77,10 +79,15 @@
 | 实际 relay 工具结果 | [展开 Read 工具](evidence/p4/09-relay-tool-result.png)、[Host 持久结果](evidence/p4/tool-result.json) |
 | 实际退出后冷启 | [保持未登录](evidence/p4/10-cold-start-signed-out.png) |
 | 独立服务观测 | [LAN Stop](evidence/p4/observe-lan-stop.json)、[relay Stop/read](evidence/p4/observe-relay-stop-read.json)、[退出后 relay 完成计数](evidence/p4/observe-after-logout.json) |
-| 产物 / 未安装本机引擎 | [APK 校验](evidence/p4/apk-verification.json)、[rootfs 缺席实证](evidence/p4/runtime-absence.json) |
+| 产物 / 未安装本机引擎 | [最终 APK 校验](evidence/p4/apk-verification.json)、[实际主链 APK 校验](evidence/p4/apk-pkce-verification.json)、[rootfs 缺席实证](evidence/p4/runtime-absence.json) |
+| 新包最终 UI 阻塞 | [Android 系统 ANR](evidence/p4/11-system-anr-after-update.png)，未到新 B 403/网络状态页复验 |
 | 合成组件矩阵 | [网络详情 24 组合](evidence/p4/network-components/)（明确不是 Android App 实机截图） |
 
 Host / model 全局计数还受 iOS 后续业务影响，不把共享累计值全部归于 Android；只按相应窗口差量与持久会话结果相互验证。
+
+## 收尾与保留
+
+本任务专属 AVD 已正常关闭，最终 `adb devices -l` 无设备。所有管理的编译、分析、下载、截图与模拟器 jobs 已结束或显式取消；按本任务 cwd 的 `ps` / `lsof` 检查未发现残留 Java/Dart/Flutter tester、Xcode、curl 或 emulator 进程，没有停止用户全局进程。保留任务 worktree、prepared/reconstructed 源、公开构建缓存、私有 AVD 数据与最终 debug APK，供资源恢复后继续两项实际复验；私有数据与缓存不进 Git。Issue/PR 保持 Open/Draft，没有 merge、Ready、release 或生产部署。
 
 ## 尚未覆盖
 
