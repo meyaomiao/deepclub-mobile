@@ -2,6 +2,16 @@
 
 执行单：[mobile#11](https://github.com/meyaomiao/deepclub-mobile/issues/11)，承接 [deepclub#444](https://github.com/meyaomiao/deepclub/issues/444) / [#480](https://github.com/meyaomiao/deepclub/issues/480)。本记录区分实际 Android UI、自动检查和未验范围；不代表生产发布或实体手机验收。
 
+## 11 月 16 日续测
+
+- 校验模拟器实际安装包的 SHA-256 为 `fe68d357e882ac2517c1b353043d1f11e81b77f2731288ebc91d3a208e8e20ab`（`fc8c150`）。账号 B 用系统相册选择账号 A 的新二维码，真实 Go 断言返回 403。App 显示同账号提示，B 随后在账户页刷新成功。
+- B 先在网页取消本机 Agent 授权，再发起新授权并明确同意。API 换码通过。SQLite 只读核对取消授权未批准或消费，成功授权绑定新 Agent 会话，新旧会话的安装 ID 一致，旧会话已失效，新会话已绑定模型 Key。App 实际完成运行时准备、启动引擎、进入本机主页并在冷启后恢复。本轮本机模型列表为空。隔离目录仅销售 OpenAI chat-completions 测试模型，其能力和端点未进入 Android Agent 模型配置。
+- B 将同账号新 Host 配对后，保留会话分别经 ADB 转发的直连和真实 Go 中转收到了受控模型的回复。两次实际网络详情均仍显示 Connecting、路径 Not confirmed。直连由活动 TCP 连接佐证，中转由移除该 Host 直连转发、恢复同一会话和 Go 完成连接日志佐证。
+- 两条 Flutter 回归分别在直连、中转初态读取时发出连接变更，修复前都停留 Connecting。状态提供器改为先订阅广播、再读取当前状态，避免错过这次转变。两项回归、现有网关链路和网络组件合计 30 项通过，变更面静态分析通过，干净重建的 693 个源码摘要一致。
+- 新 arm64 debug APK（versionCode `11161601`，SHA-256 `1996530ab02e866d18ca469afa5591fa7899aec86811c22aaacaca4d4a0d15f8`）通过签名及产物检查，保留安装数据更新。冷启恢复同一 Host 和会话，网络页显示 Connected / LAN；仅移除专属 AVD 到该 Host 的直连转发后，再次冷启显示 Connected / Relay，Go 记录本次中转连接正常完成。[直连截图](evidence/p4/12-verified-direct-network.png) · [中转截图](evidence/p4/13-verified-relay-network.png)
+
+以下各节保留首轮执行的固定输入和历史结果。
+
 ## 输入与隔离
 
 - 从最新 mobile main `f947f0462151bcb0880312f14ca9621350722720` 建分支 `codex/issue-11-p4-integration`，fast-forward 叠加冻结 mobile P3 `4d59b003c7981be853a00e034d1cbbb415f731ac`。独立 P4 worktree，原 P3 源树只读。
@@ -40,11 +50,11 @@
 
 运行时脚本、lock 和插件输入与冻结 P3 相同。校验 `overlayRevision=9860307c7e5b4cd16aaf679af9abec2948802fdd6cf51c7adc1a671c141fbfe7` 后，通过 APFS clonefile 复用其已验证公开运行时输出，并运行 bundle 校验，避免重复压缩未改变的 rootfs。没有复制凭据或用户配置。
 
-## 执行环境问题
+## 首轮执行环境问题
 
 初始数据卷不足 1 GiB，AVD 拒绝启动；首次 APK 构建在 `mergeArm64DebugNativeLibs` 因 ENOSPC 失败。Root 清理已完成任务的可重建缓存，串行构建/VM；本任务 Gradle 限制 JVM 2 GiB、单 worker、Kotlin in-process。初始软件 GPU 下 SystemUI/系统浏览器出现 ANR；本轮专属 AVD 改为 host GPU，内存压力解除后实际网页登录正常。失败与恢复均不归为 App 成功。最后在唯一 Android UI 窗口以 `install -r` 安装网络/错误修复包后，B 扫码页已恢复，但出现明确的 `Process system isn't responding` 系统 ANR；未刷新二维码、未发新配对请求，即正常关闭任务 App/AVD 保留数据。系统 ANR 阻塞 B 403 与新网络状态页复验，未把它归因 App 或用组件通过替代实际结果。
 
-## 实际执行进度
+## 首轮实际执行进度
 
 | 场景 | 实际结果 |
 |---|---|
@@ -85,12 +95,12 @@
 
 Host / model 全局计数还受 iOS 后续业务影响，不把共享累计值全部归于 Android；只按相应窗口差量与持久会话结果相互验证。
 
-## 收尾与保留
+## 首轮收尾与保留
 
 本任务专属 AVD 已正常关闭，最终 `adb devices -l` 无设备。所有管理的编译、分析、下载、截图与模拟器 jobs 已结束或显式取消；按本任务 cwd 的 `ps` / `lsof` 检查未发现残留 Java/Dart/Flutter tester、Xcode、curl 或 emulator 进程，没有停止用户全局进程。保留任务 worktree、prepared/reconstructed 源、公开构建缓存、私有 AVD 数据与最终 debug APK，供资源恢复后继续两项实际复验；私有数据与缓存不进 Git。Issue/PR 保持 Open/Draft，没有 merge、Ready、release 或生产部署。
 
 ## 尚未覆盖
 
-实体 Android 手机与 ROM、真实相机扫描外部显示屏、物理 LAN、真实跨公网、生产服务器、付费模型、release/profile 安装验收、本机 PRoot Agent 与本机授权升级的实际 UI。本轮模拟器验证不能替代这些验收。
+实体 Android 手机与 ROM、真实相机扫描外部显示屏、物理 LAN、真实跨公网、生产服务器、付费模型、release/profile 安装验收、本机 Agent 模型推理、多端审批和同账号两台电脑间切换仍待验证。
 
 AI-assisted implementation and verification.

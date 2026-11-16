@@ -9965,7 +9965,7 @@ index 64dce73..86d7ce5 100644
  
  final communityProvider = AsyncNotifierProvider<CommunityController, CommunityState>(CommunityController.new);
 diff --git a/app/lib/state/connection_state.dart b/app/lib/state/connection_state.dart
-index 332f68a..486a136 100644
+index 332f68a..95b7a7b 100644
 --- a/app/lib/state/connection_state.dart
 +++ b/app/lib/state/connection_state.dart
 @@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9992,7 +9992,32 @@ index 332f68a..486a136 100644
      case HostKind.relay:
        final backend = ref.watch(relayBackendProvider);
        final link = RelayHostLink(
-@@ -240,6 +250,7 @@ final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus,
+@@ -227,19 +237,25 @@ final hostLinkProvider = Provider.autoDispose.family<HostLink?, HostRef>((ref, h
+ });
+ 
+ /// Status of a host's link for the UI (idle for 本机).
+-final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus, HostRef>((ref, host) async* {
++final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus, HostRef>((ref, host) {
+   final link = ref.watch(hostLinkProvider(host));
+-  if (link == null) {
+-    yield HostLinkStatus.idle;
+-    return;
+-  }
+-  yield link.status;
+-  yield* link.statuses;
++  if (link == null) return Stream.value(HostLinkStatus.idle);
++  return Stream.multi((controller) {
++    // Subscribe before reading the snapshot so a connection update cannot be missed.
++    final subscription = link.statuses.listen(
++      controller.addSync,
++      onError: controller.addErrorSync,
++      onDone: controller.closeSync,
++    );
++    controller.onCancel = subscription.cancel;
++    controller.addSync(link.status);
++  });
+ });
+ 
  /// Display name of a host as currently known.
  final hostNameProvider = Provider.autoDispose.family<String?, HostRef>((ref, host) {
    return switch (host.kind) {
@@ -10000,7 +10025,7 @@ index 332f68a..486a136 100644
      HostKind.local => appL10n.commonThisPhone,
      HostKind.ssh => ref.watch(hostsProvider.select((s) => s.sshById(host.id)?.name)),
      HostKind.relay => ref.watch(relayAccountProvider.select((a) => a.value?.hostById(host.id)?.name)) ?? host.name,
-@@ -541,6 +552,7 @@ AsyncValue<HostConnection?> _connectionForHost(Ref ref, HostRef host) {
+@@ -541,6 +557,7 @@ AsyncValue<HostConnection?> _connectionForHost(Ref ref, HostRef host) {
        final loaded = ref.watch(hostsProvider.select((s) => s.loaded));
        if (!loaded) return const AsyncLoading();
        return ref.watch(remoteConnectionProvider(host));

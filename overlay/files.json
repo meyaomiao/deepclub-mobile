@@ -376,6 +376,7 @@
   "app/test/deepclub/goldens/macos/zeroBalance_light_zh_phone_large.png": "d091d64181134b6efa1b92ca7935470f04c2bab24c8f15238ad6a8bbc6614dc6",
   "app/test/deepclub/goldens/macos/zeroBalance_light_zh_wide.png": "cfc692db6a4302bdb4f8e0e3695f6a02dd9a6d10ed6aad75c6e0398fed69224d",
   "app/test/deepclub/local_engine_affinity_test.dart": "bb745c2a1fe9ff64f1fa333b075b4f348acc3993268a82351491bedaefaf239e",
+  "app/test/deepclub/p4_host_status_transition_test.dart": "9a77f37fc155c0138f907297d617be096eaf38ad823cef57972d8810686d215e",
   "app/test/deepclub/pkce_test.dart": "408b6611b202cfcd265d07a02af56a65da640692a5e3ef7e770d1aa6930e68e5",
   "app/test/deepclub/real_gateway_probe.dart": "de19db287b476590e0dc444f230f5264d0212d3ee8ab1104b7381dd73065fd3a",
   "app/test/deepclub/real_host_probe.dart": "19652eb78e118b0a25246817e925ae867557035c76251811bfd4ba5add40c4b4",
