@@ -125,6 +125,6 @@ Host / model 全局计数还受 iOS 后续业务影响，不把共享累计值�
 
 ## 尚未覆盖
 
-实体 Android 手机与 ROM、真实相机扫描外部显示屏、物理 LAN、真实跨公网、生产服务器、付费模型、release/profile 安装验收、本机 Agent 模型推理、多端审批和同账号两台电脑间切换仍待验证。
+实体 Android 手机与 ROM、真实相机扫描外部显示屏、物理 LAN、真实跨公网、生产服务器、付费模型、release/profile 安装验收、本机 Agent 模型推理和多端审批单赢家仍待验证。11 月 18 日已在模拟器上验证同账号两台 rc.3 电脑间的切换和单 App 审批；App 把 rc.3 视作未知版本，因此工作区创建、终端和 Agent 预设选择受限，需要修复后复验。
 
 AI-assisted implementation and verification.
