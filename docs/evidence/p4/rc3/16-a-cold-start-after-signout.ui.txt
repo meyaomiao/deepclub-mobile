@@ -1,0 +1,7 @@
+[318,426][402,510]   | DeepClub
+[56,587][664,634]   | Sign in to DeepClub
+[56,655][664,732]   | Sign in with the same DeepClub account as your computer. The local engine stays uninstalled.
+[56,774][664,862] C  | Sign in with your browser
+[56,862][664,946] C  | Run an Agent on this phone
+[56,946][664,1030] C  | Sign in with username and password
+[56,1058][664,1142] C  | Manage account and devices on the web
