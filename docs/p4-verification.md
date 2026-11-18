@@ -10,6 +10,22 @@
 - 两条 Flutter 回归分别在直连、中转初态读取时发出连接变更，修复前都停留 Connecting。状态提供器改为先订阅广播、再读取当前状态，避免错过这次转变。两项回归、现有网关链路和网络组件合计 30 项通过，变更面静态分析通过，干净重建的 693 个源码摘要一致。
 - 新 arm64 debug APK（versionCode `11161601`，SHA-256 `1996530ab02e866d18ca469afa5591fa7899aec86811c22aaacaca4d4a0d15f8`）通过签名及产物检查，保留安装数据更新。冷启恢复同一 Host 和会话，网络页显示 Connected / LAN；仅移除专属 AVD 到该 Host 的直连转发后，再次冷启显示 Connected / Relay，Go 记录本次中转连接正常完成。[直连截图](evidence/p4/12-verified-direct-network.png) · [中转截图](evidence/p4/13-verified-relay-network.png)
 
+## 11 月 18 日 rc.3 Host 续测
+
+- 固定输入：桌面 Host 由 `node scripts/p4/host.mjs` 启动，`runtime.json` 记录 source `dsh-v0.2.2-rc.3` / `38a6a5c965aa99ab525161efb7cc5cf1fe62fced`、gateway `721194ffbcbc1d93a80cfe91e4e53e1f3dc74e61`、adaptation `bd446e63275c284da5c57223324ef19f1c0a6b26`；同一真实 Go 二进制与隔离 SQLite。模拟器内安装包仍为 versionCode `11161601`，设备内 `sha256sum` 与上节 `1996530a…0d15f8` 一致（源码 `228f4f1` 线）。只启动专属 AVD `deepclub_p4_android36`（port 5580），未操作其他模拟器。
+- 截图均由设备截屏缩至 960px，UI 判定以同名 `.ui.txt`（uiautomator 文本，输入框只记长度）为准。
+
+| 场景 | 实际结果 |
+|---|---|
+| B 扫 A 的新二维码（前一代理执行，本次核对） | passed。B 已登录时经相册选择 A 的新 QR，Go 日志 `POST /api/client/remote/assertion` 为 403（03:58:11 PST，同时段无 429），App 显示同账号提示和 Scan again；随后账户页仍为 p4b、设备列表正常，B session 保留；B Sign out 后 Go `POST /api/client/logout` 200，页面进入 Clearing sign-in data。[403 提示](evidence/p4/rc3/00-b-403-same-account-hint.png) · [B session 保留](evidence/p4/rc3/00-b-session-retained.png) · [B 退出](evidence/p4/rc3/00-b-signout-clearing.png) |
+| B 账户页 “Action needed / The operation failed…” | 发现（未修复）。403 与截图之间 Go 没有任何其他请求，因此不是新的网络失败。源码 `account_service.dart` 的 `_run` 把最后一次操作的 `DeepClubFailure.code`（此处为 `remote_identity_denied`）留在账户状态，`account_page.dart` 的 `deepClubErrorText` 未映射该码而落入通用文案。扫码页提示正确，账户页却显示陈旧的通用错误，直到下次账户操作清空；属 UX 缺陷，未在本轮修改。 |
+| A 登录 → rc.3 Host 新二维码配对（LAN） | passed。B 退出后在 App 内用户名/密码登录 A（Go `POST /api/client/login` 200）；即时生成 120 秒 QR，经系统 PhotoPicker 选择，Go `remote/verify`、`assertion`、`check` 均 200，App 显示 P4 acceptance workspace（10 chats）。[配对后工作区](evidence/p4/rc3/01-a-paired-workspace.png) |
+| LAN 短回复 | passed。新会话选择 P4 Deterministic Local Fixture，回复为 fixture 经真实 Go 模型代理的正文（0.8 秒、56 tokens）；fixture 计数 requests 2 / completed 2。[短回复](evidence/p4/rc3/02-a-lan-short-reply.png) |
+| LAN `p4-long` Stop | passed。生成中输入框显示 Generating、按钮为 Stop generating；点击 Stop（因 uiautomator 取证耗时，实际约 15 秒，流仍在生成，30 个 chunk）后回复标 Stopped，轨迹显示 Reply (interrupted)。fixture `cancelled` 0→1，该请求 `completed=false`、`cancelled=true`。[Stopped](evidence/p4/rc3/03-a-lan-long-stopped.png) · [计数](evidence/p4/rc3/observe-lan-stop.json) |
+| 打开 hello.txt | passed。会话详情 Files 列出 hello.txt（65 B），打开后正文与 Host 工作区文件逐字一致。[文件](evidence/p4/rc3/04-a-lan-hello-file.png) |
+
+源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端；本轮未测终端，不把它当作通过或失败。
+
 以下各节保留首轮执行的固定输入和历史结果。
 
 ## 输入与隔离

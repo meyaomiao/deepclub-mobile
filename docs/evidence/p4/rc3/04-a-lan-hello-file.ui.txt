@@ -1,0 +1,9 @@
+[21,96][98,173] C  | Back
+[531,96][608,173] C  | Share
+[622,96][699,173] C  | More actions
+[42,194][208,253]   | hello.txt
+[42,260][259,292]   | Workspace · 65 B
+[49,358][577,386]   | text
+[577,348][685,397] C  | Copy
+[49,425][63,460]   | 1
+[84,425][699,460]   | DeepClub P4 real Go + compiled DSH gateway acceptance workspace.
