@@ -32,6 +32,8 @@
 
 环境事件：06:54 PST 前后宿主机 load 超过 280，swap 用到约 15.7/16 GiB，来源是其他会话的 Swift 编译和 iOS 模拟器。AVD 内 system_server 随即重启（`DeadSystemException`），uiautomator 连接超时；07:03 和 07:07 App 又出现 Input dispatching timed out ANR，一次误触打开了 WebView Browser Tester。负载降到 30 以下后，App 冷启直接恢复 A 与 Host2 会话，无需重新登录或扫码，然后才继续执行退出用例。上述系统重启和 ANR 都归为环境问题，不算产品结果，也不算通过。
 
+收尾：设备上的二维码图片与 UI dump 已删除，`adb reverse` 已全部移除，AVD 经 `adb emu kill` 正常关闭（`adb devices` 为空）。本轮启动的 Go API、主 Host 和 Host2 jobs 已停止，18340–18343 已确认无监听。私有 AVD 数据、账户和 SQLite 均保留。
+
 源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端和工作区写操作；实际影响见上表 “添加工作区” 行，终端本轮未测。
 
 以下各节保留首轮执行的固定输入和历史结果。
