@@ -36,6 +36,35 @@
 
 源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端和工作区写操作；实际影响见上表 “添加工作区” 行，终端本轮未测。
 
+### rc.3 兼容修复（`735342d`）
+
+上表两项缺陷已在源码中修复，尚未在模拟器上复验：
+
+- **版本识别。** 已验证的 Host 版本集中到 `_validatedHostVersions` 一张表，加入 `0.2.2-rc.3`；未知版本仍只放行聊天和只读集合。
+  - 放行依据是 rc.1 与 rc.3 源码对比：workspace-controller、directory-picker、permission-presets 无改动；workspace-files 只新增搜索接口；agent-preset-registry 只改了注释。
+  - terminal-controller 的 `WebTerminalInfo` 新增 `origin`、`control` 和可选 `sandboxMode`。App 端 `TerminalInfo.fromJson` 会忽略这些字段，解析兼容。
+- **终端 `typed` 标记。** 在 rc.3 上，用户的键盘、粘贴、IME、指针输入写入时带 `typed: true`，使 Agent 创建的终端把输入控制交给用户；终端协议回复不带。rc.1 和 alpha.2 的输入格式是封闭的，因此不发送该字段，由同一张版本表控制。
+- **账户页错误。** 电脑端断言失败（`remote_identity_denied`、限流）只在配对/连接页提示，不再写入或清空账户页错误；手机会话本身失效仍照常显示。
+
+自动检查（Flutter 3.47.7，`.work/prepared`）：
+
+| 检查 | 结果 |
+|---|---|
+| `flutter analyze` | 通过 |
+| `l10n_merge.py --check` | 通过 |
+| `dart format`（变更文件） | 通过 |
+| BUILD.md 测试集（`test/deepclub` 等） | 202 项通过 |
+| `test/terminal` 非 golden 用例 | 全部通过 |
+| `test/terminal` 14 个 golden | 失败，像素差异 99.47%。原因是本机字体/平台与 golden 生成环境不同；该目录不在 BUILD.md 列表中，未计入通过 |
+| dsh_client `terminal_api_test`、`dsh_go_capabilities_test` | 连续两次通过 |
+| dsh_client 全量 | 唯一失败是 `dsh_go_heartbeat_test` 的 “healthy control ping/pong”（`Bad state: StreamSink is closed`）。撤掉本次改动后同样失败，属原有问题 |
+
+另外记录：在 prepared 树运行 `dart pub get` 会改写 `packages/dsh_client/pubspec.lock`，该文件不进 overlay。
+
+新 debug APK：versionCode `11182357`，SHA-256 `1f57e03bef07f898be4dd6a3117ba939b2101546e028362bbd3c346ce9101cbb`。它在 AVD 上的复验未完成：执行代理在复验阶段中断，期间宿主机 load 超过 400。以下三项仍待在 rc.3 Host 上复验：添加工作区和终端、Agent 预设选择、B 扫 A 后账户页没有残留错误。
+
+测试账号 A、B 的密码曾因输入框错位在代理会话记录中以明文出现，已通过真实本地 Go 管理 API 轮换。轮换前后，已有 session、桌面 key 和 Host 绑定保持不变；私有 `accounts.json` 权限仍为 0600。
+
 以下各节保留首轮执行的固定输入和历史结果。
 
 ## 输入与隔离
