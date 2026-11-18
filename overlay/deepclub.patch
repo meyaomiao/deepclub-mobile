@@ -10230,6 +10230,57 @@ index dd13f6f..49d1d1b 100644
      case HostKind.relay:
        final account = ref.watch(relayAccountProvider);
        if (account.isLoading || account.hasError) return null;
+diff --git a/app/lib/state/terminal_state.dart b/app/lib/state/terminal_state.dart
+index b5e0ea0..d8a4bfe 100644
+--- a/app/lib/state/terminal_state.dart
++++ b/app/lib/state/terminal_state.dart
+@@ -313,6 +313,11 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+   /// Bumped on every build and dispose: async work of an older one stops.
+   int _epoch = 0;
+ 
++  /// True while the emulator parses Host output. Its synchronous replies
++  /// (device attributes, cursor position, size) are terminal protocol, not
++  /// the person's input, so they never take over an agent terminal.
++  bool _parsingHostOutput = false;
++
+   @override
+   TerminalWorkspaceState build() {
+     final backend = ref.watch(terminalBackendProvider(sessionId));
+@@ -534,8 +539,9 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+     }
+   }
+ 
+-  /// Input from the screen (keys, paste, emulator replies).
+-  void send(String id, String data) => _links[id]?.attachment?.write(data);
++  /// Input from the screen: keys, paste and pointer are [typed]; emulator
++  /// replies are not.
++  void send(String id, String data, {bool typed = false}) => _links[id]?.attachment?.write(data, typed: typed);
+ 
+   /// The visible screen measured [cols] × [rows]; the PTY follows when this
+   /// phone holds input.
+@@ -579,7 +585,7 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+     final terminal = Terminal(maxLines: (scrollback < 200 ? 200 : scrollback) + 200);
+     if (info != null) terminal.resize(info.cols, info.rows);
+     if (screen != null && screen.isNotEmpty) terminal.write(screen);
+-    terminal.onOutput = (data) => send(id, data);
++    terminal.onOutput = (data) => send(id, data, typed: !_parsingHostOutput);
+     terminal.onResize = (cols, rows, _, _) => resize(id, cols, rows);
+     return terminal;
+   }
+@@ -714,7 +720,12 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+           ),
+         );
+       case TerminalOutput(:final data):
+-        _tab(id)?.terminal.write(data);
++        _parsingHostOutput = true;
++        try {
++          _tab(id)?.terminal.write(data);
++        } finally {
++          _parsingHostOutput = false;
++        }
+       case TerminalStatus(:final info):
+         _update(
+           id,
 diff --git a/app/lib/ui/chat/chat_screen.dart b/app/lib/ui/chat/chat_screen.dart
 index e10a8a1..50e507f 100644
 --- a/app/lib/ui/chat/chat_screen.dart
@@ -17342,6 +17393,60 @@ index 3cafd1e..cabb7b6 100644
      chatClock = () => DateTime(2026, 10, 24, 15, 20);
    });
    setUp(() => SharedPreferences.setMockInitialValues({}));
+diff --git a/app/test/terminal/support.dart b/app/test/terminal/support.dart
+index 28e3a4c..ff861e2 100644
+--- a/app/test/terminal/support.dart
++++ b/app/test/terminal/support.dart
+@@ -119,6 +119,9 @@ class FakeTerminalBackend implements TerminalBackend {
+   Object? listError;
+   Object? createError;
+   bool autoSnapshot = true;
++
++  /// As [DshCarrier.acceptsTypedTerminalInput] of the connected Host.
++  bool marksTypedInput = false;
+   final created = <Map<String, Object?>>[];
+ 
+   FakeAttach attachOf(String id) => attaches.lastWhere((a) => a.id == id);
+@@ -190,6 +193,7 @@ class FakeTerminalBackend implements TerminalBackend {
+       send: fake.receive,
+       cancel: () async => fake.cancelled = true,
+       environment: environment,
++      marksTypedInput: marksTypedInput,
+     );
+     final info = host[id];
+     if (info == null) {
+diff --git a/app/test/terminal/terminal_state_test.dart b/app/test/terminal/terminal_state_test.dart
+index e37497a..20f5d43 100644
+--- a/app/test/terminal/terminal_state_test.dart
++++ b/app/test/terminal/terminal_state_test.dart
+@@ -97,6 +97,27 @@ void main() {
+     expect(tab.terminal.buffer.lines[0].toString().trim(), 'hello');
+   });
+ 
++  for (final marks in [true, false]) {
++    test('person input is typed only where the Host accepts it; emulator replies never (marks: $marks)', () async {
++      await open(FakeTerminalBackend()..marksTypedInput = marks);
++      final tab = read().selected!;
++      final attach = backend.attachOf(tab.id);
++      tab.terminal.textInput('ls\r');
++      await _settle();
++      // Device status report: the emulator answers with the cursor position.
++      attach.output('\x1b[6n');
++      await _settle();
++      tab.terminal.paste('pwd');
++      await _settle();
++      final writes = [
++        for (final c in attach.sent)
++          if (c['type'] == 'write') c,
++      ];
++      expect(writes.map((c) => c['data']), ['ls\r', matches(r'^\x1b\[\d+;\d+R$'), 'pwd']);
++      expect(writes.map((c) => c['typed']), marks ? [true, null, true] : [null, null, null]);
++    });
++  }
++
+   test('a second terminal is created at the measured screen size', () async {
+     final workspace = await open(FakeTerminalBackend());
+     workspace.resize(read().selected!.id, 47, 31);
 diff --git a/app/test/theme/palette_preview_test.dart b/app/test/theme/palette_preview_test.dart
 index 64bc905..84cd2c2 100644
 --- a/app/test/theme/palette_preview_test.dart
@@ -17777,6 +17882,126 @@ index 27076af..e02519c 100644
      print(f'wrote {DART.relative_to(ROOT)} and {out}')
  
  
+diff --git a/packages/dsh_client/lib/src/carrier.dart b/packages/dsh_client/lib/src/carrier.dart
+index cf401d0..55be27e 100644
+--- a/packages/dsh_client/lib/src/carrier.dart
++++ b/packages/dsh_client/lib/src/carrier.dart
+@@ -58,6 +58,13 @@ abstract class DshCarrier {
+   /// carrier has no such probe: [allowsEndpoint] alone decides.
+   Set<String>? get peerCapabilities => null;
+ 
++  /// Whether this link's Host accepts `typed: true` on `terminal/attach`
++  /// writes produced by the person (keyboard, paste, IME, pointer), which
++  /// passes an agent terminal's input control to the person. Older Hosts
++  /// validate a closed input shape, so this stays off unless the carrier
++  /// verified the Host release.
++  bool get acceptsTypedTerminalInput => false;
++
+   /// One unary call. Host failures come back as [RpcError]; carrier
+   /// failures throw ([DshHttpException], [DshTransportException],
+   /// [DshProtocolException], [DshCarrierRefusedException]).
+diff --git a/packages/dsh_client/lib/src/terminal_api.dart b/packages/dsh_client/lib/src/terminal_api.dart
+index 2f5cd7f..bdb5c41 100644
+--- a/packages/dsh_client/lib/src/terminal_api.dart
++++ b/packages/dsh_client/lib/src/terminal_api.dart
+@@ -324,6 +324,7 @@ class TerminalAttachment {
+     required void Function(Object? value) send,
+     required Future<void> Function() cancel,
+     TerminalEnvironment environment = TerminalEnvironment.defaults,
++    this.marksTypedInput = false,
+   }) : _send = send,
+        _cancel = cancel,
+        _environment = environment {
+@@ -335,6 +336,9 @@ class TerminalAttachment {
+   /// frame never approaches the carrier window.
+   static const chunkBytes = 8192;
+ 
++  /// The Host accepts `typed` on writes ([DshCarrier.acceptsTypedTerminalInput]).
++  final bool marksTypedInput;
++
+   final void Function(Object? value) _send;
+   final Future<void> Function() _cancel;
+   final TerminalEnvironment _environment;
+@@ -366,9 +370,11 @@ class TerminalAttachment {
+   bool get isClosed => _closed;
+ 
+   /// Sends [data] to the shell as typed (control characters included).
+-  /// False when this attachment cannot write; a buffer overflow fails
+-  /// [frames] with `inputFull`.
+-  bool write(String data) {
++  /// [typed] marks input the person produced (keys, paste, IME, pointer);
++  /// terminal-protocol replies leave it false. It reaches the Host only when
++  /// [marksTypedInput]. False when this attachment cannot write; a buffer
++  /// overflow fails [frames] with `inputFull`.
++  bool write(String data, {bool typed = false}) {
+     if (!writable || data.isEmpty) return false;
+     final limit = _environment.maxInputBytes < chunkBytes ? _environment.maxInputBytes : chunkBytes;
+     if (limit < 4) {
+@@ -381,7 +387,14 @@ class TerminalAttachment {
+       }
+     }
+     for (final chunk in _chunks(data, limit)) {
+-      if (!_enqueue({'type': 'write', 'sequence': _sequence + 1, 'data': chunk})) return false;
++      if (!_enqueue({
++        'type': 'write',
++        'sequence': _sequence + 1,
++        'data': chunk,
++        if (typed && marksTypedInput) 'typed': true,
++      })) {
++        return false;
++      }
+     }
+     _flush();
+     return true;
+@@ -670,6 +683,7 @@ extension TerminalApi on DshClient {
+       send: stream.send,
+       cancel: stream.cancel,
+       environment: environment,
++      marksTypedInput: carrier.acceptsTypedTerminalInput,
+     );
+   }
+ }
+diff --git a/packages/dsh_client/test/terminal_api_test.dart b/packages/dsh_client/test/terminal_api_test.dart
+index b86410b..843208d 100644
+--- a/packages/dsh_client/test/terminal_api_test.dart
++++ b/packages/dsh_client/test/terminal_api_test.dart
+@@ -56,12 +56,13 @@ Map<String, Object?> snapshotJson({
+ /// An attachment over in-memory pipes: [down] plays the Host, [sent] records
+ /// the uplink.
+ class Pipe {
+-  Pipe({TerminalEnvironment environment = TerminalEnvironment.defaults}) {
++  Pipe({TerminalEnvironment environment = TerminalEnvironment.defaults, bool marksTypedInput = false}) {
+     attachment = TerminalAttachment.over(
+       items: down.stream,
+       send: sent.add,
+       cancel: () async => cancelled++,
+       environment: environment,
++      marksTypedInput: marksTypedInput,
+     );
+     sub = attachment.frames.listen(frames.add, onError: errors.add, onDone: () => done = true);
+   }
+@@ -315,6 +316,21 @@ void main() {
+       expect(pipe.commands.single, {'type': 'write', 'sequence': 1, 'data': 'x'});
+     });
+ 
++    test('typed reaches only a Host that accepts it, and only on person input', () async {
++      final marking = Pipe(marksTypedInput: true);
++      await marking.host(snapshotJson());
++      expect(marking.attachment.write('ls\r', typed: true), isTrue);
++      expect(marking.attachment.write('\x1b[1;3R'), isTrue);
++      expect(marking.commands, [
++        {'type': 'write', 'sequence': 1, 'data': 'ls\r', 'typed': true},
++        {'type': 'write', 'sequence': 2, 'data': '\x1b[1;3R'},
++      ]);
++      final closed = Pipe();
++      await closed.host(snapshotJson());
++      expect(closed.attachment.write('ls\r', typed: true), isTrue);
++      expect(closed.commands.single, {'type': 'write', 'sequence': 1, 'data': 'ls\r'});
++    });
++
+     test('an exited process is never writable', () async {
+       final pipe = Pipe();
+       await pipe.host(snapshotJson(info: infoJson(state: 'exited', exitCode: 1)));
 diff --git a/site/share/viewer.js b/site/share/viewer.js
 index 6eb6527..9237af1 100644
 --- a/site/share/viewer.js

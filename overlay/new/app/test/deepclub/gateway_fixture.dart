@@ -27,6 +27,10 @@ class NativeGatewayFixture {
   String? helloKey, helloId;
   String helloVersion = '0.2.2-rc.1';
   bool holdHello = false;
+  // A real terminal snapshot for `terminal/attach`; its uplink is recorded in
+  // [frames] but not echoed, as a Host does not return input items.
+  Map<String, Object?>? attachSnapshot;
+  final _silentStreams = <Object?>{};
   // Same advertisedAllowlist shape as the native desktop hello, independent of
   // the phone's supported methods. Tests can narrow or extend it explicitly.
   List<String> advertisedUnary = [
@@ -162,6 +166,9 @@ class NativeGatewayFixture {
           },
         }),
       );
+    } else if (frame['type'] == 'open' && frame['endpoint'] == 'terminal/attach' && attachSnapshot != null) {
+      _silentStreams.add(id);
+      socket.add(jsonEncode({'type': 'item', 'streamId': id, 'value': attachSnapshot}));
     } else if (frame['type'] == 'open') {
       socket.add(
         jsonEncode({
@@ -170,7 +177,7 @@ class NativeGatewayFixture {
           'value': {'snapshot': frame['endpoint']},
         }),
       );
-    } else if (frame['type'] == 'item') {
+    } else if (frame['type'] == 'item' && !_silentStreams.contains(id)) {
       socket.add(jsonEncode({'type': 'item', 'streamId': id, 'value': frame['value']}));
     } else if (frame['type'] == 'end') {
       socket.add(jsonEncode({'type': 'end', 'streamId': id}));

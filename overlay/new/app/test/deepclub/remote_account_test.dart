@@ -164,6 +164,31 @@ void main() {
     expect(rig.service.state.binding, binding);
     expect(rig.store.values['session'], isNotNull);
     expect(rig.engine.calls, isEmpty);
+    // The pairing screen shows the same-account hint; the account page must
+    // not keep a stale generic failure for a computer the phone never joined.
+    expect(rig.service.state.error, isNull);
+    expect(rig.service.state.busy, isFalse);
+  });
+
+  test('computer connection failures stay with the caller and keep an earlier account error', () async {
+    final rig = ServiceRig(sessionToken: fixturePhoneSession);
+    addTearDown(rig.close);
+    await rig.service.setRemoteOnly(true);
+    await rig.login();
+    rig.handler = (request) async => switch (request.url.path) {
+      '/api/client/bootstrap' => http.Response(jsonEncode({'success': false, 'code': 'service_unavailable'}), 503),
+      '/api/client/remote/assertion' => http.Response('', 429),
+      _ => null,
+    };
+    await expectLater(rig.service.synchronize(), throwsA(isA<DeepClubFailure>()));
+    final accountError = rig.service.state.error;
+    expect(accountError, isNotNull);
+    await expectLater(
+      rig.service.remoteAssertion(fixtureGatewayId, fixtureHostKey, 'connect'),
+      throwsA(isA<DeepClubFailure>().having((e) => e.code, 'code', 'rate_limited')),
+    );
+    expect(rig.service.state.error, accountError);
+    expect(rig.service.state.signedIn, isTrue);
   });
 
   test('assertions use current session, exact snake_case request and bounded UTC expiry', () async {
@@ -192,6 +217,7 @@ void main() {
       throwsA(isA<DeepClubFailure>()),
     );
     expect(rig.service.state.signedIn, isFalse);
+    expect(rig.service.state.error, 'session_expired');
     expect(rig.store.values['session'], isNull);
   });
 }
