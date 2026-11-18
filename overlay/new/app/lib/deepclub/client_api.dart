@@ -82,7 +82,13 @@ class DeepClubApi {
   final http.Client _client;
   final Duration requestTimeout;
 
-  Future<ClientReply> call(String method, String path, {String? session, Map<String, Object?>? body}) async {
+  Future<ClientReply> call(
+    String method,
+    String path, {
+    String? session,
+    Map<String, Object?>? body,
+    Map<String, String>? headers,
+  }) async {
     if (!path.startsWith('/api/client/') || path.contains('?') || path.contains('#')) {
       throw const DeepClubFailure('invalid_endpoint');
     }
@@ -90,6 +96,7 @@ class DeepClubApi {
     final request = http.AbortableRequest(method, Uri.parse('$deepClubServiceOrigin$path'), abortTrigger: abort.future)
       ..followRedirects = false
       ..headers['Accept'] = 'application/json';
+    if (headers != null) request.headers.addAll(headers);
     if (session != null) request.headers['Authorization'] = 'Bearer $session';
     if (body != null) {
       request.headers['Content-Type'] = 'application/json';

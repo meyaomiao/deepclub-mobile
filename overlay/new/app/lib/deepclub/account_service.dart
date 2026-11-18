@@ -184,10 +184,15 @@ class DeepClubAccountService {
     if (_session case final session?) await store.write('session', jsonEncode(session.toJson()));
   }
 
-  Future<ClientReply> _authenticated(String method, String path, {Map<String, Object?>? body}) async {
+  Future<ClientReply> _authenticated(
+    String method,
+    String path, {
+    Map<String, Object?>? body,
+    Map<String, String>? headers,
+  }) async {
     final session = _session;
     if (session == null) throw const DeepClubFailure('login_required');
-    final reply = await api.call(method, path, session: session.token, body: body);
+    final reply = await api.call(method, path, session: session.token, body: body, headers: headers);
     if (reply.expiresAt case final expiry?) {
       _session = _session!.copyWith(expiresAt: expiry);
       await _save();
@@ -380,7 +385,13 @@ class DeepClubAccountService {
     }
     // Validate the current session/Key before healing a local credential.
     if (!_session!.remoteOnly) {
-      _config = DeepClubAgentConfig.fromJson((await _authenticated('GET', '/api/client/agent-config')).data);
+      _config = DeepClubAgentConfig.fromJson(
+        (await _authenticated(
+          'GET',
+          '/api/client/agent-config',
+          headers: const {'X-DeepClub-Agent-APIs': 'google-generative-ai'},
+        )).data,
+      );
       await _applyToLocal();
     }
     _bootstrap = (await _authenticated('GET', '/api/client/bootstrap')).object;

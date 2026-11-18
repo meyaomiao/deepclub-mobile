@@ -35,6 +35,64 @@ PRESET_PATCHES = {
         "ddf3f4eced54951d06443388646b1ca4791b1bcde5e9a455a1793d8c1e1eee3c",
     ),
 }
+PI_AI_INDEX_PATH = "opt/dsh/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js"
+PI_AI_INDEX_DIGESTS = (
+    "0a99a2fc903a4285044b09114b3bd20ee1e612f39aa381e4a71b10d48ee9e9f7",
+    "184b005f1f298b7b40f065e65d7bd0c33bd42a655beb98583254e9deba86ba18",
+)
+PI_AI_GEMINI_PATCHES = (
+    (
+        'import { anthropicMessagesApi } from "@earendil-works/pi-ai/api/anthropic-messages.lazy";\n',
+        'import { anthropicMessagesApi } from "@earendil-works/pi-ai/api/anthropic-messages.lazy";\n'
+        'import { googleGenerativeAIApi } from "@earendil-works/pi-ai/api/google-generative-ai.lazy";\n',
+    ),
+    (
+        '\t"anthropic-messages": anthropicMessagesApi\n};',
+        '\t"anthropic-messages": anthropicMessagesApi,\n\t"google-generative-ai": googleGenerativeAIApi\n};',
+    ),
+    (
+        'const LISTABLE_PROTOCOLS = new Set([\n\t"anthropic-messages",',
+        'const LISTABLE_PROTOCOLS = new Set([\n\t"anthropic-messages",\n\t"google-generative-ai",',
+    ),
+    (
+        "function readListing(body) {\n\tconst listing = body;\n\tconst data = listing?.data;\n\tlet listed;\n"
+        "\tif (Array.isArray(data)) listed = data.map((raw) => ({ raw }));\n\telse {\n\t\tconst models = listing?.models;",
+        'function readListing(body, api) {\n\tconst listing = body;\n\tconst data = listing?.data;\n\tlet listed;\n'
+        '\tif (Array.isArray(data)) listed = data.map((raw) => ({ raw }));\n'
+        '\telse if (api === "google-generative-ai" && Array.isArray(listing?.models)) '
+        'listed = listing.models.map((raw) => ({ raw }));\n\telse {\n\t\tconst models = listing?.models;',
+    ),
+    (
+        "\t\tconst id = label(key, entry?.id);\n\t\tif (id === void 0) continue;\n"
+        "\t\tconst name = label(entry?.name, entry?.display_name, entry?.displayName) ?? id;\n"
+        "\t\tconst contextWindow = capacity(entry?.contextWindow, entry?.context_window, entry?.context_length, "
+        "entry?.max_input_tokens, entry?.limit?.context);\n"
+        "\t\tconst maxTokens = capacity(entry?.maxOutputTokens, entry?.max_output_tokens, entry?.maxTokens, "
+        "entry?.max_tokens, entry?.limit?.output, entry?.top_provider?.max_completion_tokens);",
+        '\t\tconst geminiId = api === "google-generative-ai" && typeof entry?.name === "string" && entry.name.length > 0 '
+        '? entry.name.replace(/^models\\//, "") : void 0;\n'
+        "\t\tconst id = label(key, entry?.id, geminiId);\n\t\tif (id === void 0) continue;\n"
+        "\t\tconst name = label(entry?.display_name, entry?.displayName, entry?.name) ?? id;\n"
+        "\t\tconst contextWindow = capacity(entry?.contextWindow, entry?.context_window, entry?.context_length, "
+        "entry?.max_input_tokens, entry?.inputTokenLimit, entry?.limit?.context);\n"
+        "\t\tconst maxTokens = capacity(entry?.maxOutputTokens, entry?.max_output_tokens, entry?.maxTokens, "
+        "entry?.max_tokens, entry?.outputTokenLimit, entry?.limit?.output, entry?.top_provider?.max_completion_tokens);",
+    ),
+    (
+        '\t\tif (api === "anthropic-messages") {\n\t\t\theaders.set("anthropic-version", ANTHROPIC_VERSION);\n'
+        '\t\t\tif (apiKey !== void 0) headers.set("x-api-key", apiKey);\n'
+        '\t\t} else if (apiKey !== void 0) headers.set("authorization", `Bearer ${apiKey}`);',
+        '\t\tif (api === "anthropic-messages") {\n\t\t\theaders.set("anthropic-version", ANTHROPIC_VERSION);\n'
+        '\t\t\tif (apiKey !== void 0) headers.set("x-api-key", apiKey);\n'
+        '\t\t} else if (api === "google-generative-ai") {\n'
+        '\t\t\tif (apiKey !== void 0) headers.set("x-goog-api-key", apiKey);\n'
+        '\t\t} else if (apiKey !== void 0) headers.set("authorization", `Bearer ${apiKey}`);',
+    ),
+    (
+        "\treturn readListing(body);\n}",
+        "\treturn readListing(body, api);\n}",
+    ),
+)
 WEB_TOOL_BLOCK = (
     "          - id: tool-web\n"
     "            name: '@deepseek-ai/dsh-tool-web'\n"
@@ -213,6 +271,22 @@ def main():
                         add_file(outgoing, entry.name, content, epoch)
                         uncompressed += len(content)
                         found.add(entry.name)
+                    elif entry.name == PI_AI_INDEX_PATH:
+                        content = stream.read()
+                        before, after = PI_AI_INDEX_DIGESTS
+                        if hashlib.sha256(content).hexdigest() != before:
+                            raise SystemExit(f"Pinned pi-ai adapter changed: {entry.name}")
+                        text = content.decode("utf-8")
+                        for old, new in PI_AI_GEMINI_PATCHES:
+                            if text.count(old) != 1:
+                                raise SystemExit(f"Expected exact single match in {entry.name}: {old[:40]!r}")
+                            text = text.replace(old, new, 1)
+                        content = text.encode("utf-8")
+                        if hashlib.sha256(content).hexdigest() != after:
+                            raise SystemExit(f"pi-ai adaptation digest mismatch: {entry.name}")
+                        add_file(outgoing, entry.name, content, epoch)
+                        uncompressed += len(content)
+                        found.add(entry.name)
                     else:
                         outgoing.addfile(entry, stream)
                         uncompressed += entry.size
@@ -224,7 +298,7 @@ def main():
                     outgoing.addfile(entry)
                 else:
                     raise SystemExit("Unexpected special entry in pinned runtime.")
-            if found != {PATCH_PATH, RUNTIME_INFO, *PRESET_PATCHES}:
+            if found != {PATCH_PATH, RUNTIME_INFO, PI_AI_INDEX_PATH, *PRESET_PATCHES}:
                 raise SystemExit("Pinned runtime overlay and preset inputs were not found.")
             directories = {PLUGIN_ROOT}
             for path in files:

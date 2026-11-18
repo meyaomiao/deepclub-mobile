@@ -78,6 +78,9 @@ void main() {
     final rig = ServiceRig();
     addTearDown(rig.close);
     await rig.login();
+    final configRequests = rig.requests.where((r) => r.url.path.endsWith('/agent-config')).toList();
+    expect(configRequests, hasLength(1));
+    expect(configRequests.single.headers['X-DeepClub-Agent-APIs']?.split(',').map((e) => e.trim()), contains('google-generative-ai'));
     expect(rig.engine.configWrites, 1);
     expect(rig.engine.recommendations, [true]);
     await rig.service.synchronize();
