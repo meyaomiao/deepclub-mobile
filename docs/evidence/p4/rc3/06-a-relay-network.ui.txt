@@ -1,0 +1,15 @@
+[35,731][605,775]   | Network details
+[619,715][696,792] C  | Close
+[35,806][685,921]   | Connects directly to your computer or through the DeepClub relay. The route and status reflect the active connection.
+[63,981][346,1019]   | Host
+[374,981][657,1058]   | P4 isolated compiled Host
+[63,1103][346,1142]   | Connection type
+[374,1103][657,1142]   | My computer
+[63,1187][346,1226]   | Status
+[374,1187][657,1226]   | Connected
+[63,1271][346,1310]   | Current path
+[374,1271][657,1310]   | Relay
+[63,1355][346,1394]   | Connection time
+[374,1355][657,1394]   | Not measured
+[63,1439][346,1478]   | Round-trip time (RTT)
+[374,1439][657,1478]   | Not measured

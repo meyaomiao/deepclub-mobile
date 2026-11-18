@@ -23,6 +23,7 @@
 | LAN 短回复 | passed。新会话选择 P4 Deterministic Local Fixture，回复为 fixture 经真实 Go 模型代理的正文（0.8 秒、56 tokens）；fixture 计数 requests 2 / completed 2。[短回复](evidence/p4/rc3/02-a-lan-short-reply.png) |
 | LAN `p4-long` Stop | passed。生成中输入框显示 Generating、按钮为 Stop generating；点击 Stop（因 uiautomator 取证耗时，实际约 15 秒，流仍在生成，30 个 chunk）后回复标 Stopped，轨迹显示 Reply (interrupted)。fixture `cancelled` 0→1，该请求 `completed=false`、`cancelled=true`。[Stopped](evidence/p4/rc3/03-a-lan-long-stopped.png) · [计数](evidence/p4/rc3/observe-lan-stop.json) |
 | 打开 hello.txt | passed。会话详情 Files 列出 hello.txt（65 B），打开后正文与 Host 工作区文件逐字一致。[文件](evidence/p4/rc3/04-a-lan-hello-file.png) |
+| Go relay 聊天 | passed。仅移除专属 AVD 的 `adb reverse tcp:18342`（保留 18340），force-stop + 冷启后未重登、未扫码，恢复同一会话；Go `remote/assertion`、`verify`、`check` 200。新消息经 relay 收到 fixture 回复（0.5 秒），本机 18342 无已建立连接。会话列表底栏为 “Current host: P4 isolated compiled Host, Relay”，网络详情为 Connected / Relay，时延显示 Not measured。[relay 回复](evidence/p4/rc3/05-a-relay-chat.png) · [网络详情](evidence/p4/rc3/06-a-relay-network.png) |
 
 源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端；本轮未测终端，不把它当作通过或失败。
 
