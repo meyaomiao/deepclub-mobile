@@ -12,7 +12,7 @@
 
 ## 11 月 18 日 rc.3 Host 续测
 
-- 固定输入：桌面 Host 由 `node scripts/p4/host.mjs` 启动，`runtime.json` 记录 source `dsh-v0.2.2-rc.3` / `38a6a5c965aa99ab525161efb7cc5cf1fe62fced`、gateway `721194ffbcbc1d93a80cfe91e4e53e1f3dc74e61`、adaptation `bd446e63275c284da5c57223324ef19f1c0a6b26`；同一真实 Go 二进制与隔离 SQLite。模拟器内安装包仍为 versionCode `11161601`，设备内 `sha256sum` 与上节 `1996530a…0d15f8` 一致（源码 `228f4f1` 线）。只启动专属 AVD `deepclub_p4_android36`（port 5580），未操作其他模拟器。
+- 固定输入：桌面 Host 由 `node scripts/p4/host.mjs` 启动，`runtime.json` 记录 source `dsh-v0.2.2-rc.3` / `38a6a5c965aa99ab525161efb7cc5cf1fe62fced`、gateway `721194ffbcbc1d93a80cfe91e4e53e1f3dc74e61`、adaptation `b2e58beeeabd6c46cbdf919a18eab694fba54ef7`（在 `bd446e6` 上仅增文档；Host2 的 runtime.json 相同）；同一真实 Go 二进制与隔离 SQLite。模拟器内安装包仍为 versionCode `11161601`，设备内 `sha256sum` 与上节 `1996530a…0d15f8` 一致（源码 `228f4f1` 线）。只启动专属 AVD `deepclub_p4_android36`（port 5580），未操作其他模拟器。
 - 截图均由设备截屏缩至 960px，UI 判定以同名 `.ui.txt`（uiautomator 文本，输入框只记长度）为准。
 
 | 场景 | 实际结果 |
@@ -24,8 +24,10 @@
 | LAN `p4-long` Stop | passed。生成中输入框显示 Generating、按钮为 Stop generating；点击 Stop（因 uiautomator 取证耗时，实际约 15 秒，流仍在生成，30 个 chunk）后回复标 Stopped，轨迹显示 Reply (interrupted)。fixture `cancelled` 0→1，该请求 `completed=false`、`cancelled=true`。[Stopped](evidence/p4/rc3/03-a-lan-long-stopped.png) · [计数](evidence/p4/rc3/observe-lan-stop.json) |
 | 打开 hello.txt | passed。会话详情 Files 列出 hello.txt（65 B），打开后正文与 Host 工作区文件逐字一致。[文件](evidence/p4/rc3/04-a-lan-hello-file.png) |
 | Go relay 聊天 | passed。仅移除专属 AVD 的 `adb reverse tcp:18342`（保留 18340），force-stop + 冷启后未重登、未扫码，恢复同一会话；Go `remote/assertion`、`verify`、`check` 200。新消息经 relay 收到 fixture 回复（0.5 秒），本机 18342 无已建立连接。会话列表底栏为 “Current host: P4 isolated compiled Host, Relay”，网络详情为 Connected / Relay，时延显示 Not measured。[relay 回复](evidence/p4/rc3/05-a-relay-chat.png) · [网络详情](evidence/p4/rc3/06-a-relay-network.png) |
+| 第二台电脑配对与切换 | passed（附缺陷）。`host2.mjs prepare` + `start` 后 Host2（18343，独立 gateway/key，同 rc.3 pin）在线；恢复 18342 reverse 并新增 18343 reverse。从 Switch host → Scan 即时生成 Host2 二维码并经相册选择，Go `assertion`/`verify`/`check` 200，App 进入 Host2，显示 No workspaces yet / No chats yet。在 Host2 的 Host default folder 新建会话，fixture 回复 “Hello Host2 only”。Switch host 切到主 Host：工作区为 P4 acceptance workspace，Today 会话只含本轮 LAN/relay 消息；切回 Host2：只有它自己的一条会话和 “Hello Host2 only”。两台电脑的会话与工作区互不出现。[Host2 空状态](evidence/p4/rc3/07-host2-paired-empty.png) · [Host2 会话](evidence/p4/rc3/09-host2-chat.png) · [切到主 Host](evidence/p4/rc3/11-switched-host1.png) · [切回 Host2](evidence/p4/rc3/12-switched-back-host2.png) |
+| 在 rc.3 Host 上添加工作区 | failed（App 兼容缺陷）。Host2 的 Add workspace → Enter path 输入其工作区后显示 “This host can’t browse folders here”，Add 不可用。源码 `gateway_carrier.dart` 仅把 `0.2.2-alpha.2` / `0.2.2-rc.1` 当作已知版本，rc.3 源码 `package.json` 版本为 `0.2.2-rc.3`，于是只放行 `_compatibleChatReads`：`workspace/create`/`rename`/`delete`、`directoryPicker/createDirectory`、`terminal/*` 创建类和 `agentPresets/select` 均不在手机端放行集合内。该页提示与此推断一致，但本轮未单独抓取 RPC 拒绝记录。新 Host 的工作区管理需在 App 识别 rc.3 后复验。[阻塞页](evidence/p4/rc3/08-host2-add-workspace-blocked.png) |
 
-源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端；本轮未测终端，不把它当作通过或失败。
+源码观察（未执行验证）：`gateway_carrier.dart` 只把 `0.2.2-alpha.2` / `0.2.2-rc.1` 视为已知版本，其他版本会去掉 `harness.terminal.v1` 和终端 retain/attach 流。rc.3 Host 因此按兼容模式处理终端和工作区写操作；实际影响见上表 “添加工作区” 行，终端本轮未测。
 
 以下各节保留首轮执行的固定输入和历史结果。
 
