@@ -2189,7 +2189,7 @@ index d030f03..fd2e872 100644
        ..headers.addAll(_headers)
        ..fields['type'] = 'composer'
 diff --git a/app/lib/l10n/app_en.arb b/app/lib/l10n/app_en.arb
-index 4c1bc9e..ea0a1bf 100644
+index 4c1bc9e..2a44767 100644
 --- a/app/lib/l10n/app_en.arb
 +++ b/app/lib/l10n/app_en.arb
 @@ -3,8 +3,8 @@
@@ -2738,7 +2738,7 @@ index 4c1bc9e..ea0a1bf 100644
    "remoteDirectoryEnterPath": "Enter path",
    "remoteDirectoryGo": "Go",
    "remoteDirectoryAbsolutePath": "Enter the full path, starting with “/”",
-+  "remoteDirectoryHostAbsolutePath": "Enter the full path to the folder on your computer",
++  "remoteDirectoryHostAbsolutePath": "Use a full path",
    "remoteDirectoryNewFolder": "New folder",
    "remoteDirectoryParentCaption": "In “{name}”",
    "remoteDirectoryFolderName": "Folder name",
@@ -2966,7 +2966,7 @@ index 4c1bc9e..ea0a1bf 100644
    "workshopUpdateTo": "Update to {version}",
    "workshopInstalledWithdrawn": "The version you installed has been withdrawn. It still works; update if a newer version is listed, otherwise consider removing it.",
 diff --git a/app/lib/l10n/app_zh.arb b/app/lib/l10n/app_zh.arb
-index fc65a9e..c989ae4 100644
+index fc65a9e..fdecc83 100644
 --- a/app/lib/l10n/app_zh.arb
 +++ b/app/lib/l10n/app_zh.arb
 @@ -3,8 +3,8 @@
@@ -3511,7 +3511,7 @@ index fc65a9e..c989ae4 100644
    "remoteDirectoryEnterPath": "输入路径",
    "remoteDirectoryGo": "前往",
    "remoteDirectoryAbsolutePath": "从「/」开始写完整路径",
-+  "remoteDirectoryHostAbsolutePath": "请输入电脑上文件夹的完整路径",
++  "remoteDirectoryHostAbsolutePath": "请输入完整路径",
    "remoteDirectoryNewFolder": "新建文件夹",
    "remoteDirectoryParentCaption": "在「{name}」里",
    "@remoteDirectoryParentCaption": {
@@ -3770,7 +3770,7 @@ index fc65a9e..c989ae4 100644
      "placeholders": {
        "version": {
 diff --git a/app/lib/l10n/gen/app_localizations.dart b/app/lib/l10n/gen/app_localizations.dart
-index 8514ee1..35a090c 100644
+index 8514ee1..20c1926 100644
 --- a/app/lib/l10n/gen/app_localizations.dart
 +++ b/app/lib/l10n/gen/app_localizations.dart
 @@ -113,13 +113,13 @@ abstract class L10n {
@@ -4895,7 +4895,7 @@ index 8514ee1..35a090c 100644
 +  /// No description provided for @remoteDirectoryHostAbsolutePath.
 +  ///
 +  /// In zh, this message translates to:
-+  /// **'请输入电脑上文件夹的完整路径'**
++  /// **'请输入完整路径'**
 +  String get remoteDirectoryHostAbsolutePath;
 +
    /// No description provided for @remoteDirectoryNewFolder.
@@ -5202,7 +5202,7 @@ index 8514ee1..35a090c 100644
  
    /// No description provided for @workshopInstalledVersion.
 diff --git a/app/lib/l10n/gen/app_localizations_en.dart b/app/lib/l10n/gen/app_localizations_en.dart
-index d1173f7..67d0b6a 100644
+index d1173f7..88788d3 100644
 --- a/app/lib/l10n/gen/app_localizations_en.dart
 +++ b/app/lib/l10n/gen/app_localizations_en.dart
 @@ -21,10 +21,10 @@ class L10nEn extends L10n {
@@ -6038,7 +6038,7 @@ index d1173f7..67d0b6a 100644
    String get remoteDirectoryAbsolutePath => 'Enter the full path, starting with “/”';
  
 +  @override
-+  String get remoteDirectoryHostAbsolutePath => 'Enter the full path to the folder on your computer';
++  String get remoteDirectoryHostAbsolutePath => 'Use a full path';
 +
    @override
    String get remoteDirectoryNewFolder => 'New folder';
@@ -6327,7 +6327,7 @@ index d1173f7..67d0b6a 100644
  
    @override
 diff --git a/app/lib/l10n/gen/app_localizations_zh.dart b/app/lib/l10n/gen/app_localizations_zh.dart
-index bee7e25..499b1d5 100644
+index bee7e25..ec8a323 100644
 --- a/app/lib/l10n/gen/app_localizations_zh.dart
 +++ b/app/lib/l10n/gen/app_localizations_zh.dart
 @@ -19,10 +19,10 @@ class L10nZh extends L10n {
@@ -7117,7 +7117,7 @@ index bee7e25..499b1d5 100644
    String get remoteDirectoryAbsolutePath => '从「/」开始写完整路径';
  
 +  @override
-+  String get remoteDirectoryHostAbsolutePath => '请输入电脑上文件夹的完整路径';
++  String get remoteDirectoryHostAbsolutePath => '请输入完整路径';
 +
    @override
    String get remoteDirectoryNewFolder => '新建文件夹';
@@ -8364,7 +8364,7 @@ index f82128e..73d077d 100644
      "placeholders": {
        "version": {
 diff --git a/app/lib/l10n/parts/remote_en.arb b/app/lib/l10n/parts/remote_en.arb
-index 3159f68..4d02380 100644
+index 3159f68..2ab60f4 100644
 --- a/app/lib/l10n/parts/remote_en.arb
 +++ b/app/lib/l10n/parts/remote_en.arb
 @@ -38,7 +38,7 @@
@@ -8380,7 +8380,7 @@ index 3159f68..4d02380 100644
    "remoteDirectoryEnterPath": "Enter path",
    "remoteDirectoryGo": "Go",
    "remoteDirectoryAbsolutePath": "Enter the full path, starting with “/”",
-+  "remoteDirectoryHostAbsolutePath": "Enter the full path to the folder on your computer",
++  "remoteDirectoryHostAbsolutePath": "Use a full path",
    "remoteDirectoryNewFolder": "New folder",
    "remoteDirectoryParentCaption": "In “{name}”",
    "remoteDirectoryFolderName": "Folder name",
@@ -8442,7 +8442,7 @@ index e4ff20d..ae5e05a 100644
    "remotePairErrUnsupported": "这个 Remote 服务器还不支持扫码配对",
    "remotePairErrExpired": "二维码已过期或已经用过了。请在电脑上重新生成二维码",
 diff --git a/app/lib/l10n/parts/remote_zh.arb b/app/lib/l10n/parts/remote_zh.arb
-index f5ed8a2..1de5a3b 100644
+index f5ed8a2..7964791 100644
 --- a/app/lib/l10n/parts/remote_zh.arb
 +++ b/app/lib/l10n/parts/remote_zh.arb
 @@ -52,7 +52,7 @@
@@ -8458,7 +8458,7 @@ index f5ed8a2..1de5a3b 100644
    "remoteDirectoryEnterPath": "输入路径",
    "remoteDirectoryGo": "前往",
    "remoteDirectoryAbsolutePath": "从「/」开始写完整路径",
-+  "remoteDirectoryHostAbsolutePath": "请输入电脑上文件夹的完整路径",
++  "remoteDirectoryHostAbsolutePath": "请输入完整路径",
    "remoteDirectoryNewFolder": "新建文件夹",
    "remoteDirectoryParentCaption": "在「{name}」里",
    "@remoteDirectoryParentCaption": {
@@ -16433,7 +16433,7 @@ index b406052..a6887ff 100644
        return NoDshWeb(appL10n.webRelayUnavailable);
      case HostKind.ssh:
 diff --git a/app/lib/ui/workspace/directory_picker.dart b/app/lib/ui/workspace/directory_picker.dart
-index a6c77dc..e60d1f6 100644
+index a6c77dc..2d748fc 100644
 --- a/app/lib/ui/workspace/directory_picker.dart
 +++ b/app/lib/ui/workspace/directory_picker.dart
 @@ -116,22 +116,22 @@ class DirectoryLocationsSheet extends ConsumerWidget {
@@ -16463,7 +16463,7 @@ index a6c77dc..e60d1f6 100644
        } else {
          Navigator.of(context).pop(path);
        }
-@@ -196,19 +196,21 @@ class DirectoryLocationsSheet extends ConsumerWidget {
+@@ -196,19 +196,22 @@ class DirectoryLocationsSheet extends ConsumerWidget {
  }
  
  /// Asks for an absolute folder path.
@@ -16474,7 +16474,8 @@ index a6c77dc..e60d1f6 100644
      context,
      title: l10n.remoteDirectoryEnterPath,
 -    hint: '/root/workspace',
-+    hint: local ? '/root/workspace' : r'C:\Work  ·  /home/work',
++    hint: local ? '/root/workspace' : null,
++    caption: local ? null : r'C:\Work  ·  /home/work',
      confirm: l10n.remoteDirectoryGo,
      mono: true,
      keyboardType: TextInputType.url,
@@ -16490,7 +16491,7 @@ index a6c77dc..e60d1f6 100644
  }
  
  /// Asks for a new folder's name.
-@@ -249,11 +251,12 @@ String levelTitle(DirectoryLevel level, {required bool local}) {
+@@ -249,11 +252,12 @@ String levelTitle(DirectoryLevel level, {required bool local}) {
  /// The full-page browser: one level of the host's folders at a time.
  /// Pops with the chosen folder's path.
  class DirectoryBrowserPage extends ConsumerStatefulWidget {
@@ -16504,7 +16505,7 @@ index a6c77dc..e60d1f6 100644
  
    @override
    ConsumerState<DirectoryBrowserPage> createState() => _DirectoryBrowserPageState();
-@@ -336,14 +339,18 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
+@@ -336,14 +340,18 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
      final title = level == null ? l10n.remoteDirectoryPickerTitle : levelTitle(level, local: local);
      final confirmLabel = widget.confirmLabel ?? l10n.remoteDirectoryChoose;
      final canCreate = conn?.client.canCreateDirectories ?? false;
@@ -16525,7 +16526,7 @@ index a6c77dc..e60d1f6 100644
          action: unavailable ? null : (l10n.commonRetry, () => _open(widget.start, record: false)),
        );
      } else if (level == null) {
-@@ -397,7 +404,7 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
+@@ -397,7 +405,7 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
              bottom: 0,
              child: FormBottomBar(
                child: FilledButton(
@@ -17677,7 +17678,7 @@ index eb78dff..2b164f7 100644
      runClock = () => DateTime(2026, 10, 23, 15, 20);
    });
 diff --git a/app/test/workspace/workspace_flows_test.dart b/app/test/workspace/workspace_flows_test.dart
-index 05a3961..1111f58 100644
+index 05a3961..a25f0bc 100644
 --- a/app/test/workspace/workspace_flows_test.dart
 +++ b/app/test/workspace/workspace_flows_test.dart
 @@ -199,6 +199,53 @@ void main() {
@@ -17720,7 +17721,7 @@ index 05a3961..1111f58 100644
 +      await tester.enterText(find.byType(TextField), r'C:Work');
 +      await tester.tap(find.text('前往'));
 +      await tester.pump();
-+      expect(find.text('请输入电脑上文件夹的完整路径'), findsOneWidget);
++      expect(find.text('请输入完整路径'), findsOneWidget);
 +      await tester.enterText(find.byType(TextField), path);
 +      await tester.tap(find.text('前往'));
 +      await _settle(tester);
