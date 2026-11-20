@@ -60,14 +60,25 @@ jobs:
       - name: Analyze the complete application
         working-directory: .work/dsh-go/app
         run: flutter analyze --no-pub
-      - name: Install real fonts for UI and icon checks
+      - name: Fetch pinned Noto CJK fonts for UI and icon checks
+        env:
+          FONT_SOURCE: https://raw.githubusercontent.com/notofonts/noto-cjk/523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/OTC
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-cjk-extra
+          mkdir -p "$RUNNER_TEMP/noto-cjk"
+          cd "$RUNNER_TEMP/noto-cjk"
+          for weight in Light Regular Bold; do
+            file="NotoSansCJK-${weight}.ttc"
+            curl --fail --location --retry 3 --max-time 120 --output "$file" "$FONT_SOURCE/$file"
+          done
+          sha256sum --check <<'SUMS'
+          872def437cf8b9c41bf1736da891e34a8c25b764c0c4a51418d3745570660f42  NotoSansCJK-Light.ttc
+          b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a  NotoSansCJK-Regular.ttc
+          faa5f3656a78b2e2d450d27fe8382c778bc2b6bb5ea29c986664a6a435056ceb  NotoSansCJK-Bold.ttc
+          SUMS
       - name: Verify account, preparation UI, icons and architecture
         working-directory: .work/dsh-go/app
         env:
-          DSH_TEST_FONT_DIR: /usr/share/fonts/opentype/noto
+          DSH_TEST_FONT_DIR: ${{ runner.temp }}/noto-cjk
         run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart test/icons/app_icons_test.dart test/arch/import_direction_test.dart
       - name: Keep icon golden comparison evidence
         if: failure()

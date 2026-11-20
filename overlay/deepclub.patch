@@ -2189,7 +2189,7 @@ index d030f03..fd2e872 100644
        ..headers.addAll(_headers)
        ..fields['type'] = 'composer'
 diff --git a/app/lib/l10n/app_en.arb b/app/lib/l10n/app_en.arb
-index 4c1bc9e..13f24cb 100644
+index 4c1bc9e..2a44767 100644
 --- a/app/lib/l10n/app_en.arb
 +++ b/app/lib/l10n/app_en.arb
 @@ -3,8 +3,8 @@
@@ -2734,7 +2734,15 @@ index 4c1bc9e..13f24cb 100644
    "remoteErrVersionIncompatible": "Update DSH or the remote plugin on the host",
    "remoteErrSignInTimeout": "Sign-in timed out",
    "remoteSignInCancelled": "Sign-in cancelled",
-@@ -4758,7 +4855,7 @@
+@@ -4656,6 +4753,7 @@
+   "remoteDirectoryEnterPath": "Enter path",
+   "remoteDirectoryGo": "Go",
+   "remoteDirectoryAbsolutePath": "Enter the full path, starting with “/”",
++  "remoteDirectoryHostAbsolutePath": "Use a full path",
+   "remoteDirectoryNewFolder": "New folder",
+   "remoteDirectoryParentCaption": "In “{name}”",
+   "remoteDirectoryFolderName": "Folder name",
+@@ -4758,7 +4856,7 @@
    "remotePairTitle": "Pair a computer",
    "remotePairSubtitle": "No Remote account needed. Your DeepSeek password and sign-in tokens are never sent.",
    "remotePairNeedsDeepSeek": "Sign in to DeepSeek first",
@@ -2743,7 +2751,7 @@ index 4c1bc9e..13f24cb 100644
    "remotePairScanHint": "Point the camera at the pairing code the Remote plugin shows on your computer",
    "remotePairPasteLink": "Paste pairing link",
    "remotePairPasteEmpty": "No pairing link on the clipboard",
-@@ -4785,10 +4882,10 @@
+@@ -4785,10 +4883,10 @@
    "remotePairCodeExpired": "The code expired. Show a new pairing code on the computer.",
    "remotePairConnecting": "Paired. Connecting to {name}…",
    "remotePairFailedTitle": "Couldn’t pair",
@@ -2756,7 +2764,7 @@ index 4c1bc9e..13f24cb 100644
    "remotePairErrOtherServer": "This code is from another Remote server",
    "remotePairErrUnsupported": "This Remote server doesn’t support pairing by scanning yet",
    "remotePairErrExpired": "The code expired or was already used. Show a new pairing code on the computer.",
-@@ -4819,15 +4916,15 @@
+@@ -4819,15 +4917,15 @@
    "riskAllowForChatBody": "Commands and changes in this chat run without asking. Turn it off above the message box anytime.",
    "riskAllowForChatAction": "Allow all",
    "riskPetOverlayTitle": "Show over other apps?",
@@ -2777,7 +2785,7 @@ index 4c1bc9e..13f24cb 100644
    "askAiQuestionPhoneControl": "How does phone control work, and what are the risks?",
    "askAiQuestionPhoneAlways": "What changes with “Always skip confirmation” in phone control, and how is it riskier than asking each time?",
    "askAiQuestionAppRules": "What is the app list in phone control for, and what are the risks of allowing banking and payment apps?",
-@@ -5255,7 +5352,7 @@
+@@ -5255,7 +5353,7 @@
    "shellJsonStringNewline": "Strings can’t contain literal line breaks",
    "shellJsonControlCharacter": "String contains a control character",
    "shellJsonBadNumber": "Invalid number format",
@@ -2786,7 +2794,7 @@ index 4c1bc9e..13f24cb 100644
    "shellSkillInstallDirectory": "1. Create the target folder `$DSH_HOME/skills/{skill}/` if needed (or `~/.dsh/skills/{skill}/` if DSH_HOME isn’t set).",
    "shellSkillInstallFiles": "2. Write each file below at its given relative path, keeping the contents exactly as provided.",
    "shellSkillInstallConfirm": "4. Tell me when it’s installed.",
-@@ -5289,13 +5386,13 @@
+@@ -5289,13 +5387,13 @@
    "shellPanelNoPlugins": "No plugin panels for this chat yet",
    "shellQuickPanel": "Shortcuts",
    "shellQuickPanelHint": "Change these in {path}",
@@ -2803,7 +2811,7 @@ index 4c1bc9e..13f24cb 100644
    "hubStartPage": "Start page",
    "hubChatSuggestions": "Chat suggestions",
    "hubChatSuggestionsHint": "Show chat suggestions on the start page",
-@@ -5304,7 +5401,7 @@
+@@ -5304,7 +5402,7 @@
    "phoneStartupFailureStoppingDetail": "Startup failed; stopping. {reason}",
    "phoneStartupTokenTimeout": "Startup timed out: no startup token arrived within 180 seconds. Check the logs.",
    "phoneStartupPortNotReady": "The startup token arrived, but the local service port did not become ready. Check the logs.",
@@ -2812,7 +2820,7 @@ index 4c1bc9e..13f24cb 100644
    "stateStoragePermission": "No storage permission to save to Downloads",
    "stateDiagnosticsStorageFull": "Not enough storage to create the diagnostics bundle",
    "stateDiagnosticsExportFailed": "Couldn’t export diagnostics bundle",
-@@ -5376,11 +5473,11 @@
+@@ -5376,11 +5474,11 @@
    "stateSubagent": "Subagent",
    "stateParentChat": "Parent chat",
    "statePreparing": "Provisioning",
@@ -2829,7 +2837,7 @@ index 4c1bc9e..13f24cb 100644
    "stateWallpaper": "Wallpaper",
    "stateFileMissing": "File not found. It may have been deleted or moved.",
    "stateFileNoApp": "No app on this phone can open this file type",
-@@ -5679,7 +5776,7 @@
+@@ -5679,7 +5777,7 @@
    "stateUiWeb": "Web",
    "statePluginRegistryProgressUnknown": "Downloading from {registry} (registry {attempt}/null)",
    "stateProviderTokenCountInvalid": "Enter a number, like 128K",
@@ -2838,7 +2846,7 @@ index 4c1bc9e..13f24cb 100644
    "tavernTitle": "Tavern",
    "tavernImport": "Import",
    "tavernEmptyTitle": "No characters yet",
-@@ -6006,7 +6103,7 @@
+@@ -6006,7 +6104,7 @@
    "tavernStorybookShare": "Share the image",
    "tavernStorybookEarlier": "{count, plural, =1{1 earlier line is} other{{count} earlier lines are}} left out of the image; export the e-book for all of it.",
    "tavernStorybookEarlierShort": "… {count, plural, =1{1 line} other{{count} lines}} before this …",
@@ -2847,7 +2855,7 @@ index 4c1bc9e..13f24cb 100644
    "tavernStorybookContents": "Contents",
    "tavernStorybookChapter": "Chapter {n}",
    "tavernStorybookSaved": "Saved to photos",
-@@ -6434,13 +6531,13 @@
+@@ -6434,13 +6532,13 @@
    "updateFreeSpaceRetry": "Free up space and try again.",
    "updateSpaceRequired": "About {size} of free space needed. Free up space and try again.",
    "updateSettingsOpenFailed": "Couldn’t open system settings",
@@ -2863,7 +2871,7 @@ index 4c1bc9e..13f24cb 100644
    "updateWrongPackage": "This isn’t a DSH package",
    "updateWrongPackageMessage": "The wrong file was downloaded and deleted. Try again later.",
    "updateDowngradeBlocked": "Can’t install an older version",
-@@ -6459,7 +6556,7 @@
+@@ -6459,7 +6557,7 @@
    "updateNewVersionFound": "New version available",
    "updateReleaseNotes": "What’s new",
    "updateNoReleaseNotes": "No release notes for this version.",
@@ -2872,7 +2880,7 @@ index 4c1bc9e..13f24cb 100644
    "updateNoCompatiblePackage": "No package for this phone",
    "updateDownloading": "Downloading",
    "updateDownloadSource": "Via {source}",
-@@ -6470,7 +6567,7 @@
+@@ -6470,7 +6568,7 @@
    "updateConfirmInstallNote": "Confirm installation in the system prompt",
    "updatePackageDownloaded": "Package downloaded",
    "updateReadyToInstall": "Verified and ready to install.",
@@ -2881,7 +2889,7 @@ index 4c1bc9e..13f24cb 100644
    "updateAllowInstallMessage": "Turn on “Install unknown apps” in system settings. Installation resumes when you return.",
    "updateOpenReleasePage": "Open release page",
    "updateUpdateNow": "Update now",
-@@ -6479,7 +6576,7 @@
+@@ -6479,7 +6577,7 @@
    "updateSystemInstallerFailed": "Couldn't open the system installer",
    "updateExportApk": "Save the package",
    "updateExportApkTitle": "Save the package?",
@@ -2890,7 +2898,7 @@ index 4c1bc9e..13f24cb 100644
    "updateExportApkDone": "Saved to Downloads/{path}",
    "updateExportApkFailed": "Couldn't save the package",
    "updateStarProject": "Star it",
-@@ -6491,11 +6588,13 @@
+@@ -6491,11 +6589,13 @@
    "updateNoAbiPackage": "No {abi} package for this release yet. Check the release page.",
    "updateNoPackage": "No package for this release yet. Check the release page.",
    "updateDownloadingPercent": "Downloading {percent}%",
@@ -2907,7 +2915,7 @@ index 4c1bc9e..13f24cb 100644
    "usageUpgradeLearn": "Learn more",
    "usageUpgradeOff": "Turn off",
    "viewArtifactSaved": "Saved to {value}",
-@@ -6537,7 +6636,7 @@
+@@ -6537,7 +6637,7 @@
    "viewBalanceChecking": "Checking balance…",
    "viewBalanceCheckFailed": "Can’t check balance right now",
    "viewBalanceNoAlert": "Off",
@@ -2916,7 +2924,7 @@ index 4c1bc9e..13f24cb 100644
    "viewBalanceTurnOff": "Turn off",
    "viewBalanceBelow": "Below {value}",
    "viewBalanceAlert": "Low balance alert",
-@@ -6677,7 +6776,7 @@
+@@ -6677,7 +6777,7 @@
    "viewTipImageZoom": "In the image viewer, double-tap or pinch to zoom; long-press to save",
    "viewTipQueuedRecall": "A queued message can be pulled back into the composer to edit",
    "viewTipKeyboard": "With a keyboard: Ctrl+Enter sends, Esc twice stops",
@@ -2925,7 +2933,7 @@ index 4c1bc9e..13f24cb 100644
    "viewTipShareSelect": "When sharing a chat, long-press and slide to pick several messages at once",
    "viewTipChartDrag": "Drag across a chart in a reply to read each point",
    "viewTipCopyPath": "Long-press a file in a changes card to copy its path",
-@@ -6747,7 +6846,7 @@
+@@ -6747,7 +6847,7 @@
    "viewModelManageProviders": "Manage providers",
    "viewContinuePrompt": "Continue the chat attached here:",
    "viewContinueRange": "Turns {first}–{second} of {third, plural, =1{1 turn} other{{third} turns}}",
@@ -2934,7 +2942,7 @@ index 4c1bc9e..13f24cb 100644
    "viewContinueUser": "\n## User\n\n",
    "viewImageCount": "{count, plural, =1{1 image} other{{count} images}}",
    "viewContinueAttachments": "\n(Attachments: {value})\n",
-@@ -6763,11 +6862,11 @@
+@@ -6763,11 +6863,11 @@
    "viewShareNoPermission": "No storage permission. Couldn’t save.",
    "viewShareOpenFailed": "Couldn’t open share sheet",
    "viewShareLinkFailed": "Couldn’t create link. Try again later.",
@@ -2948,7 +2956,7 @@ index 4c1bc9e..13f24cb 100644
    "viewShareWebHint": "Opens in any browser, even offline",
    "viewShareMarkdownHint": "Plain text, readable anywhere",
    "viewShareLinkHint": "End-to-end encrypted. The server can’t see your content.",
-@@ -7062,7 +7161,7 @@
+@@ -7062,7 +7162,7 @@
    "workshopAbout": "About",
    "workshopNoDescription": "The author didn't write a description.",
    "workshopSource": "Source",
@@ -2958,7 +2966,7 @@ index 4c1bc9e..13f24cb 100644
    "workshopUpdateTo": "Update to {version}",
    "workshopInstalledWithdrawn": "The version you installed has been withdrawn. It still works; update if a newer version is listed, otherwise consider removing it.",
 diff --git a/app/lib/l10n/app_zh.arb b/app/lib/l10n/app_zh.arb
-index fc65a9e..5f46381 100644
+index fc65a9e..fdecc83 100644
 --- a/app/lib/l10n/app_zh.arb
 +++ b/app/lib/l10n/app_zh.arb
 @@ -3,8 +3,8 @@
@@ -3499,7 +3507,15 @@ index fc65a9e..5f46381 100644
    "remoteErrVersionIncompatible": "主机上的 DSH 或远程插件需要更新",
    "remoteErrSignInTimeout": "登录超时",
    "remoteSignInCancelled": "已取消登录",
-@@ -9648,7 +9759,7 @@
+@@ -9341,6 +9452,7 @@
+   "remoteDirectoryEnterPath": "输入路径",
+   "remoteDirectoryGo": "前往",
+   "remoteDirectoryAbsolutePath": "从「/」开始写完整路径",
++  "remoteDirectoryHostAbsolutePath": "请输入完整路径",
+   "remoteDirectoryNewFolder": "新建文件夹",
+   "remoteDirectoryParentCaption": "在「{name}」里",
+   "@remoteDirectoryParentCaption": {
+@@ -9648,7 +9760,7 @@
    "remotePairTitle": "扫码配对电脑",
    "remotePairSubtitle": "不用注册 Remote 账号，也不会传 DeepSeek 密码或登录凭据",
    "remotePairNeedsDeepSeek": "先登录 DeepSeek 账号",
@@ -3508,7 +3524,7 @@ index fc65a9e..5f46381 100644
    "remotePairScanHint": "对准电脑上 Remote 插件显示的配对二维码",
    "remotePairPasteLink": "粘贴配对链接",
    "remotePairPasteEmpty": "剪贴板里没有配对链接",
-@@ -9696,7 +9807,7 @@
+@@ -9696,7 +9808,7 @@
      }
    },
    "remotePairFailedTitle": "没能配对",
@@ -3517,7 +3533,7 @@ index fc65a9e..5f46381 100644
    "@remotePairOtherServerBody": {
      "placeholders": {
        "server": {
-@@ -9706,7 +9817,7 @@
+@@ -9706,7 +9818,7 @@
    },
    "remotePairSwitchServer": "切换服务器并继续",
    "remotePairScanAgain": "重新扫码",
@@ -3526,7 +3542,7 @@ index fc65a9e..5f46381 100644
    "remotePairErrOtherServer": "这个二维码来自另一个 Remote 服务器",
    "remotePairErrUnsupported": "这个 Remote 服务器还不支持扫码配对",
    "remotePairErrExpired": "二维码已过期或已经用过了。请在电脑上重新生成二维码",
-@@ -9744,12 +9855,12 @@
+@@ -9744,12 +9856,12 @@
    "riskAllowForChatBody": "这个对话之后的命令和改动都直接放行，可在输入框上方随时关闭。",
    "riskAllowForChatAction": "全部允许",
    "riskPetOverlayTitle": "显示在其他应用上层？",
@@ -3541,7 +3557,7 @@ index fc65a9e..5f46381 100644
    "@askAiAboutApp": {
      "placeholders": {
        "question": {
-@@ -9757,7 +9868,7 @@
+@@ -9757,7 +9869,7 @@
        }
      }
    },
@@ -3550,7 +3566,7 @@ index fc65a9e..5f46381 100644
    "@askAiWithGuide": {
      "placeholders": {
        "question": {
-@@ -9765,8 +9876,8 @@
+@@ -9765,8 +9877,8 @@
        }
      }
    },
@@ -3561,7 +3577,7 @@ index fc65a9e..5f46381 100644
    "askAiQuestionPhoneControl": "手机操控是怎么工作的？有什么风险？",
    "askAiQuestionPhoneAlways": "手机操控选「始终免确认」会怎样？和「每次都询问」比风险在哪？",
    "askAiQuestionAppRules": "手机操控的应用名单有什么用？放开银行、支付类 App 有什么风险？",
-@@ -9912,7 +10023,7 @@
+@@ -9912,7 +10024,7 @@
    "searchKwPersonalization": "个性化,偏好,风格,习惯",
    "searchKwInterface": "原生,网页,网页模式,网页版,通用设置",
    "searchKwPrivacy": "隐私,数据,日志,分享,统计",
@@ -3570,7 +3586,7 @@ index fc65a9e..5f46381 100644
    "searchKwPhoneConfirmEntry": "确认方式,手机操控,免确认",
    "searchKwWebCodingView": "代码视图,工作视图,网页版",
    "searchKwWebCollapse": "工作步骤,收起,折叠,网页版",
-@@ -10547,7 +10658,7 @@
+@@ -10547,7 +10659,7 @@
    "shellJsonStringNewline": "字符串里不能直接换行",
    "shellJsonControlCharacter": "字符串里有控制字符",
    "shellJsonBadNumber": "数字格式不对",
@@ -3579,7 +3595,7 @@ index fc65a9e..5f46381 100644
    "@shellSkillInstallPrompt": {
      "placeholders": {
        "skill": {
-@@ -10653,7 +10764,7 @@
+@@ -10653,7 +10765,7 @@
        }
      }
    },
@@ -3588,7 +3604,7 @@ index fc65a9e..5f46381 100644
    "@starPromptTitle": {
      "description": "The star prompt's first line. hours is the whole hours of use so far, rounded down; 0 is half an hour (the first ask comes after 30 minutes). The word joiner keeps the ~ on the line of the word before it.",
      "placeholders": {
-@@ -10667,7 +10778,7 @@
+@@ -10667,7 +10779,7 @@
    "starPromptStar": "去 GitHub 点 Star",
    "starPromptDone": "已经点过啦",
    "starPromptLater": "下次再说",
@@ -3597,7 +3613,7 @@ index fc65a9e..5f46381 100644
    "hubStartPage": "起始页",
    "hubChatSuggestions": "聊天建议",
    "hubChatSuggestionsHint": "显示起始页的聊天建议",
-@@ -10683,7 +10794,7 @@
+@@ -10683,7 +10795,7 @@
    },
    "phoneStartupTokenTimeout": "启动等待已超时（180 秒内未收到启动标记），请查看日志",
    "phoneStartupPortNotReady": "已收到启动标记，但本机服务端口尚未就绪，请查看日志",
@@ -3606,7 +3622,7 @@ index fc65a9e..5f46381 100644
    "stateStoragePermission": "没有存储权限，存不进「下载」",
    "stateDiagnosticsStorageFull": "存储空间不足，没能生成诊断包",
    "stateDiagnosticsExportFailed": "没能导出诊断包",
-@@ -10755,11 +10866,11 @@
+@@ -10755,11 +10867,11 @@
    "stateSubagent": "子代理",
    "stateParentChat": "上级对话",
    "statePreparing": "准备中",
@@ -3623,7 +3639,7 @@ index fc65a9e..5f46381 100644
    "stateWallpaper": "壁纸",
    "stateFileMissing": "找不到这个文件了，可能已被删除或移走",
    "stateFileNoApp": "手机上没有能打开这类文件的应用",
-@@ -11468,7 +11579,7 @@
+@@ -11468,7 +11580,7 @@
      }
    },
    "stateProviderTokenCountInvalid": "填写数字，如 128K",
@@ -3632,7 +3648,7 @@ index fc65a9e..5f46381 100644
    "tavernTitle": "酒馆",
    "tavernImport": "导入",
    "tavernEmptyTitle": "还没有角色",
-@@ -12141,7 +12252,7 @@
+@@ -12141,7 +12253,7 @@
        }
      }
    },
@@ -3641,7 +3657,7 @@ index fc65a9e..5f46381 100644
    "tavernStorybookContents": "目录",
    "tavernStorybookChapter": "第 {n} 章",
    "@tavernStorybookChapter": {
-@@ -12997,13 +13108,13 @@
+@@ -12997,13 +13109,13 @@
      }
    },
    "updateSettingsOpenFailed": "没能打开系统设置",
@@ -3657,7 +3673,7 @@ index fc65a9e..5f46381 100644
    "updateWrongPackage": "不是 DSH 的安装包",
    "updateWrongPackageMessage": "下载到的文件不对，已删除，请稍后重试。",
    "updateDowngradeBlocked": "不能降级安装",
-@@ -13046,7 +13157,7 @@
+@@ -13046,7 +13158,7 @@
    "updateNewVersionFound": "发现新版本",
    "updateReleaseNotes": "更新内容",
    "updateNoReleaseNotes": "这个版本没有写更新说明。",
@@ -3666,7 +3682,7 @@ index fc65a9e..5f46381 100644
    "updateNoCompatiblePackage": "没有适合本机的安装包",
    "updateDownloading": "正在下载",
    "updateDownloadSource": "经由 {source}",
-@@ -13064,7 +13175,7 @@
+@@ -13064,7 +13176,7 @@
    "updateConfirmInstallNote": "在系统弹窗里确认安装",
    "updatePackageDownloaded": "安装包已下载",
    "updateReadyToInstall": "校验通过，可以安装了。",
@@ -3675,7 +3691,7 @@ index fc65a9e..5f46381 100644
    "updateAllowInstallMessage": "在系统设置里打开「安装未知应用」，回来后自动继续。",
    "updateOpenReleasePage": "打开发布页",
    "updateUpdateNow": "立即更新",
-@@ -13073,7 +13184,7 @@
+@@ -13073,7 +13185,7 @@
    "updateSystemInstallerFailed": "没能打开系统安装器",
    "updateExportApk": "导出安装包",
    "updateExportApkTitle": "导出安装包？",
@@ -3684,7 +3700,7 @@ index fc65a9e..5f46381 100644
    "updateExportApkDone": "已存到 下载/{path}",
    "@updateExportApkDone": {
      "placeholders": {
-@@ -13106,11 +13217,20 @@
+@@ -13106,11 +13218,20 @@
        }
      }
    },
@@ -3708,7 +3724,7 @@ index fc65a9e..5f46381 100644
    "usageUpgradeLearn": "了解",
    "usageUpgradeOff": "关闭",
    "viewArtifactSaved": "已存到 {value}",
-@@ -13819,7 +13939,7 @@
+@@ -13819,7 +13940,7 @@
    "viewTipImageZoom": "看图时双击放大、双指缩放，长按可以保存",
    "viewTipQueuedRecall": "排队中的消息可以撤回到输入框再改",
    "viewTipKeyboard": "接了键盘：Ctrl+Enter 发送，连按两次 Esc 停止",
@@ -3717,7 +3733,7 @@ index fc65a9e..5f46381 100644
    "viewTipShareSelect": "分享对话时长按再滑动，可以一次选中多条消息",
    "viewTipChartDrag": "回复里的图表可以左右拖动，看每个点的数值",
    "viewTipCopyPath": "改动卡里长按某个文件，可以复制它的路径",
-@@ -13989,7 +14109,7 @@
+@@ -13989,7 +14110,7 @@
        }
      }
    },
@@ -3726,7 +3742,7 @@ index fc65a9e..5f46381 100644
    "@viewContinueHeader": {
      "placeholders": {
        "value": {
-@@ -14026,7 +14146,7 @@
+@@ -14026,7 +14147,7 @@
    "viewShareNoPermission": "没有存储权限，没能保存",
    "viewShareOpenFailed": "没能打开分享",
    "viewShareLinkFailed": "没能生成链接，稍后再试",
@@ -3735,7 +3751,7 @@ index fc65a9e..5f46381 100644
    "@viewShareLinkText": {
      "placeholders": {
        "first": {
-@@ -14054,7 +14174,7 @@
+@@ -14054,7 +14175,7 @@
        }
      }
    },
@@ -3744,7 +3760,7 @@ index fc65a9e..5f46381 100644
    "viewShareWebHint": "任何浏览器都能打开，不用联网",
    "viewShareMarkdownHint": "纯文本，随处可读",
    "viewShareLinkHint": "端到端加密，服务器看不到内容",
-@@ -14774,7 +14894,7 @@
+@@ -14774,7 +14895,7 @@
    "workshopAbout": "简介",
    "workshopNoDescription": "作者没有写简介。",
    "workshopSource": "来源",
@@ -3754,7 +3770,7 @@ index fc65a9e..5f46381 100644
      "placeholders": {
        "version": {
 diff --git a/app/lib/l10n/gen/app_localizations.dart b/app/lib/l10n/gen/app_localizations.dart
-index 8514ee1..fa98ac5 100644
+index 8514ee1..20c1926 100644
 --- a/app/lib/l10n/gen/app_localizations.dart
 +++ b/app/lib/l10n/gen/app_localizations.dart
 @@ -113,13 +113,13 @@ abstract class L10n {
@@ -4872,7 +4888,20 @@ index 8514ee1..fa98ac5 100644
    String get remoteErrUpdateNeeded;
  
    /// No description provided for @remoteErrVersionIncompatible.
-@@ -28643,7 +29225,7 @@ abstract class L10n {
+@@ -28028,6 +28610,12 @@ abstract class L10n {
+   /// **'从「/」开始写完整路径'**
+   String get remoteDirectoryAbsolutePath;
+ 
++  /// No description provided for @remoteDirectoryHostAbsolutePath.
++  ///
++  /// In zh, this message translates to:
++  /// **'请输入完整路径'**
++  String get remoteDirectoryHostAbsolutePath;
++
+   /// No description provided for @remoteDirectoryNewFolder.
+   ///
+   /// In zh, this message translates to:
+@@ -28643,7 +29231,7 @@ abstract class L10n {
    /// No description provided for @remotePairNeedsDeepSeekBody.
    ///
    /// In zh, this message translates to:
@@ -4881,7 +4910,7 @@ index 8514ee1..fa98ac5 100644
    String get remotePairNeedsDeepSeekBody;
  
    /// No description provided for @remotePairScanHint.
-@@ -28805,7 +29387,7 @@ abstract class L10n {
+@@ -28805,7 +29393,7 @@ abstract class L10n {
    /// No description provided for @remotePairOtherServerBody.
    ///
    /// In zh, this message translates to:
@@ -4890,7 +4919,7 @@ index 8514ee1..fa98ac5 100644
    String remotePairOtherServerBody(String server);
  
    /// No description provided for @remotePairSwitchServer.
-@@ -28823,7 +29405,7 @@ abstract class L10n {
+@@ -28823,7 +29411,7 @@ abstract class L10n {
    /// No description provided for @remotePairErrInvalidCode.
    ///
    /// In zh, this message translates to:
@@ -4899,7 +4928,7 @@ index 8514ee1..fa98ac5 100644
    String get remotePairErrInvalidCode;
  
    /// No description provided for @remotePairErrOtherServer.
-@@ -29009,7 +29591,7 @@ abstract class L10n {
+@@ -29009,7 +29597,7 @@ abstract class L10n {
    /// No description provided for @riskPetOverlayBody.
    ///
    /// In zh, this message translates to:
@@ -4908,7 +4937,7 @@ index 8514ee1..fa98ac5 100644
    String get riskPetOverlayBody;
  
    /// No description provided for @riskPetOverlayAction.
-@@ -29039,25 +29621,25 @@ abstract class L10n {
+@@ -29039,25 +29627,25 @@ abstract class L10n {
    /// No description provided for @askAiAboutApp.
    ///
    /// In zh, this message translates to:
@@ -4938,7 +4967,7 @@ index 8514ee1..fa98ac5 100644
    String get askAiQuestionOverview;
  
    /// No description provided for @askAiQuestionPhoneControl.
-@@ -29807,7 +30389,7 @@ abstract class L10n {
+@@ -29807,7 +30395,7 @@ abstract class L10n {
    /// No description provided for @searchKwAbout.
    ///
    /// In zh, this message translates to:
@@ -4947,7 +4976,7 @@ index 8514ee1..fa98ac5 100644
    String get searchKwAbout;
  
    /// No description provided for @searchKwPhoneConfirmEntry.
-@@ -31625,7 +32207,7 @@ abstract class L10n {
+@@ -31625,7 +32213,7 @@ abstract class L10n {
    /// No description provided for @shellSkillInstallPrompt.
    ///
    /// In zh, this message translates to:
@@ -4956,7 +4985,7 @@ index 8514ee1..fa98ac5 100644
    String shellSkillInstallPrompt(String skill);
  
    /// No description provided for @shellSkillInstallDirectory.
-@@ -31829,7 +32411,7 @@ abstract class L10n {
+@@ -31829,7 +32417,7 @@ abstract class L10n {
    /// The star prompt's first line. hours is the whole hours of use so far, rounded down; 0 is half an hour (the first ask comes after 30 minutes). The word joiner keeps the ~ on the line of the word before it.
    ///
    /// In zh, this message translates to:
@@ -4965,7 +4994,7 @@ index 8514ee1..fa98ac5 100644
    String starPromptTitle(int hours);
  
    /// No description provided for @starPromptBody.
-@@ -31865,7 +32447,7 @@ abstract class L10n {
+@@ -31865,7 +32453,7 @@ abstract class L10n {
    /// No description provided for @starSettingsTitle.
    ///
    /// In zh, this message translates to:
@@ -4974,7 +5003,7 @@ index 8514ee1..fa98ac5 100644
    String get starSettingsTitle;
  
    /// No description provided for @hubStartPage.
-@@ -31919,7 +32501,7 @@ abstract class L10n {
+@@ -31919,7 +32507,7 @@ abstract class L10n {
    /// No description provided for @stateDiagnosticsSubject.
    ///
    /// In zh, this message translates to:
@@ -4983,7 +5012,7 @@ index 8514ee1..fa98ac5 100644
    String get stateDiagnosticsSubject;
  
    /// No description provided for @stateStoragePermission.
-@@ -32351,31 +32933,31 @@ abstract class L10n {
+@@ -32351,31 +32939,31 @@ abstract class L10n {
    /// No description provided for @stateIconMist.
    ///
    /// In zh, this message translates to:
@@ -5020,7 +5049,7 @@ index 8514ee1..fa98ac5 100644
    String get stateAppDisclaimer;
  
    /// No description provided for @stateWallpaper.
-@@ -34169,7 +34751,7 @@ abstract class L10n {
+@@ -34169,7 +34757,7 @@ abstract class L10n {
    /// No description provided for @appSlogan.
    ///
    /// In zh, this message translates to:
@@ -5029,7 +5058,7 @@ index 8514ee1..fa98ac5 100644
    String get appSlogan;
  
    /// No description provided for @tavernTitle.
-@@ -36131,7 +36713,7 @@ abstract class L10n {
+@@ -36131,7 +36719,7 @@ abstract class L10n {
    /// No description provided for @tavernStorybookMadeWith.
    ///
    /// In zh, this message translates to:
@@ -5038,7 +5067,7 @@ index 8514ee1..fa98ac5 100644
    String get tavernStorybookMadeWith;
  
    /// No description provided for @tavernStorybookContents.
-@@ -38699,7 +39281,7 @@ abstract class L10n {
+@@ -38699,7 +39287,7 @@ abstract class L10n {
    /// No description provided for @updateSettingsOpenFailedMessage.
    ///
    /// In zh, this message translates to:
@@ -5047,7 +5076,7 @@ index 8514ee1..fa98ac5 100644
    String get updateSettingsOpenFailedMessage;
  
    /// No description provided for @updateInstallCancelled.
-@@ -38735,7 +39317,7 @@ abstract class L10n {
+@@ -38735,7 +39323,7 @@ abstract class L10n {
    /// No description provided for @updateSignatureMismatchMessage.
    ///
    /// In zh, this message translates to:
@@ -5056,7 +5085,7 @@ index 8514ee1..fa98ac5 100644
    String get updateSignatureMismatchMessage;
  
    /// No description provided for @updateWrongPackage.
-@@ -38849,7 +39431,7 @@ abstract class L10n {
+@@ -38849,7 +39437,7 @@ abstract class L10n {
    /// No description provided for @updateInstallKeepsData.
    ///
    /// In zh, this message translates to:
@@ -5065,7 +5094,7 @@ index 8514ee1..fa98ac5 100644
    String get updateInstallKeepsData;
  
    /// No description provided for @updateNoCompatiblePackage.
-@@ -38915,7 +39497,7 @@ abstract class L10n {
+@@ -38915,7 +39503,7 @@ abstract class L10n {
    /// No description provided for @updateAllowInstall.
    ///
    /// In zh, this message translates to:
@@ -5074,7 +5103,7 @@ index 8514ee1..fa98ac5 100644
    String get updateAllowInstall;
  
    /// No description provided for @updateAllowInstallMessage.
-@@ -38969,7 +39551,7 @@ abstract class L10n {
+@@ -38969,7 +39557,7 @@ abstract class L10n {
    /// No description provided for @updateExportApkMessage.
    ///
    /// In zh, this message translates to:
@@ -5083,7 +5112,7 @@ index 8514ee1..fa98ac5 100644
    String get updateExportApkMessage;
  
    /// No description provided for @updateExportApkDone.
-@@ -39038,6 +39620,18 @@ abstract class L10n {
+@@ -39038,6 +39626,18 @@ abstract class L10n {
    /// **'正在下载 {percent}%'**
    String updateDownloadingPercent(int percent);
  
@@ -5102,7 +5131,7 @@ index 8514ee1..fa98ac5 100644
    /// No description provided for @usageStatsTitle.
    ///
    /// In zh, this message translates to:
-@@ -39047,13 +39641,13 @@ abstract class L10n {
+@@ -39047,13 +39647,13 @@ abstract class L10n {
    /// No description provided for @usageStatsSection.
    ///
    /// In zh, this message translates to:
@@ -5118,7 +5147,7 @@ index 8514ee1..fa98ac5 100644
    String get usageStatsFooter;
  
    /// No description provided for @usageNoticeBody.
-@@ -39065,7 +39659,7 @@ abstract class L10n {
+@@ -39065,7 +39665,7 @@ abstract class L10n {
    /// No description provided for @usageUpgradeNotice.
    ///
    /// In zh, this message translates to:
@@ -5127,7 +5156,7 @@ index 8514ee1..fa98ac5 100644
    String get usageUpgradeNotice;
  
    /// No description provided for @usageUpgradeLearn.
-@@ -40157,7 +40751,7 @@ abstract class L10n {
+@@ -40157,7 +40757,7 @@ abstract class L10n {
    /// No description provided for @viewTipShareIn.
    ///
    /// In zh, this message translates to:
@@ -5136,7 +5165,7 @@ index 8514ee1..fa98ac5 100644
    String get viewTipShareIn;
  
    /// No description provided for @viewTipShareSelect.
-@@ -40577,7 +41171,7 @@ abstract class L10n {
+@@ -40577,7 +41177,7 @@ abstract class L10n {
    /// No description provided for @viewContinueHeader.
    ///
    /// In zh, this message translates to:
@@ -5145,7 +5174,7 @@ index 8514ee1..fa98ac5 100644
    String viewContinueHeader(String value);
  
    /// No description provided for @viewContinueUser.
-@@ -40673,7 +41267,7 @@ abstract class L10n {
+@@ -40673,7 +41273,7 @@ abstract class L10n {
    /// No description provided for @viewShareLinkText.
    ///
    /// In zh, this message translates to:
@@ -5154,7 +5183,7 @@ index 8514ee1..fa98ac5 100644
    String viewShareLinkText(String first, String second);
  
    /// No description provided for @viewShareEmpty.
-@@ -40697,7 +41291,7 @@ abstract class L10n {
+@@ -40697,7 +41297,7 @@ abstract class L10n {
    /// No description provided for @viewShareFileHint.
    ///
    /// In zh, this message translates to:
@@ -5163,7 +5192,7 @@ index 8514ee1..fa98ac5 100644
    String get viewShareFileHint;
  
    /// No description provided for @viewShareWebHint.
-@@ -42467,7 +43061,7 @@ abstract class L10n {
+@@ -42467,7 +43067,7 @@ abstract class L10n {
    /// No description provided for @workshopMinApp.
    ///
    /// In zh, this message translates to:
@@ -5173,7 +5202,7 @@ index 8514ee1..fa98ac5 100644
  
    /// No description provided for @workshopInstalledVersion.
 diff --git a/app/lib/l10n/gen/app_localizations_en.dart b/app/lib/l10n/gen/app_localizations_en.dart
-index d1173f7..47c1d59 100644
+index d1173f7..88788d3 100644
 --- a/app/lib/l10n/gen/app_localizations_en.dart
 +++ b/app/lib/l10n/gen/app_localizations_en.dart
 @@ -21,10 +21,10 @@ class L10nEn extends L10n {
@@ -6004,7 +6033,17 @@ index d1173f7..47c1d59 100644
  
    @override
    String get remoteErrVersionIncompatible => 'Update DSH or the remote plugin on the host';
-@@ -16509,7 +16821,7 @@ class L10nEn extends L10n {
+@@ -16091,6 +16403,9 @@ class L10nEn extends L10n {
+   @override
+   String get remoteDirectoryAbsolutePath => 'Enter the full path, starting with “/”';
+ 
++  @override
++  String get remoteDirectoryHostAbsolutePath => 'Use a full path';
++
+   @override
+   String get remoteDirectoryNewFolder => 'New folder';
+ 
+@@ -16509,7 +16824,7 @@ class L10nEn extends L10n {
  
    @override
    String get remotePairNeedsDeepSeekBody =>
@@ -6013,7 +6052,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get remotePairScanHint => 'Point the camera at the pairing code the Remote plugin shows on your computer';
-@@ -16601,7 +16913,7 @@ class L10nEn extends L10n {
+@@ -16601,7 +16916,7 @@ class L10nEn extends L10n {
  
    @override
    String remotePairOtherServerBody(String server) {
@@ -6022,7 +6061,7 @@ index d1173f7..47c1d59 100644
    }
  
    @override
-@@ -16611,7 +16923,7 @@ class L10nEn extends L10n {
+@@ -16611,7 +16926,7 @@ class L10nEn extends L10n {
    String get remotePairScanAgain => 'Scan again';
  
    @override
@@ -6031,7 +6070,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get remotePairErrOtherServer => 'This code is from another Remote server';
-@@ -16714,7 +17026,7 @@ class L10nEn extends L10n {
+@@ -16714,7 +17029,7 @@ class L10nEn extends L10n {
  
    @override
    String get riskPetOverlayBody =>
@@ -6040,7 +6079,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get riskPetOverlayAction => 'Open settings';
-@@ -16730,19 +17042,19 @@ class L10nEn extends L10n {
+@@ -16730,19 +17045,19 @@ class L10nEn extends L10n {
  
    @override
    String askAiAboutApp(String question) {
@@ -6064,7 +6103,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get askAiQuestionPhoneControl => 'How does phone control work, and what are the risks?';
-@@ -18232,7 +18544,7 @@ class L10nEn extends L10n {
+@@ -18232,7 +18547,7 @@ class L10nEn extends L10n {
  
    @override
    String shellSkillInstallPrompt(String skill) {
@@ -6073,7 +6112,7 @@ index d1173f7..47c1d59 100644
    }
  
    @override
-@@ -18380,16 +18692,16 @@ class L10nEn extends L10n {
+@@ -18380,16 +18695,16 @@ class L10nEn extends L10n {
      String _temp0 = intl.Intl.pluralLogic(
        hours,
        locale: localeName,
@@ -6094,7 +6133,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get starPromptPlea => 'Pretty please~ It really matters!!';
-@@ -18404,7 +18716,7 @@ class L10nEn extends L10n {
+@@ -18404,7 +18719,7 @@ class L10nEn extends L10n {
    String get starPromptLater => 'Maybe later';
  
    @override
@@ -6103,7 +6142,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get hubStartPage => 'Start page';
-@@ -18435,7 +18747,7 @@ class L10nEn extends L10n {
+@@ -18435,7 +18750,7 @@ class L10nEn extends L10n {
        'The startup token arrived, but the local service port did not become ready. Check the logs.';
  
    @override
@@ -6112,7 +6151,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get stateStoragePermission => 'No storage permission to save to Downloads';
-@@ -18651,19 +18963,19 @@ class L10nEn extends L10n {
+@@ -18651,19 +18966,19 @@ class L10nEn extends L10n {
    String get statePreparing => 'Provisioning';
  
    @override
@@ -6137,7 +6176,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get stateWallpaper => 'Wallpaper';
-@@ -19734,7 +20046,7 @@ class L10nEn extends L10n {
+@@ -19734,7 +20049,7 @@ class L10nEn extends L10n {
    String get stateProviderTokenCountInvalid => 'Enter a number, like 128K';
  
    @override
@@ -6146,7 +6185,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get tavernTitle => 'Tavern';
-@@ -20869,7 +21181,7 @@ class L10nEn extends L10n {
+@@ -20869,7 +21184,7 @@ class L10nEn extends L10n {
    }
  
    @override
@@ -6155,7 +6194,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get tavernStorybookContents => 'Contents';
-@@ -22342,7 +22654,7 @@ class L10nEn extends L10n {
+@@ -22342,7 +22657,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateSettingsOpenFailedMessage =>
@@ -6164,7 +6203,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get updateInstallCancelled => 'Installation cancelled';
-@@ -22362,7 +22674,7 @@ class L10nEn extends L10n {
+@@ -22362,7 +22677,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateSignatureMismatchMessage =>
@@ -6173,7 +6212,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get updateWrongPackage => 'This isn’t a DSH package';
-@@ -22427,7 +22739,7 @@ class L10nEn extends L10n {
+@@ -22427,7 +22742,7 @@ class L10nEn extends L10n {
    String get updateNoReleaseNotes => 'No release notes for this version.';
  
    @override
@@ -6182,7 +6221,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get updateNoCompatiblePackage => 'No package for this phone';
-@@ -22462,7 +22774,7 @@ class L10nEn extends L10n {
+@@ -22462,7 +22777,7 @@ class L10nEn extends L10n {
    String get updateReadyToInstall => 'Verified and ready to install.';
  
    @override
@@ -6191,7 +6230,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get updateAllowInstallMessage =>
-@@ -22491,7 +22803,7 @@ class L10nEn extends L10n {
+@@ -22491,7 +22806,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateExportApkMessage =>
@@ -6200,7 +6239,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String updateExportApkDone(String path) {
-@@ -22532,21 +22844,29 @@ class L10nEn extends L10n {
+@@ -22532,21 +22847,29 @@ class L10nEn extends L10n {
      return 'Downloading $percent%';
    }
  
@@ -6233,7 +6272,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get usageUpgradeLearn => 'Learn more';
-@@ -22691,7 +23011,7 @@ class L10nEn extends L10n {
+@@ -22691,7 +23014,7 @@ class L10nEn extends L10n {
    String get viewBalanceNoAlert => 'Off';
  
    @override
@@ -6242,7 +6281,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get viewBalanceTurnOff => 'Turn off';
-@@ -23304,7 +23624,7 @@ class L10nEn extends L10n {
+@@ -23304,7 +23627,7 @@ class L10nEn extends L10n {
    String get viewTipKeyboard => 'With a keyboard: Ctrl+Enter sends, Esc twice stops';
  
    @override
@@ -6251,7 +6290,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get viewTipShareSelect => 'When sharing a chat, long-press and slide to pick several messages at once';
-@@ -23545,7 +23865,7 @@ class L10nEn extends L10n {
+@@ -23545,7 +23868,7 @@ class L10nEn extends L10n {
  
    @override
    String viewContinueHeader(String value) {
@@ -6260,7 +6299,7 @@ index d1173f7..47c1d59 100644
    }
  
    @override
-@@ -23600,7 +23920,7 @@ class L10nEn extends L10n {
+@@ -23600,7 +23923,7 @@ class L10nEn extends L10n {
  
    @override
    String viewShareLinkText(String first, String second) {
@@ -6269,7 +6308,7 @@ index d1173f7..47c1d59 100644
    }
  
    @override
-@@ -23619,7 +23939,7 @@ class L10nEn extends L10n {
+@@ -23619,7 +23942,7 @@ class L10nEn extends L10n {
    }
  
    @override
@@ -6278,7 +6317,7 @@ index d1173f7..47c1d59 100644
  
    @override
    String get viewShareWebHint => 'Opens in any browser, even offline';
-@@ -24656,7 +24976,7 @@ class L10nEn extends L10n {
+@@ -24656,7 +24979,7 @@ class L10nEn extends L10n {
  
    @override
    String workshopMinApp(String version) {
@@ -6288,7 +6327,7 @@ index d1173f7..47c1d59 100644
  
    @override
 diff --git a/app/lib/l10n/gen/app_localizations_zh.dart b/app/lib/l10n/gen/app_localizations_zh.dart
-index bee7e25..a847f84 100644
+index bee7e25..ec8a323 100644
 --- a/app/lib/l10n/gen/app_localizations_zh.dart
 +++ b/app/lib/l10n/gen/app_localizations_zh.dart
 @@ -19,10 +19,10 @@ class L10nZh extends L10n {
@@ -7073,7 +7112,17 @@ index bee7e25..a847f84 100644
  
    @override
    String get remoteErrVersionIncompatible => '主机上的 DSH 或远程插件需要更新';
-@@ -15682,7 +15977,8 @@ class L10nZh extends L10n {
+@@ -15325,6 +15620,9 @@ class L10nZh extends L10n {
+   @override
+   String get remoteDirectoryAbsolutePath => '从「/」开始写完整路径';
+ 
++  @override
++  String get remoteDirectoryHostAbsolutePath => '请输入完整路径';
++
+   @override
+   String get remoteDirectoryNewFolder => '新建文件夹';
+ 
+@@ -15682,7 +15980,8 @@ class L10nZh extends L10n {
    String get remotePairNeedsDeepSeek => '先登录 DeepSeek 账号';
  
    @override
@@ -7083,7 +7132,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get remotePairScanHint => '对准电脑上 Remote 插件显示的配对二维码';
-@@ -15770,7 +16066,7 @@ class L10nZh extends L10n {
+@@ -15770,7 +16069,7 @@ class L10nZh extends L10n {
  
    @override
    String remotePairOtherServerBody(String server) {
@@ -7092,7 +7141,7 @@ index bee7e25..a847f84 100644
    }
  
    @override
-@@ -15780,7 +16076,7 @@ class L10nZh extends L10n {
+@@ -15780,7 +16079,7 @@ class L10nZh extends L10n {
    String get remotePairScanAgain => '重新扫码';
  
    @override
@@ -7101,7 +7150,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get remotePairErrOtherServer => '这个二维码来自另一个 Remote 服务器';
-@@ -15875,7 +16171,7 @@ class L10nZh extends L10n {
+@@ -15875,7 +16174,7 @@ class L10nZh extends L10n {
    String get riskPetOverlayTitle => '显示在其他应用上层？';
  
    @override
@@ -7110,7 +7159,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get riskPetOverlayAction => '去设置';
-@@ -15891,19 +16187,19 @@ class L10nZh extends L10n {
+@@ -15891,19 +16190,19 @@ class L10nZh extends L10n {
  
    @override
    String askAiAboutApp(String question) {
@@ -7134,7 +7183,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get askAiQuestionPhoneControl => '手机操控是怎么工作的？有什么风险？';
-@@ -16284,7 +16580,7 @@ class L10nZh extends L10n {
+@@ -16284,7 +16583,7 @@ class L10nZh extends L10n {
    String get searchKwPrivacy => '隐私,数据,日志,分享,统计';
  
    @override
@@ -7143,7 +7192,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get searchKwPhoneConfirmEntry => '确认方式,手机操控,免确认';
-@@ -17284,7 +17580,7 @@ class L10nZh extends L10n {
+@@ -17284,7 +17583,7 @@ class L10nZh extends L10n {
  
    @override
    String shellSkillInstallPrompt(String skill) {
@@ -7152,7 +7201,7 @@ index bee7e25..a847f84 100644
    }
  
    @override
-@@ -17407,9 +17703,9 @@ class L10nZh extends L10n {
+@@ -17407,9 +17706,9 @@ class L10nZh extends L10n {
      String _temp0 = intl.Intl.pluralLogic(
        hours,
        locale: localeName,
@@ -7165,7 +7214,7 @@ index bee7e25..a847f84 100644
      );
      return '$_temp0';
    }
-@@ -17430,7 +17726,7 @@ class L10nZh extends L10n {
+@@ -17430,7 +17729,7 @@ class L10nZh extends L10n {
    String get starPromptLater => '下次再说';
  
    @override
@@ -7174,7 +7223,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get hubStartPage => '起始页';
-@@ -17459,7 +17755,7 @@ class L10nZh extends L10n {
+@@ -17459,7 +17758,7 @@ class L10nZh extends L10n {
    String get phoneStartupPortNotReady => '已收到启动标记，但本机服务端口尚未就绪，请查看日志';
  
    @override
@@ -7183,7 +7232,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get stateStoragePermission => '没有存储权限，存不进「下载」';
-@@ -17675,19 +17971,19 @@ class L10nZh extends L10n {
+@@ -17675,19 +17974,19 @@ class L10nZh extends L10n {
    String get statePreparing => '准备中';
  
    @override
@@ -7208,7 +7257,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get stateWallpaper => '壁纸';
-@@ -18690,7 +18986,7 @@ class L10nZh extends L10n {
+@@ -18690,7 +18989,7 @@ class L10nZh extends L10n {
    String get stateProviderTokenCountInvalid => '填写数字，如 128K';
  
    @override
@@ -7217,7 +7266,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get tavernTitle => '酒馆';
-@@ -19764,7 +20060,7 @@ class L10nZh extends L10n {
+@@ -19764,7 +20063,7 @@ class L10nZh extends L10n {
    }
  
    @override
@@ -7226,7 +7275,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get tavernStorybookContents => '目录';
-@@ -21177,7 +21473,7 @@ class L10nZh extends L10n {
+@@ -21177,7 +21476,7 @@ class L10nZh extends L10n {
    String get updateSettingsOpenFailed => '没能打开系统设置';
  
    @override
@@ -7235,7 +7284,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get updateInstallCancelled => '已取消安装';
-@@ -21195,7 +21491,7 @@ class L10nZh extends L10n {
+@@ -21195,7 +21494,7 @@ class L10nZh extends L10n {
    String get updateSignatureMismatch => '签名不一致，不能直接覆盖';
  
    @override
@@ -7244,7 +7293,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get updateWrongPackage => '不是 DSH 的安装包';
-@@ -21258,7 +21554,7 @@ class L10nZh extends L10n {
+@@ -21258,7 +21557,7 @@ class L10nZh extends L10n {
    String get updateNoReleaseNotes => '这个版本没有写更新说明。';
  
    @override
@@ -7253,7 +7302,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get updateNoCompatiblePackage => '没有适合本机的安装包';
-@@ -21293,7 +21589,7 @@ class L10nZh extends L10n {
+@@ -21293,7 +21592,7 @@ class L10nZh extends L10n {
    String get updateReadyToInstall => '校验通过，可以安装了。';
  
    @override
@@ -7262,7 +7311,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get updateAllowInstallMessage => '在系统设置里打开「安装未知应用」，回来后自动继续。';
-@@ -21321,7 +21617,7 @@ class L10nZh extends L10n {
+@@ -21321,7 +21620,7 @@ class L10nZh extends L10n {
  
    @override
    String get updateExportApkMessage =>
@@ -7271,7 +7320,7 @@ index bee7e25..a847f84 100644
  
    @override
    String updateExportApkDone(String path) {
-@@ -21362,20 +21658,28 @@ class L10nZh extends L10n {
+@@ -21362,20 +21661,28 @@ class L10nZh extends L10n {
      return '正在下载 $percent%';
    }
  
@@ -7303,7 +7352,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get usageUpgradeLearn => '了解';
-@@ -22057,7 +22361,7 @@ class L10nZh extends L10n {
+@@ -22057,7 +22364,7 @@ class L10nZh extends L10n {
    String get viewTipKeyboard => '接了键盘：Ctrl+Enter 发送，连按两次 Esc 停止';
  
    @override
@@ -7312,7 +7361,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get viewTipShareSelect => '分享对话时长按再滑动，可以一次选中多条消息';
-@@ -22294,7 +22598,7 @@ class L10nZh extends L10n {
+@@ -22294,7 +22601,7 @@ class L10nZh extends L10n {
  
    @override
    String viewContinueHeader(String value) {
@@ -7321,7 +7370,7 @@ index bee7e25..a847f84 100644
    }
  
    @override
-@@ -22348,7 +22652,7 @@ class L10nZh extends L10n {
+@@ -22348,7 +22655,7 @@ class L10nZh extends L10n {
  
    @override
    String viewShareLinkText(String first, String second) {
@@ -7330,7 +7379,7 @@ index bee7e25..a847f84 100644
    }
  
    @override
-@@ -22365,7 +22669,7 @@ class L10nZh extends L10n {
+@@ -22365,7 +22672,7 @@ class L10nZh extends L10n {
    }
  
    @override
@@ -7339,7 +7388,7 @@ index bee7e25..a847f84 100644
  
    @override
    String get viewShareWebHint => '任何浏览器都能打开，不用联网';
-@@ -23366,7 +23670,7 @@ class L10nZh extends L10n {
+@@ -23366,7 +23673,7 @@ class L10nZh extends L10n {
  
    @override
    String workshopMinApp(String version) {
@@ -8315,7 +8364,7 @@ index f82128e..73d077d 100644
      "placeholders": {
        "version": {
 diff --git a/app/lib/l10n/parts/remote_en.arb b/app/lib/l10n/parts/remote_en.arb
-index 3159f68..d830980 100644
+index 3159f68..2ab60f4 100644
 --- a/app/lib/l10n/parts/remote_en.arb
 +++ b/app/lib/l10n/parts/remote_en.arb
 @@ -38,7 +38,7 @@
@@ -8327,6 +8376,14 @@ index 3159f68..d830980 100644
    "remoteErrVersionIncompatible": "Update DSH or the remote plugin on the host",
    "remoteErrSignInTimeout": "Sign-in timed out",
    "remoteSignInCancelled": "Sign-in cancelled",
+@@ -367,6 +367,7 @@
+   "remoteDirectoryEnterPath": "Enter path",
+   "remoteDirectoryGo": "Go",
+   "remoteDirectoryAbsolutePath": "Enter the full path, starting with “/”",
++  "remoteDirectoryHostAbsolutePath": "Use a full path",
+   "remoteDirectoryNewFolder": "New folder",
+   "remoteDirectoryParentCaption": "In “{name}”",
+   "remoteDirectoryFolderName": "Folder name",
 diff --git a/app/lib/l10n/parts/remote_pairing_en.arb b/app/lib/l10n/parts/remote_pairing_en.arb
 index 1930056..efe4af3 100644
 --- a/app/lib/l10n/parts/remote_pairing_en.arb
@@ -8385,7 +8442,7 @@ index e4ff20d..ae5e05a 100644
    "remotePairErrUnsupported": "这个 Remote 服务器还不支持扫码配对",
    "remotePairErrExpired": "二维码已过期或已经用过了。请在电脑上重新生成二维码",
 diff --git a/app/lib/l10n/parts/remote_zh.arb b/app/lib/l10n/parts/remote_zh.arb
-index f5ed8a2..ad84558 100644
+index f5ed8a2..7964791 100644
 --- a/app/lib/l10n/parts/remote_zh.arb
 +++ b/app/lib/l10n/parts/remote_zh.arb
 @@ -52,7 +52,7 @@
@@ -8397,6 +8454,14 @@ index f5ed8a2..ad84558 100644
    "remoteErrVersionIncompatible": "主机上的 DSH 或远程插件需要更新",
    "remoteErrSignInTimeout": "登录超时",
    "remoteSignInCancelled": "已取消登录",
+@@ -759,6 +759,7 @@
+   "remoteDirectoryEnterPath": "输入路径",
+   "remoteDirectoryGo": "前往",
+   "remoteDirectoryAbsolutePath": "从「/」开始写完整路径",
++  "remoteDirectoryHostAbsolutePath": "请输入完整路径",
+   "remoteDirectoryNewFolder": "新建文件夹",
+   "remoteDirectoryParentCaption": "在「{name}」里",
+   "@remoteDirectoryParentCaption": {
 diff --git a/app/lib/l10n/parts/risk_en.arb b/app/lib/l10n/parts/risk_en.arb
 index 952f07d..857d028 100644
 --- a/app/lib/l10n/parts/risk_en.arb
@@ -16368,10 +16433,10 @@ index b406052..a6887ff 100644
        return NoDshWeb(appL10n.webRelayUnavailable);
      case HostKind.ssh:
 diff --git a/app/lib/ui/workspace/directory_picker.dart b/app/lib/ui/workspace/directory_picker.dart
-index a6c77dc..c7ffdbb 100644
+index a6c77dc..2d748fc 100644
 --- a/app/lib/ui/workspace/directory_picker.dart
 +++ b/app/lib/ui/workspace/directory_picker.dart
-@@ -116,11 +116,11 @@ class DirectoryLocationsSheet extends ConsumerWidget {
+@@ -116,22 +116,22 @@ class DirectoryLocationsSheet extends ConsumerWidget {
          if (!known.contains(p)) p,
      ];
  
@@ -16385,7 +16450,11 @@ index a6c77dc..c7ffdbb 100644
          ),
        );
        if (picked != null && navigator.mounted) navigator.pop(picked);
-@@ -131,7 +131,7 @@ class DirectoryLocationsSheet extends ConsumerWidget {
+     }
+ 
+     Future<void> typePath() async {
+-      final path = await askFolderPath(context);
++      final path = await askFolderPath(context, local: local);
        if (path == null || !context.mounted) return;
        // Without the browser the typed folder is the answer; the host checks it.
        if (canBrowse) {
@@ -16394,7 +16463,35 @@ index a6c77dc..c7ffdbb 100644
        } else {
          Navigator.of(context).pop(path);
        }
-@@ -249,11 +249,12 @@ String levelTitle(DirectoryLevel level, {required bool local}) {
+@@ -196,19 +196,22 @@ class DirectoryLocationsSheet extends ConsumerWidget {
+ }
+ 
+ /// Asks for an absolute folder path.
+-Future<String?> askFolderPath(BuildContext context) async {
++Future<String?> askFolderPath(BuildContext context, {required bool local}) async {
+   final l10n = context.l10n;
+   final path = await showTextPrompt(
+     context,
+     title: l10n.remoteDirectoryEnterPath,
+-    hint: '/root/workspace',
++    hint: local ? '/root/workspace' : null,
++    caption: local ? null : r'C:\Work  ·  /home/work',
+     confirm: l10n.remoteDirectoryGo,
+     mono: true,
+     keyboardType: TextInputType.url,
+-    validate: (v) => v.startsWith('/') ? null : l10n.remoteDirectoryAbsolutePath,
++    validate: (v) {
++      if (absoluteFolderPath(v, local: local) != null) return null;
++      return local ? l10n.remoteDirectoryAbsolutePath : l10n.remoteDirectoryHostAbsolutePath;
++    },
+   );
+-  if (path == null) return null;
+-  return path.length > 1 && path.endsWith('/') ? path.substring(0, path.length - 1) : path;
++  return path == null ? null : absoluteFolderPath(path, local: local);
+ }
+ 
+ /// Asks for a new folder's name.
+@@ -249,11 +252,12 @@ String levelTitle(DirectoryLevel level, {required bool local}) {
  /// The full-page browser: one level of the host's folders at a time.
  /// Pops with the chosen folder's path.
  class DirectoryBrowserPage extends ConsumerStatefulWidget {
@@ -16408,7 +16505,7 @@ index a6c77dc..c7ffdbb 100644
  
    @override
    ConsumerState<DirectoryBrowserPage> createState() => _DirectoryBrowserPageState();
-@@ -336,14 +337,18 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
+@@ -336,14 +340,18 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
      final title = level == null ? l10n.remoteDirectoryPickerTitle : levelTitle(level, local: local);
      final confirmLabel = widget.confirmLabel ?? l10n.remoteDirectoryChoose;
      final canCreate = conn?.client.canCreateDirectories ?? false;
@@ -16429,7 +16526,7 @@ index a6c77dc..c7ffdbb 100644
          action: unavailable ? null : (l10n.commonRetry, () => _open(widget.start, record: false)),
        );
      } else if (level == null) {
-@@ -397,7 +402,7 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
+@@ -397,7 +405,7 @@ class _DirectoryBrowserPageState extends ConsumerState<DirectoryBrowserPage> {
              bottom: 0,
              child: FormBottomBar(
                child: FilledButton(
@@ -16438,6 +16535,26 @@ index a6c77dc..c7ffdbb 100644
                  child: Text(
                    level == null ? confirmLabel : l10n.remoteDirectoryConfirmFolder(confirmLabel, title),
                    maxLines: 1,
+diff --git a/app/lib/ui/workspace/workspace_format.dart b/app/lib/ui/workspace/workspace_format.dart
+index 3892849..e3d12e1 100644
+--- a/app/lib/ui/workspace/workspace_format.dart
++++ b/app/lib/ui/workspace/workspace_format.dart
+@@ -29,6 +29,15 @@ String displayPath(String path, {required bool local, String? home}) {
+   return path;
+ }
+ 
++/// A full path entered on the phone, in the target host's path syntax.
++String? absoluteFolderPath(String path, {required bool local}) {
++  if (path.startsWith('/')) {
++    return path.length > 1 && path.endsWith('/') ? path.substring(0, path.length - 1) : path;
++  }
++  if (!local && RegExp(r'^(?:[A-Za-z]:[/\\]|\\\\[^\\/]+\\[^\\/]+)').hasMatch(path)) return path;
++  return null;
++}
++
+ /// The folder that contains [path] (POSIX), or null at the root.
+ String? parentFolder(String path) {
+   final trimmed = path.length > 1 && path.endsWith('/') ? path.substring(0, path.length - 1) : path;
 diff --git a/app/lib/update/checker.dart b/app/lib/update/checker.dart
 index 64b4d0b..3b0e8c1 100644
 --- a/app/lib/update/checker.dart
@@ -17561,10 +17678,10 @@ index eb78dff..2b164f7 100644
      runClock = () => DateTime(2026, 10, 23, 15, 20);
    });
 diff --git a/app/test/workspace/workspace_flows_test.dart b/app/test/workspace/workspace_flows_test.dart
-index 05a3961..b90f0ae 100644
+index 05a3961..a25f0bc 100644
 --- a/app/test/workspace/workspace_flows_test.dart
 +++ b/app/test/workspace/workspace_flows_test.dart
-@@ -199,6 +199,27 @@ void main() {
+@@ -199,6 +199,53 @@ void main() {
        expect(find.text('这里还没有对话'), findsOneWidget);
      });
  
@@ -17589,10 +17706,36 @@ index 05a3961..b90f0ae 100644
 +      expect(find.text('已有项目 QA'), findsOneWidget);
 +    });
 +
++    testWidgets('a remote Windows folder is sent to the host with its drive and separators', (tester) async {
++      const path = r'C:\Work\已有项目 QA';
++      final host = FakeWorkspaceHost(browse: false, folders: [path]);
++      final connection = workspaceHost(host, local: false);
++      await _pump(tester, const WorkspacesPage(), [
++        ...workspaceOverrides(host, livePrefs: true, connection: connection),
++        activeHostProvider.overrideWith(() => _RemoteHost(connection.hostId!)),
++      ]);
++      await tester.tap(find.text('添加工作区'));
++      await _settle(tester);
++      await tester.tap(find.text('输入路径'));
++      await _settle(tester);
++      await tester.enterText(find.byType(TextField), r'C:Work');
++      await tester.tap(find.text('前往'));
++      await tester.pump();
++      expect(find.text('请输入完整路径'), findsOneWidget);
++      await tester.enterText(find.byType(TextField), path);
++      await tester.tap(find.text('前往'));
++      await _settle(tester);
++      await tester.tap(find.text('添加'));
++      await _settle(tester);
++      expect(host.argsOf('workspace/create').single, {
++        'request': {'path': path},
++      });
++    });
++
      testWidgets('a typed path opens the browser there; a missing one stays put', (tester) async {
        final host = sampleWorkspaceHost();
        await _pump(
-@@ -334,6 +355,15 @@ void main() {
+@@ -334,6 +381,15 @@ void main() {
        await _pump(tester, const DirectoryBrowserPage(), workspaceOverrides(native));
        expect(find.text('这台主机不能在这里浏览文件夹'), findsOneWidget);
        expect(find.text('重试'), findsNothing);
@@ -17608,6 +17751,29 @@ index 05a3961..b90f0ae 100644
      });
    });
  
+diff --git a/app/test/workspace/workspaces_state_test.dart b/app/test/workspace/workspaces_state_test.dart
+index fabfca3..8e81a88 100644
+--- a/app/test/workspace/workspaces_state_test.dart
++++ b/app/test/workspace/workspaces_state_test.dart
+@@ -256,6 +256,18 @@ void main() {
+   });
+ 
+   group('text', () {
++    test('typed folders use the target host path syntax and preserve drive roots', () {
++      for (final path in [r'C:\Work\客户 项目', 'd:/', r'\\server\share\Work']) {
++        expect(absoluteFolderPath(path, local: false), path);
++        expect(absoluteFolderPath(path, local: true), isNull);
++      }
++      for (final path in [r'C:Work', r'\Work', 'relative', r'\\server']) {
++        expect(absoluteFolderPath(path, local: false), isNull);
++      }
++      expect(absoluteFolderPath('/', local: false), '/');
++      expect(absoluteFolderPath('/home/work/', local: true), '/home/work');
++    });
++
+     test('titles: stored, the first-use default, else the folder', () {
+       expect(workspaceTitle(_w('1', 'dsh-app')), 'dsh-app');
+       expect(workspaceTitle(_w('1', 'default-workspace')), '默认工作区');
 diff --git a/app/tool/make_brand_mark.py b/app/tool/make_brand_mark.py
 index 1962f4e..e750aa9 100644
 --- a/app/tool/make_brand_mark.py
