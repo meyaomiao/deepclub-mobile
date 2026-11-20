@@ -1,0 +1,14 @@
+// P0's existing native regression tests. Other upstream unit tests reference
+// phone-control implementations deliberately excluded from the DeepClub APK.
+// This init script only changes the test source set for this explicit invocation.
+gradle.projectsEvaluated {
+    def app = gradle.rootProject.findProject(':app')
+    if (app == null) return
+    app.tasks.matching { it.name == 'compileArm64DebugUnitTestKotlin' }.configureEach {
+        setSource(app.fileTree('src/test/kotlin') {
+            include 'io/github/ccch1mneyyy/dsh_app/runtime/GuestSetupTest.kt'
+            include 'io/github/ccch1mneyyy/dsh_app/icons/PictureShortcutsTest.kt'
+            include 'io/github/ccch1mneyyy/dsh_app/icons/LauncherManifestTest.kt'
+        })
+    }
+}

@@ -275,6 +275,14 @@
     "app/lib/ui/shell/brand_glyph.g.dart": {
       "before_sha256": "816efbf49553ec475f9cd63259e330abdea65f3c4bd6cf0fff833850a79c3a6e",
       "sha256": "6da3c6ddb3d3ab26c108386a7c1bf1343ab99ad10e1aa6bf1aaf9409ef61b081"
+    },
+    "app/test/shell/goldens/brand_mark_dark.png": {
+      "before_sha256": "116057e28983bbc1840b9523b3dac56c602eafaf63870b3fed27ebba0acad4ce",
+      "sha256": "578d6338adced4a67cdd7da2b3c82149dfbabc99b35b1dcf9b9302cadb37a2b4"
+    },
+    "app/test/shell/goldens/brand_mark_light.png": {
+      "before_sha256": "b288b073461dffce18c6f074563ff6033fb2fc16062fe5bae300aaf5589735d4",
+      "sha256": "766d5b43aa392b7b1b517e5790371600523d3afb942d6b11026ccb3ee822f029"
     }
   }
 }

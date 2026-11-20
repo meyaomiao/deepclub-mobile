@@ -26,7 +26,9 @@ EXCLUDED_BRAND = {"app/assets/brand/glyph-dark.svg", "app/assets/brand/glyph-lig
 
 def files(root: Path) -> list[str]:
     result = subprocess.check_output(["git", "-C", str(root), "ls-files", "--cached", "--others", "--exclude-standard", "-z"])
-    return sorted({item.decode() for item in result.split(b"\0") if item})
+    paths = {item.decode() for item in result.split(b"\0") if item}
+    # Finder view metadata is neither build source nor a distributable asset.
+    return sorted(name for name in paths if Path(name).name != ".DS_Store")
 
 
 def add_bytes(archive, name, data, mode=0o644):

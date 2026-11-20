@@ -18,7 +18,7 @@ class PhonePlugin : FlutterPlugin {
             channel.setMethodCallHandler { call, result ->
                 when (call.method) {
                     "status", "getStatus" -> result.success(status)
-                    else -> result.error("feature_not_available", "Phone control is not included in DeepClub Agent.", null)
+                    else -> result.error("feature_not_available", "Phone control is not included in DeepClub.", null)
                 }
             }
         }

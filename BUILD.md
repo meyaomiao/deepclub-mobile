@@ -22,10 +22,30 @@ flutter pub get --enforce-lockfile
 python3 tool/l10n_merge.py
 python3 tool/l10n_merge.py --check
 flutter analyze --no-pub
-flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart
+flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart \
+  test/icons/app_icons_test.dart test/arch/import_direction_test.dart
 ```
 
-主机行为测试不依赖 Linux 金图字体。上游原品牌、退休功能和金图测试仍属于原产品矩阵，不用本首版的通过记录替代它们。新增 Kotlin cleanup/ownership/launch-guard 与 GuestSetup 的测试按验证记录独立编译执行；完整 Gradle 单测源集仍包含引用已排除 phone 实现的历史测试，不宣称全量通过。
+UI 几何、图标与截图使用真实 Noto CJK Light / Regular / Bold 字体。Linux 可安装 `fonts-noto-cjk` 和 `fonts-noto-cjk-extra`，并设置 `DSH_TEST_FONT_DIR=/usr/share/fonts/opentype/noto`；其它平台将该变量指向包含三个对应 TTC 的目录，`FLUTTER_ROOT` 指向固定 Flutter SDK。不用 Regular 冒充其它字重，也不以缺字方框作为通过证据。
+
+显式生成准备页与账户页的截图矩阵：
+
+```sh
+flutter test --no-pub --update-goldens \
+  --dart-define=DEEPCLUB_FULL_MATRIX=true test/deepclub/ui_capture.dart
+```
+
+该入口渲染真实生产组件、注入合成状态，输出按宿主平台分目录保存，需人工看图；它是组件截图，不能替代 Android 模拟器或真机验收。常规测试覆盖相同的状态、几何和交互，不跨平台盲目重写像素基线。上游退休功能和其它历史金图仍属于原产品矩阵，不以本批检查代替全量通过。Kotlin cleanup/ownership/launch-guard、GuestSetup 与品牌测试按验证记录执行；完整 Gradle 单测源集仍包含引用已排除 phone 实现的历史测试，不宣称全量通过。
+
+本批 Android 原生品牌回归可从准备树的 `app/android/` 运行（`<adaptation>` 指本改造层仓库）：
+
+```sh
+./gradlew testArm64DebugUnitTest \
+  -I <adaptation>/scripts/test-native-brand.gradle \
+  -x compileFlutterBuildArm64Debug --console=plain
+```
+
+这会编译真实原生源码，运行 GuestSetup、LauncherManifest 和 PictureShortcuts 三组已有测试；显式跳过 Flutter 编译，因此不能当作完整 APK 构建。完整上游原生测试源集仍不在本批通过范围。
 
 ## 准备运行时
 

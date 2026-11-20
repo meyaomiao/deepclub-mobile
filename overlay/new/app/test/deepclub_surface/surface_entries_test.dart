@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dsh_app/deepclub/account_page.dart';
+import 'package:dsh_app/ui/settings/deepclub_account_page.dart';
 import 'package:dsh_app/l10n/l10n.dart';
 import 'package:dsh_app/share_code/conversation_share.dart';
 import 'package:dsh_app/share_code/share_codec.dart';
@@ -354,7 +354,7 @@ void main() {
     const selected = ModelSelection(provider: 'deepclub-deepseek', model: 'deepseek-v4-pro');
     container.read(pendingModelProvider.notifier).select(selected);
     await tester.pump();
-    expect(find.text('当前模型暂不可用，请刷新账户或选择其他模型'), findsOneWidget);
+    expect(find.text('当前模型暂不可用，请刷新账号或选择其他模型'), findsOneWidget);
     expect(find.text(appL10n.deepClubAccount), findsOneWidget);
     expect(find.text(appL10n.chatErrTurn), findsNothing);
     expect(find.text('retry'), findsNothing);

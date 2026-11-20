@@ -26,6 +26,20 @@ jobs:
           python3 -m py_compile scripts/*.py
           python3 scripts/prepare.py --checkout .work/dsh-go
           git -C .work/dsh-go diff --check
+          python3 - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          source = Path('.work/dsh-go')
+          expected = json.loads(Path('overlay/source-state.json').read_text())
+          changed = subprocess.check_output(['git', 'diff', '--name-only', '--no-renames', '-z', 'HEAD'], cwd=source)
+          added = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard', '-z'], cwd=source)
+          assert {p.decode() for p in (changed + added).split(b'\0') if p} == set(expected)
+          for name, digest in expected.items():
+              path = source / name
+              actual = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+              assert actual == digest, name
+          print(f'Clean source reconstruction verified: {len(expected)} entries')
+          PY
       - name: Install pinned Flutter
         env:
           FLUTTER_ARCHIVE_SHA256: af7455f540df951184c7953fbe3cf884766e7541dacf8571f9f582db03dd6230
@@ -46,9 +60,23 @@ jobs:
       - name: Analyze the complete application
         working-directory: .work/dsh-go/app
         run: flutter analyze --no-pub
-      - name: Verify account and first-release behavior
+      - name: Install real fonts for UI and icon checks
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk fonts-noto-cjk-extra
+      - name: Verify account, preparation UI, icons and architecture
         working-directory: .work/dsh-go/app
-        run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart
+        env:
+          DSH_TEST_FONT_DIR: /usr/share/fonts/opentype/noto
+        run: flutter test --no-pub test/deepclub test/deepclub_surface test/brand/site_update_test.dart test/icons/app_icons_test.dart test/arch/import_direction_test.dart
+      - name: Keep icon golden comparison evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: icon-golden-failures
+          path: .work/dsh-go/app/test/icons/failures/*.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Check local conversation viewer
         working-directory: .work/dsh-go
         run: |
