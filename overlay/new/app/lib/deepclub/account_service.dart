@@ -13,6 +13,8 @@ class DeepClubSession {
     this.apiKey,
     this.revision,
     this.initialChoiceDone = false,
+    this.remoteOnly = false,
+    this.binding = '',
   });
   factory DeepClubSession.fromJson(Map<String, Object?> data) => DeepClubSession(
     token: requiredText(data, 'session_token'),
@@ -21,13 +23,16 @@ class DeepClubSession {
     apiKey: data['api_key'] as String?,
     revision: data['revision'] as String?,
     initialChoiceDone: data['initial_choice_done'] == true,
+    remoteOnly: data['client_type'] == 'android_remote' || data['remote_only'] == true,
+    binding: data['binding'] as String? ?? '',
   );
   final String token;
   final DateTime expiresAt;
   final Map<String, Object?> user;
   final String? apiKey;
   final String? revision;
-  final bool initialChoiceDone;
+  final bool initialChoiceDone, remoteOnly;
+  final String binding;
   DeepClubSession copyWith({String? apiKey, String? revision, DateTime? expiresAt, bool? initialChoiceDone}) =>
       DeepClubSession(
         token: token,
@@ -36,6 +41,8 @@ class DeepClubSession {
         apiKey: apiKey ?? this.apiKey,
         revision: revision ?? this.revision,
         initialChoiceDone: initialChoiceDone ?? this.initialChoiceDone,
+        remoteOnly: remoteOnly,
+        binding: binding,
       );
   Map<String, Object?> toJson() => {
     'session_token': token,
@@ -44,6 +51,8 @@ class DeepClubSession {
     'api_key': apiKey,
     'revision': revision,
     'initial_choice_done': initialChoiceDone,
+    'remote_only': remoteOnly,
+    'binding': binding,
   };
 }
 
@@ -51,6 +60,8 @@ class DeepClubSession {
 class DeepClubAccountState {
   const DeepClubAccountState({
     this.loaded = false,
+    this.remoteOnly = false,
+    this.binding = '',
     this.busy = false,
     this.signedIn = false,
     this.awaitingBrowser = false,
@@ -64,6 +75,8 @@ class DeepClubAccountState {
     this.config,
     this.error,
   });
+  final bool remoteOnly;
+  final String binding;
   final bool loaded, busy, signedIn, awaitingBrowser, require2fa, engineReady, cleanupBlocked, serverNotRevoked;
   final Map<String, Object?> user;
   final Map<String, Object?>? bootstrap;
@@ -103,6 +116,7 @@ class DeepClubAccountService {
   Future<void> _tail = Future.value();
   DeepClubSession? _session;
   String? _pending2fa;
+  bool _remoteOnly = false;
   bool _loaded = false,
       _busy = false,
       _awaiting = false,
@@ -118,6 +132,8 @@ class DeepClubAccountService {
   String? _keyValue;
   DeepClubAccountState get state => DeepClubAccountState(
     loaded: _loaded,
+    remoteOnly: _session?.remoteOnly ?? _remoteOnly,
+    binding: _session?.binding ?? '',
     busy: _busy,
     signedIn: _session != null,
     awaitingBrowser: _awaiting,
@@ -135,7 +151,7 @@ class DeepClubAccountService {
     if (!_changes.isClosed) _changes.add(state);
   }
 
-  Future<T> _run<T>(Future<T> Function() operation) {
+  Future<T> _run<T>(Future<T> Function() operation, {bool invalidateSession = true}) {
     final result = _tail.then((_) async {
       _busy = true;
       _error = null;
@@ -144,9 +160,9 @@ class DeepClubAccountService {
         return await operation();
       } catch (error) {
         _error = error is DeepClubFailure
-            ? (error.invalidSession ? 'session_expired' : error.code)
+            ? (invalidateSession && error.invalidSession ? 'session_expired' : error.code)
             : 'operation_failed';
-        if (error is DeepClubFailure && error.invalidSession && _session != null) {
+        if (invalidateSession && error is DeepClubFailure && error.invalidSession && _session != null) {
           try {
             await _clearLocal();
           } catch (_) {
@@ -181,6 +197,7 @@ class DeepClubAccountService {
 
   Future<void> restore() => _run(() async {
     try {
+      _remoteOnly = await store.read('remote_only') == '1';
       _serverNotRevoked = await store.read('server_not_revoked') == '1';
       // The marker is committed before any logout cleanup. A killed process
       // cannot revive its old secure-storage session on the next launch.
@@ -188,6 +205,20 @@ class DeepClubAccountService {
         await _clearLocal();
       } else if (await store.read('session') case final raw?) {
         _session = DeepClubSession.fromJson(jsonObject(jsonDecode(raw)));
+        _remoteOnly = _session!.remoteOnly;
+        // Migrate the former split key to the identity already authorized by the
+        // server. Never generate a new identity to recover a remote session.
+        final legacy = await store.read('remote_device_id');
+        if (_remoteOnly && legacy != null) {
+          await store.write('device_id', legacy);
+          await store.delete('remote_device_id');
+        }
+        if (_session!.binding.isEmpty) {
+          // Pre-remote Android sessions have no pairings to revive. Give that
+          // existing authorization one stable binding without reissuing its Key.
+          _session = DeepClubSession.fromJson({..._session!.toJson(), 'binding': secureUrlToken()});
+          await _save();
+        }
       }
       _awaiting = await store.read('pkce') != null;
       if (_session != null) await _synchronize();
@@ -199,14 +230,21 @@ class DeepClubAccountService {
   Future<Map<String, String>> _device() async {
     var id = await store.read('device_id');
     if (id == null) {
-      id = secureUrlToken();
+      if (_session != null) throw const DeepClubFailure('installation_identity_missing');
+      id = secureDeviceId();
       await store.write('device_id', id);
     }
-    return {'device_id': id, 'device_name': 'DeepClub Android', 'platform': 'android', 'app_version': appVersion};
+    return {
+      'device_id': id,
+      'device_name': 'DeepClub Android',
+      'platform': 'android',
+      'app_version': appVersion,
+      'client_type': _remoteOnly ? 'android_remote' : 'agent',
+    };
   }
 
   Future<Uri> beginBrowserLogin() => _run(() async {
-    final pending = PendingAuthorization.create();
+    final pending = PendingAuthorization.create(remoteOnly: _remoteOnly);
     await store.write('pkce', pending.encode());
     _pending2fa = null;
     _awaiting = true;
@@ -223,6 +261,11 @@ class DeepClubAccountService {
     final raw = await store.read('pkce');
     if (raw == null) throw const DeepClubFailure('authorization_expired');
     final pending = PendingAuthorization.decode(raw);
+    if (pending.isUpgrade && (_session?.remoteOnly != true || _session?.binding != pending.upgradeBinding)) {
+      await store.delete('pkce');
+      _awaiting = false;
+      throw const DeepClubFailure('authorization_expired');
+    }
     final String code;
     try {
       code = pending.codeFrom(uri);
@@ -242,14 +285,31 @@ class DeepClubAccountService {
       '/api/client/token',
       body: {
         'grant_type': 'authorization_code',
-        'client_id': deepClubClientId,
+        'client_id': pending.clientId,
+        if (pending.isUpgrade) 'client_type': 'agent',
         'redirect_uri': deepClubRedirect,
         'code': code,
         'code_verifier': pending.verifier,
       },
     );
+    // Fully parse before changing the requested mode. A malformed exchange
+    // response must leave both the source session and its device type intact.
+    final candidate = DeepClubSession.fromJson({...reply.object, 'remote_only': pending.remoteOnly});
+    if (pending.isUpgrade) {
+      final data = reply.object;
+      if (data['client_type'] != 'agent' ||
+          data['device_id'] != pending.deviceId ||
+          candidate.user['id'] is! int ||
+          candidate.user['id'] != _session!.user['id'] ||
+          candidate.apiKey == null ||
+          candidate.apiKey!.isEmpty) {
+        throw const DeepClubFailure('invalid_upgrade_response');
+      }
+    }
+    _remoteOnly = pending.remoteOnly;
     await _acceptSession(reply.object);
-  });
+    await store.write('remote_only', _remoteOnly ? '1' : '0');
+  }, invalidateSession: false);
 
   Future<void> loginWithPassword(String username, String password, {List<int> revokeSessionIds = const []}) =>
       _run(() async {
@@ -291,7 +351,12 @@ class DeepClubAccountService {
     // Finish any failed previous-account cleanup before making a new key usable.
     if (await store.read('cleanup') != null) await _clearLocal();
     await store.delete('cleanup');
-    _session = DeepClubSession.fromJson(data);
+    final type = data['client_type'];
+    if ((type != null && type != (_remoteOnly ? 'android_remote' : 'agent')) ||
+        (_remoteOnly && data['api_key'] != null)) {
+      throw const DeepClubFailure('invalid_client_type');
+    }
+    _session = DeepClubSession.fromJson({...data, 'remote_only': _remoteOnly, 'binding': secureUrlToken()});
     await store.delete('server_not_revoked');
     _serverNotRevoked = false;
     _ready = false;
@@ -302,21 +367,23 @@ class DeepClubAccountService {
   Future<void> synchronize() => _run(_synchronize);
   Future<void> _synchronize() async {
     if (_session == null) return;
-    if (_session!.apiKey == null) {
+    if (!_session!.remoteOnly && _session!.apiKey == null) {
       final provision = await _authenticated('POST', '/api/client/provision', body: {});
       _session = _session!.copyWith(apiKey: requiredText(provision.object, 'api_key'));
       await _save();
     }
     // Validate the current session/Key before healing a local credential.
-    _config = DeepClubAgentConfig.fromJson((await _authenticated('GET', '/api/client/agent-config')).data);
-    await _applyToLocal();
+    if (!_session!.remoteOnly) {
+      _config = DeepClubAgentConfig.fromJson((await _authenticated('GET', '/api/client/agent-config')).data);
+      await _applyToLocal();
+    }
     _bootstrap = (await _authenticated('GET', '/api/client/bootstrap')).object;
     await _loadDevices();
   }
 
   Future<void> localEngineConnected() => _run(() async {
     if (await store.read('cleanup') != null) await _clearLocal();
-    if (_session != null) {
+    if (_session != null && !_session!.remoteOnly) {
       // A failed startup fetch leaves no validated config. Recheck on connect.
       if (_config == null) {
         await _synchronize();
@@ -382,6 +449,7 @@ class DeepClubAccountService {
   });
 
   Future<void> _clearLocal() async {
+    final remoteSession = _session?.remoteOnly ?? _remoteOnly;
     _cleanupBlocked = true;
     _session = null;
     _config = null;
@@ -410,6 +478,12 @@ class DeepClubAccountService {
       storageFailed = true;
     }
     try {
+      if (remoteSession) {
+        if (storageFailed) throw const DeepClubFailure('cleanup_failed');
+        await store.delete('cleanup');
+        _cleanupBlocked = false;
+        return;
+      }
       final engine = localEngine();
       if (engine != null) {
         try {
@@ -434,6 +508,100 @@ class DeepClubAccountService {
       throw const DeepClubFailure('cleanup_failed');
     }
   }
+
+  Future<void> setRemoteOnly(bool value) => _run(() async {
+    if (_session != null || _awaiting || _pending2fa != null) throw const DeepClubFailure('login_required');
+    _remoteOnly = value;
+    await store.write('remote_only', value ? '1' : '0');
+    _ready = false;
+  });
+
+  /// A source-session-bound intent requires explicit browser consent. The old
+  /// remote authorization, binding and installation survive until token exchange.
+  Future<Uri> enableLocal() => _run(() async {
+    final session = _session;
+    if (session == null || !session.remoteOnly) throw const DeepClubFailure('login_required');
+    final pending = PendingAuthorization.create(
+      upgradeBinding: session.binding,
+      deviceId: (await _device())['device_id'],
+    );
+    final reply = await _authenticated(
+      'POST',
+      '/api/client/agent-upgrade/intents',
+      body: {
+        'state': pending.state,
+        'code_challenge': pkceChallenge(pending.verifier),
+        'code_challenge_method': 'S256',
+        'redirect_uri': deepClubRedirect,
+      },
+    );
+    final relative = Uri.tryParse(requiredText(reply.object, 'authorize_url'));
+    // A browser never receives the source session. Only the fixed site's
+    // authorization page may consume the opaque intent returned by its API.
+    if (relative == null ||
+        relative.hasScheme ||
+        relative.hasAuthority ||
+        relative.path != '/client/authorize' ||
+        relative.hasFragment ||
+        relative.queryParametersAll.values.any((values) => values.length != 1) ||
+        relative.queryParameters.keys.any(
+          (key) => !const {
+            'client_id',
+            'client_type',
+            'upgrade_intent',
+            'redirect_uri',
+            'state',
+            'code_challenge',
+            'code_challenge_method',
+            'device_id',
+            'device_name',
+            'platform',
+            'app_version',
+          }.contains(key),
+        ) ||
+        relative.queryParameters['client_id'] != pending.clientId ||
+        relative.queryParameters['client_type'] != 'agent' ||
+        relative.queryParameters['code_challenge_method'] != 'S256' ||
+        relative.queryParameters['state'] != pending.state ||
+        relative.queryParameters['code_challenge'] != pkceChallenge(pending.verifier) ||
+        relative.queryParameters['redirect_uri'] != deepClubRedirect ||
+        relative.queryParameters['upgrade_intent'] != requiredText(reply.object, 'intent')) {
+      throw const DeepClubFailure('invalid_response');
+    }
+    await store.write('pkce', pending.encode());
+    _pending2fa = null;
+    _awaiting = true;
+    return Uri.parse(deepClubServiceOrigin).resolveUri(relative);
+  }, invalidateSession: false);
+
+  Future<String> remoteAssertion(String gatewayId, String hostKey, String purpose) => _run(() async {
+    if (purpose != 'pair' && purpose != 'connect') throw const DeepClubFailure('invalid_endpoint');
+    final reply = await _authenticated(
+      'POST',
+      '/api/client/remote/assertion',
+      body: {'gateway_id': gatewayId, 'host_key': hostKey, 'purpose': purpose},
+    );
+    final proof = requiredText(reply.object, 'assertion');
+    final expiry = DateTime.tryParse(requiredText(reply.object, 'expires_at'));
+    // Allow a small clock skew; the server is authoritative when consuming it.
+    final now = DateTime.now().toUtc();
+    if (!RegExp(r'^[A-Za-z0-9_-]{43}$').hasMatch(proof) ||
+        expiry == null ||
+        !expiry.isUtc ||
+        expiry.isBefore(now.subtract(const Duration(seconds: 5))) ||
+        expiry.isAfter(now.add(const Duration(seconds: 130)))) {
+      throw const DeepClubFailure('invalid_response');
+    }
+    return proof;
+  });
+
+  /// Used only by the fixed DeepClub relay; never sent to a desktop endpoint.
+  String relaySession() {
+    if (_session == null) throw const DeepClubFailure('login_required');
+    return _session!.token;
+  }
+
+  Future<Map<String, String>> remoteDevice() => _device();
 
   Future<void> retryCleanup() => _run(_clearLocal);
   Future<void> close() => _changes.close();

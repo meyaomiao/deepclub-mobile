@@ -39,8 +39,8 @@ Map<String, Object?> configJson({String revision = 'sha256:first', bool empty = 
   },
   if (!empty) 'recommendation': {'provider': 'deepclub-claude', 'model': 'claude-sonnet-5.5'},
 };
-Map<String, Object?> sessionJson({bool withKey = true}) => {
-  'session_token': 'synthetic-session',
+Map<String, Object?> sessionJson({bool withKey = true, String token = 'synthetic-session'}) => {
+  'session_token': token,
   'expires_at': '2099-01-01T00:00:00Z',
   if (withKey) 'api_key': 'synthetic-model-key',
   if (withKey) 'token_id': 123,
@@ -90,7 +90,8 @@ class FakeEngine implements DeepClubEngine {
 }
 
 class ServiceRig {
-  ServiceRig({MemoryStore? storage, this.connected = true}) : store = storage ?? MemoryStore() {
+  ServiceRig({MemoryStore? storage, this.connected = true, this.sessionToken = 'synthetic-session'})
+    : store = storage ?? MemoryStore() {
     api = DeepClubApi(
       client: MockClient((request) async {
         requests.add(request);
@@ -99,8 +100,8 @@ class ServiceRig {
           if (response != null) return response;
         }
         final data = switch (request.url.path) {
-          '/api/client/token' => sessionJson(),
-          '/api/client/login' || '/api/client/login/2fa' => sessionJson(withKey: false),
+          '/api/client/token' => sessionJson(token: sessionToken),
+          '/api/client/login' || '/api/client/login/2fa' => sessionJson(withKey: false, token: sessionToken),
           '/api/client/provision' => {
             'api_key': 'synthetic-model-key',
             'token_id': 123,
@@ -133,6 +134,7 @@ class ServiceRig {
     );
   }
   final MemoryStore store;
+  final String sessionToken;
   final engine = FakeEngine();
   late final DeepClubApi api;
   late final DeepClubAccountService service;

@@ -31,29 +31,71 @@ String secureUrlToken() {
   return base64UrlEncode(List<int>.generate(32, (_) => random.nextInt(256))).replaceAll('=', '');
 }
 
+/// A backend-valid installation identity, distinct from session bindings.
+String secureDeviceId() {
+  final random = Random.secure();
+  final bytes = List<int>.generate(16, (_) => random.nextInt(256));
+  bytes[6] = (bytes[6] & 15) | 64;
+  bytes[8] = (bytes[8] & 63) | 128;
+  final hex = bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+  return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20)}';
+}
+
 String pkceChallenge(String verifier) =>
     base64UrlEncode(sha256.convert(ascii.encode(verifier)).bytes).replaceAll('=', '');
 
 class PendingAuthorization {
-  const PendingAuthorization({required this.state, required this.verifier, required this.createdAt});
-  factory PendingAuthorization.create() =>
-      PendingAuthorization(state: secureUrlToken(), verifier: secureUrlToken(), createdAt: DateTime.now().toUtc());
+  const PendingAuthorization({
+    required this.state,
+    required this.verifier,
+    required this.createdAt,
+    this.remoteOnly = false,
+    this.upgradeBinding,
+    this.deviceId,
+  });
+  factory PendingAuthorization.create({bool remoteOnly = false, String? upgradeBinding, String? deviceId}) =>
+      PendingAuthorization(
+        state: secureUrlToken(),
+        verifier: secureUrlToken(),
+        createdAt: DateTime.now().toUtc(),
+        remoteOnly: remoteOnly,
+        upgradeBinding: upgradeBinding,
+        deviceId: deviceId,
+      );
   factory PendingAuthorization.decode(String value) {
     final data = jsonObject(jsonDecode(value));
     return PendingAuthorization(
       state: requiredText(data, 'state'),
       verifier: requiredText(data, 'verifier'),
       createdAt: DateTime.parse(requiredText(data, 'created_at')),
+      remoteOnly: data['remote_only'] == true,
+      upgradeBinding: data['upgrade_binding'] as String?,
+      deviceId: data['device_id'] as String?,
     );
   }
+  final bool remoteOnly;
+  final String? upgradeBinding, deviceId;
+  bool get isUpgrade => upgradeBinding != null;
+  String get clientId => isUpgrade
+      ? 'deepclub-android-agent-upgrade-v1'
+      : remoteOnly
+      ? 'deepclub-android-remote'
+      : deepClubClientId;
   final String state;
   final String verifier;
   final DateTime createdAt;
-  String encode() => jsonEncode({'state': state, 'verifier': verifier, 'created_at': createdAt.toIso8601String()});
+  String encode() => jsonEncode({
+    'state': state,
+    'verifier': verifier,
+    'created_at': createdAt.toIso8601String(),
+    'remote_only': remoteOnly,
+    if (isUpgrade) 'upgrade_binding': upgradeBinding,
+    if (isUpgrade) 'device_id': deviceId,
+  });
 
   Uri authorizeUri(Map<String, String> device) => Uri.parse('$deepClubServiceOrigin/client/authorize').replace(
     queryParameters: {
-      'client_id': deepClubClientId,
+      'client_id': clientId,
       'redirect_uri': deepClubRedirect,
       'code_challenge_method': 'S256',
       'code_challenge': pkceChallenge(verifier),
@@ -73,7 +115,11 @@ class PendingAuthorization {
     }
     if (!_equal(uri.queryParameters['state'] ?? '', state)) throw const DeepClubFailure('invalid_state');
     final age = (now ?? DateTime.now()).difference(createdAt);
-    if (age.isNegative || age > const Duration(minutes: 10)) throw const DeepClubFailure('authorization_expired');
+    // Upgrade intent has 5 minutes to consent, followed by a fresh 5-minute
+    // code window. The token endpoint enforces each authoritative deadline.
+    if (age.isNegative || age > const Duration(minutes: 10)) {
+      throw const DeepClubFailure('authorization_expired');
+    }
     if (uri.queryParameters.containsKey('error')) throw const DeepClubFailure('authorization_denied');
     final code = uri.queryParameters['code'];
     if (code == null || code.isEmpty || code.length > 512) throw const DeepClubFailure('invalid_callback');

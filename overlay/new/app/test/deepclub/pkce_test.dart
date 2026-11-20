@@ -59,6 +59,7 @@ void main() {
         'device_name',
         'platform',
         'app_version',
+        'client_type',
       ]),
       reason: 'the web authorization page accepts this exact strict field set',
     );

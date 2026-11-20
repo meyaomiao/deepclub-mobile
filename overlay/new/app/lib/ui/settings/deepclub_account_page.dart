@@ -10,6 +10,7 @@ import '../common/app_sheet.dart';
 import '../common/overview_card.dart';
 import '../common/status_chip.dart';
 import '../onboarding/deepclub_loading.dart';
+import '../onboarding/local_install.dart';
 import '../shell/page_frame.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
@@ -48,12 +49,14 @@ class DeepClubAccountOverview extends ConsumerWidget {
         account.signedIn ? l10n.deepClubBalance(_balance(account.bootstrap)) : l10n.deepClubSignInToContinue,
       ),
       footer: OverviewFooter(
-        tone: account.engineReady
+        tone: account.engineReady || account.signedIn && account.remoteOnly
             ? StatusTone.ok
             : account.error != null
             ? StatusTone.error
             : StatusTone.idle,
-        text: account.engineReady
+        text: account.signedIn && account.remoteOnly
+            ? l10n.deepClubRemoteReady
+            : account.engineReady
             ? l10n.deepClubConnected
             : account.signedIn
             ? l10n.deepClubPreparing
@@ -117,8 +120,17 @@ class DeepClubAccountPage extends ConsumerWidget {
                   icon: AppIcons.localOnly,
                   tinted: false,
                   title: l10n.deepClubThisDevice,
-                  subtitle: l10n.deepClubLocalCredentialsOnly,
+                  subtitle: account.remoteOnly ? l10n.deepClubRemoteCredentialsOnly : l10n.deepClubLocalCredentialsOnly,
                 ),
+                if (account.remoteOnly)
+                  SettingsTile(
+                    key: const ValueKey('deepclub-install-local'),
+                    icon: AppIcons.engine,
+                    tinted: false,
+                    title: l10n.deepClubInstallLocal,
+                    subtitle: l10n.deepClubLocalNotInstalled,
+                    onTap: account.busy ? null : () => openLocalInstall(context),
+                  ),
                 if (account.error != null)
                   SettingsTile(
                     key: const ValueKey('deepclub-account-error'),
@@ -131,7 +143,7 @@ class DeepClubAccountPage extends ConsumerWidget {
                   active: account.busy,
                   builder: (context, visible) => SettingsTile(
                     key: const ValueKey('deepclub-account-refresh'),
-                    title: l10n.deepClubRefresh,
+                    title: account.remoteOnly ? l10n.deepClubRefreshAccount : l10n.deepClubRefresh,
                     icon: AppIcons.refresh,
                     tinted: false,
                     chevron: false,
@@ -337,7 +349,7 @@ class _DeepClubLoginPanelState extends ConsumerState<DeepClubLoginPanel> {
               children: [
                 Text(l10n.deepClubLoginTitle, style: Theme.of(context).textTheme.headlineSmall),
                 const SizedBox(height: AppSpace.md),
-                Text(l10n.deepClubLoginDescription),
+                Text(account.remoteOnly ? l10n.deepClubRemoteLoginDescription : l10n.deepClubLoginDescription),
                 const SizedBox(height: AppSpace.xxl),
                 if (account.serverNotRevoked)
                   Padding(
@@ -387,6 +399,12 @@ class _DeepClubLoginPanelState extends ConsumerState<DeepClubLoginPanel> {
                       child: Text(l10n.deepClubCancel),
                     ),
                   ],
+                  if (!account.awaitingBrowser && !account.require2fa)
+                    TextButton(
+                      key: const ValueKey('deepclub-remote-only'),
+                      onPressed: account.busy ? null : () => _run(() => service.setRemoteOnly(!account.remoteOnly)),
+                      child: Text(account.remoteOnly ? l10n.deepClubUseLocal : l10n.deepClubRemoteOnly),
+                    ),
                   TextButton(
                     onPressed: account.busy ? null : () => setState(() => _passwordMode = !_passwordMode),
                     child: Text(l10n.deepClubPasswordLogin),

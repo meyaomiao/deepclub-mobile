@@ -12,13 +12,17 @@
 - 深云媒体与 embedding 工具：按授权目录启用，付费请求走审批，收费 POST 不自动重试，视频轮询为真实本地后台任务。
 - 账户余额、设备管理、公告和本站 Android 更新信息；本地分享、文件及终端保留。
 - 准备页按登录、运行环境、引擎、模型四个阶段显示单一进度，失败时只保留一个重试入口；账户页复用设置卡片，刷新不插入整页进度条。
-- 默认关闭原 DeepSeek 账号引导、遥测、论坛/市场、托管分享、桌宠/伙伴及未接代理的内置联网搜索。`web_fetch` 保留，SSH/Direct 连接电脑放在高级入口。
+- 默认关闭原 DeepSeek 账号引导、遥测、论坛/市场、托管分享、桌宠/伙伴及未接代理的内置联网搜索。`web_fetch` 保留；普通连接入口只显示深云扫码与我的电脑，不提供 SSH/接口地址/API Key 表单。
+- 统一二维码、相册识别、粘贴与深链配对；使用受限原生通道复用电脑上的工作区、会话、文件、终端与审批。只连接电脑登录跳过本机运行环境和模型配置。
+- 只连接电脑的 Android 设备可通过浏览器明确授权启用本机 Agent：保持同一 installation ID；取消/失败保留远程账号和配对，成功兑换后更新账户绑定、清旧配对并准备本机。依赖下述新后端与桌面版本。
 
-首版未提供跨设备会话同步、DeepClub/Whaleness 扫码配对、云端音频/重排工具或手机操控。视频任务的客户端句柄不跨引擎重启恢复；取消本地轮询不代表供应商取消或退款。
+尚未提供跨设备会话同步、云端音频/重排工具或手机操控。扫码功能的本地源码、真实桌面 Host 协议测试与 debug APK 已验证；相机/相册/系统回调、真实异网和实体设备验收尚未完成。视频任务的客户端句柄不跨引擎重启恢复；取消本地轮询不代表供应商取消或退款。
 
 ## 后端要求
 
 运行站点必须包含 [deepclub#446 / PR #450](https://github.com/meyaomiao/deepclub/pull/450) 的设备销售授权与配置接口，以及 [deepclub#452 / PR #459](https://github.com/meyaomiao/deepclub/pull/459) 的网页 PKCE、设备管理、续期和 Android 版本信息。这些后端能力已由 [deepclub#477](https://github.com/meyaomiao/deepclub/issues/477) 整合并上线；该后端验收不代替本 APK 的真机验收。
+
+扫码/远程登录另需冻结的 [后端 P1 #501](https://github.com/meyaomiao/deepclub/pull/501) 与 [桌面 #43](https://github.com/meyaomiao/deepclub-desktop/pull/43)；同设备启用本机需 [显式授权 #508](https://github.com/meyaomiao/deepclub/pull/508)。这些 Draft 的代码/CI 不代表生产已经支持新能力。
 
 正式构建固定访问 `https://deepclub.net`。debug 构建可显式使用受限的 loopback/模拟器 origin 进行合成验证；release/profile 忽略该测试定义。
 
@@ -39,7 +43,7 @@ python3 scripts/prepare-runtime.py --checkout .work/dsh-go --apk /path/to/verifi
 
 [验证记录](docs/verification.md)区分本地自动检查、真实 DSH 协议测试、Android 模拟器和未验证环境。模拟器通过真实浏览器授权、本机 PRoot/DSH、真实 Go relay 与受控模型响应，执行了实际文件工具和取消链路；没有真实付费模型调用。
 
-完整适配方案见 [docs/adaptation-plan.md](docs/adaptation-plan.md)，包括扫码连接电脑和读取电脑已有项目。界面改动按 [UI 检查规范](docs/ui-review.md) 自查并附截图。P0 的品牌、加载和账户界面结果及截图矩阵见 [P0 验证记录](docs/p0-verification.md)。
+完整适配方案见 [docs/adaptation-plan.md](docs/adaptation-plan.md)，包括扫码连接电脑和读取电脑已有项目。界面改动按 [UI 检查规范](docs/ui-review.md) 自查并附截图。P0 的品牌、加载和账户界面结果及截图矩阵见 [P0 验证记录](docs/p0-verification.md)。本次功能整合的源码快照、协议、72 张组件截图与实际验证边界见 [P3 验证记录](docs/p3-verification.md)。
 
 方案索引：[deepclub#444](https://github.com/meyaomiao/deepclub/issues/444)、[deepclub#480](https://github.com/meyaomiao/deepclub/issues/480)。本仓库执行单：[mobile#1](https://github.com/meyaomiao/deepclub-mobile/issues/1)、[mobile#3](https://github.com/meyaomiao/deepclub-mobile/issues/3)。
 
@@ -51,4 +55,4 @@ DeepClub for Android is an adaptation of DSH Go. The display name is DeepClub in
 
 The application is not an official DeepSeek product. Code is available under AGPL-3.0 with upstream notices preserved. This repository contains the reproducible adaptation layer and pinned inputs; see [BUILD.md](BUILD.md), [NOTICE.md](NOTICE.md) and the [verification record](docs/verification.md).
 
-The required backend login flow was integrated and deployed through [deepclub#477](https://github.com/meyaomiao/deepclub/issues/477). Android acceptance uses synthetic identities and a local mock provider, not paid upstream calls. Physical-device ROM behavior and cross-device pairing remain separate acceptance work; passing backend checks does not validate a phone build.
+The required backend login flow was integrated and deployed through [deepclub#477](https://github.com/meyaomiao/deepclub/issues/477). Android acceptance uses synthetic identities and a local mock provider, not paid upstream calls. The P3 integration adds QR/photo/paste/deep-link pairing, native desktop sessions/workspaces/files/approvals, and remote-only login. Enabling a local Android Agent requires explicit browser consent through backend #508 while retaining the same installation identity; cancellation or failed exchange preserves the remote session. Remote features require backend #501 and desktop #43. Actual Dart carrier → real desktop Host checks, a local debug APK and the synthetic component matrix are recorded in [P3 verification](docs/p3-verification.md). Physical-device camera, album, callbacks and real cross-network acceptance remain unverified; the backend Drafts are not production deployment evidence.
