@@ -1,0 +1,5 @@
+[21,96][98,173] C  | Back
+[622,96][699,173] C  | Add workspace
+[42,194][269,253]   | Workspace
+[42,260][185,299]   | 1 workspace
+[0,334][720,502] C  | P4 acceptance workspace / /Users/xzb/Documents/_issue-worktrees/deepclub-p4-integration/.work/p4-host/workspace / 10 chats

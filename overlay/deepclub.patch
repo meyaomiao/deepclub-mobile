@@ -2189,7 +2189,7 @@ index d030f03..fd2e872 100644
        ..headers.addAll(_headers)
        ..fields['type'] = 'composer'
 diff --git a/app/lib/l10n/app_en.arb b/app/lib/l10n/app_en.arb
-index 4c1bc9e..41b9761 100644
+index 4c1bc9e..13f24cb 100644
 --- a/app/lib/l10n/app_en.arb
 +++ b/app/lib/l10n/app_en.arb
 @@ -3,8 +3,8 @@
@@ -2264,7 +2264,7 @@ index 4c1bc9e..41b9761 100644
    "companionMemoryLoadFailed": "Couldn't load",
    "companionMemoryRetry": "Retry",
    "companionMemoryConflict": "It was just changed elsewhere, so it's been refreshed",
-@@ -1770,6 +1770,101 @@
+@@ -1770,6 +1770,103 @@
    "companionAdaptUnreadable": "the model's answer made no sense",
    "companionAdaptEmpty": "the model found nothing to match",
    "companionAdaptNetwork": "no connection",
@@ -2329,6 +2329,8 @@ index 4c1bc9e..41b9761 100644
 +  "deepClubScanComputer": "Scan to connect to your computer",
 +  "deepClubScanDescription": "Open Connect phone on your computer. Both devices must use the same DeepClub account.",
 +  "deepClubGatewayScanHint": "Point your camera at the QR code shown in Connect phone on your computer.",
++  "deepClubGatewayNetworkHint": "Connects directly to your computer or through the DeepClub relay. The route and status reflect the active connection.",
++  "deepClubRateLimited": "Too many attempts. Try again later.",
 +  "deepClubGatewayConnecting": "Connecting",
 +  "deepClubGatewayConnected": "Connected",
 +  "deepClubGatewayReconnecting": "Reconnecting",
@@ -2366,7 +2368,7 @@ index 4c1bc9e..41b9761 100644
    "systemImeTitle": "System input-method diagnostics",
    "systemImeCollect": "Capture recent events",
    "systemImePrivacy": "Reproduce first. Each attempt needs native confirmation: fixed events from the last 120 seconds, up to 64; no input contents or raw logs. Permissions are never requested automatically.",
-@@ -1837,7 +1932,7 @@
+@@ -1837,7 +1934,7 @@
    "engineAccountPreparingSignIn": "Preparing sign-in",
    "engineAccountOpenDeepSeekNext": "Opening DeepSeek sign-in",
    "engineAccountFinishInBrowser": "Finish sign-in in your browser",
@@ -2375,7 +2377,7 @@ index 4c1bc9e..41b9761 100644
    "engineAccountFinishingSignIn": "Finishing sign-in",
    "engineAccountSavingSignIn": "Saving sign-in details",
    "engineAccountAwaitingResult": "Still waiting for sign-in",
-@@ -2492,7 +2587,7 @@
+@@ -2492,7 +2589,7 @@
    "featuresExportRemoteHint": "Logs aren’t available over DSH Remote. Export them from DSH Web on your computer.",
    "featuresExportShareHint": "Attach to feedback or send to yourself",
    "featuresExportSaveDownloads": "Save to Downloads",
@@ -2384,7 +2386,7 @@ index 4c1bc9e..41b9761 100644
    "featuresExportContents": "All records and attachments from this chat and its subagents",
    "featuresSkillUseHere": "Use in chat",
    "featuresSkillUseNew": "New chat",
-@@ -2579,7 +2674,7 @@
+@@ -2579,7 +2676,7 @@
    "hubSettingsFullAccessBody": "AI won’t ask before running commands or changing files.",
    "hubSettingsStorageTitle": "Let AI access phone files?",
    "hubSettingsStorageAllow": "Allow access",
@@ -2393,7 +2395,7 @@ index 4c1bc9e..41b9761 100644
    "hubSettingsRestartRequired": "Takes effect after restarting the engine",
    "hubSettingsRestartNow": "Restart now",
    "hubSettingsInterface": "Interface",
-@@ -2607,13 +2702,13 @@
+@@ -2607,13 +2704,13 @@
    "hubSettingsAbout": "About",
    "hubSettingsCommunity": "Community",
    "hubSettingsLicenses": "Open-source licenses",
@@ -2410,7 +2412,7 @@ index 4c1bc9e..41b9761 100644
    "hubPluginShare": "Share plugin",
    "hubPluginDetails": "Plugin details",
    "hubPluginFeatured": "Featured on dshfind",
-@@ -2667,7 +2762,7 @@
+@@ -2667,7 +2764,7 @@
    "hubGroupAi": "AI",
    "hubGroupCapabilities": "Capabilities",
    "hubGroupGeneral": "General",
@@ -2419,7 +2421,7 @@ index 4c1bc9e..41b9761 100644
    "hubGroupHelp": "Help and about",
    "hubPersonalization": "Personalization",
    "hubPersonalizationAboutYou": "About you",
-@@ -2686,8 +2781,8 @@
+@@ -2686,8 +2783,8 @@
    "hubTableTintFillHint": "Alternating rows, easier to scan long tables",
    "hubTableTintFollowHint": "Header tint only, body follows the reply",
    "hubTableTintNoneHint": "Grid lines only, the lightest",
@@ -2430,7 +2432,7 @@ index 4c1bc9e..41b9761 100644
    "hubAboutBilibili": "Bilibili profile",
    "hubAboutX": "X profile",
    "hubAboutGithub": "GitHub profile",
-@@ -2740,10 +2835,10 @@
+@@ -2740,10 +2837,10 @@
    "iconShortcutHint": "Drag or pinch to fit",
    "iconShortcutName": "Name",
    "iconShortcutAdd": "Add to home screen",
@@ -2443,7 +2445,7 @@ index 4c1bc9e..41b9761 100644
    "iconShortcutSettings": "Settings",
    "iconShortcutUnsupported": "This home screen doesn’t take shortcuts",
    "iconShortcutFailed": "Couldn’t add it. Try again later.",
-@@ -2771,8 +2866,8 @@
+@@ -2771,8 +2868,8 @@
    "liveSettingsSubtitle": "While DSH works, waits on you or controls the phone: in the status bar chip and on the lock screen, and in the island on phones that have one",
    "liveSettingsFooter": "Android 16 Live Updates. Shown on Xiaomi HyperOS 3.1+, OPPO / OnePlus ColorOS 16, Honor MagicOS 10 and Pixel; vivo's Atomic Island and Samsung's Now Bar are open only to apps the maker partners with.",
    "liveUnsupported": "This phone's system doesn't support live activities yet",
@@ -2454,7 +2456,7 @@ index 4c1bc9e..41b9761 100644
    "localeTitle": "Language",
    "localeSystem": "System",
    "localeZh": "简体中文",
-@@ -2800,13 +2895,13 @@
+@@ -2800,13 +2897,13 @@
    "localEnvSignInNeedsRuntime": "Needs DSH on this phone",
    "localEnvSignInInstallFirst": "Install it to sign in",
    "marketSectionOfficial": "Official",
@@ -2470,7 +2472,7 @@ index 4c1bc9e..41b9761 100644
    "marketRiskMedium": "Medium risk",
    "marketRiskHigh": "High risk",
    "marketFlagInstallScripts": "Runs install scripts",
-@@ -2821,8 +2916,8 @@
+@@ -2821,8 +2918,8 @@
    "marketFlagFilesystemBody": "Writes to paths outside the workspace",
    "marketFlagObfuscated": "Hard to review",
    "marketFlagObfuscatedBody": "Has large minified or obfuscated files; hard to tell what they do",
@@ -2481,7 +2483,7 @@ index 4c1bc9e..41b9761 100644
    "marketFlagOtherBody": "Another trait the automatic checks reported",
    "marketChecksTitle": "Automatic checks",
    "marketChecksClean": "No risky traits found",
-@@ -2832,8 +2927,8 @@
+@@ -2832,8 +2929,8 @@
    "marketRiskConfirmTitle": "{name} has risky traits",
    "marketRiskConfirmAction": "Install anyway",
    "marketPinnedVersion": "Pinned version",
@@ -2492,7 +2494,7 @@ index 4c1bc9e..41b9761 100644
    "marketUpdateAvailable": "Update available",
    "marketBlockedTitle": "This version was withdrawn",
    "marketBlockedMessage": "The installed {version} was withdrawn from the plugin market. Uninstalling it is recommended.",
-@@ -3072,7 +3167,7 @@
+@@ -3072,7 +3169,7 @@
    "phoneDiagnosticsShare": "Share diagnostics bundle",
    "phoneDiagnosticsShareHint": "Attach to a bug report",
    "phoneDiagnosticsSave": "Save to Downloads",
@@ -2501,7 +2503,7 @@ index 4c1bc9e..41b9761 100644
    "phoneDiagnosticsNote": "Includes versions, device info, logs and the latest crash. No API keys or tokens.",
    "phoneDiagnosticsExport": "Export diagnostics bundle",
    "phoneSafeMode": "Safe mode",
-@@ -3087,7 +3182,7 @@
+@@ -3087,7 +3184,7 @@
    "phoneEngineTitle": "Local engine",
    "phoneEngineLocal": "This phone’s engine",
    "phoneEngineLogs": "Logs",
@@ -2510,7 +2512,7 @@ index 4c1bc9e..41b9761 100644
    "phoneEngineKeepAlive": "Background running",
    "phoneEngineKeepAliveHint": "Prevent Android from stopping the engine",
    "phoneEngineDiagnostics": "Diagnostics",
-@@ -3180,7 +3275,7 @@
+@@ -3180,7 +3277,7 @@
    "phoneActionFailedLater": "Couldn’t complete. Try again later.",
    "phoneDndDisabled": "Non-disruptive mode is off",
    "phoneDndEnabled": "Non-disruptive mode is on",
@@ -2519,7 +2521,7 @@ index 4c1bc9e..41b9761 100644
    "phoneDndPairedConnect": "Paired. Tap “Connect”.",
    "phoneDndTitle": "Non-disruptive mode",
    "phoneDndSubtitle": "Works on a hidden screen while you use your phone",
-@@ -3214,18 +3309,18 @@
+@@ -3214,18 +3311,18 @@
    "phoneDndSuiAllSet": "Sui is ready.",
    "phoneDndSuiPermissionFailed": "Couldn’t ask Sui for permission. Check that the Sui module is enabled and try again.",
    "phoneDndRootWaiting": "Waiting for root. Answer your root manager’s prompt.",
@@ -2543,7 +2545,7 @@ index 4c1bc9e..41b9761 100644
    "phoneDndShizukuCompatibility": "This Android version has compatibility issues with the official Shizuku release.",
    "phoneDndWirelessDebuggingOn": "Wireless debugging on",
    "phoneDndPaired": "Paired",
-@@ -3261,7 +3356,7 @@
+@@ -3261,7 +3358,7 @@
    "phoneEnabled": "On",
    "phoneDisabled": "Off",
    "phoneOpenAccessibilityFailed": "Can’t open settings. Find DSH in Settings → Accessibility.",
@@ -2552,7 +2554,7 @@ index 4c1bc9e..41b9761 100644
    "phoneStopFailed": "Couldn’t stop. Tap “Stop” on the floating bar or notification.",
    "phoneControlTitle": "Phone control",
    "phoneControlSubtitle": "Reads the screen and taps for you. Stop anytime.",
-@@ -3339,9 +3434,9 @@
+@@ -3339,9 +3436,9 @@
    "phoneRestrictedOpenInfoStep": "Return here and tap “Open app info”.",
    "phoneRestrictedBackAccessibility": "Return to “Accessibility” and turn on DSH.",
    "phoneRestrictedMenuStep": "Tap the three dots at the top right, choose “Allow restricted settings”, then verify your lock screen password.",
@@ -2565,7 +2567,7 @@ index 4c1bc9e..41b9761 100644
    "phoneRestrictedHuaweiAccessibility": "HarmonyOS 4 and earlier usually skip this step. Turn on DSH directly in “Accessibility”.",
    "phoneRestrictedVivoNote": "The location varies by OriginOS version. If there are no three dots, scroll to the bottom of App info.",
    "phoneRestrictedAdvancedStep": "In “Advanced settings”, find “Allow restricted settings” and turn it on.",
-@@ -3426,7 +3521,7 @@
+@@ -3426,7 +3523,7 @@
    "phoneSafeStartSettingsHint": "Skip plugins to troubleshoot startup",
    "phoneSafeAutoSettings": "Automatic Safe mode",
    "phoneSafeAutoSettingsHint": "Turn on after repeated startup failures",
@@ -2574,7 +2576,7 @@ index 4c1bc9e..41b9761 100644
    "phoneAccentDaiqing": "Teal",
    "phoneAccentDusk": "Dusk",
    "phoneAccentTurquoise": "Aqua",
-@@ -3477,7 +3572,7 @@
+@@ -3477,7 +3574,7 @@
    "phoneControlEnabledRestarting": "On · Restarting the engine",
    "phoneControlDisabledRestarting": "Off · Restarting the engine",
    "phoneControlEnabledPending": "On · Takes effect when the engine starts",
@@ -2583,7 +2585,7 @@ index 4c1bc9e..41b9761 100644
    "phoneReturnAfterDoneHint": "Closes the bar, opens the chat",
    "phoneFloatingBar": "Floating bar",
    "phoneIdleOpacity": "Idle opacity",
-@@ -3546,7 +3641,7 @@
+@@ -3546,7 +3643,7 @@
    "phoneSelfCheckRefresh": "Refresh status",
    "phoneSelfCheckSave": "Save sanitized report",
    "phoneSelfCheckSaving": "Saving…",
@@ -2592,7 +2594,7 @@ index 4c1bc9e..41b9761 100644
    "phoneSelfCheckSaveFailed": "Could not save the report.",
    "phoneSelfCheckReportHint": "Save only when you choose. The local report contains fixed results, with no screenshots, recognized text, logs, account data or run identifier.",
    "phoneSelfCheckRunState": "{state, select, idle{Not started} running{Running partial check} cleaning{Cleaning up; cancellation does not undo sent input} done{Execution and cleanup ended; inspect each result below} cancelled{Cancelled; observed actions remain recorded} cleanup_pending{Cleanup unconfirmed — resources remain reserved} other{Status unavailable}}",
-@@ -3602,13 +3697,13 @@
+@@ -3602,13 +3699,13 @@
    "phoneTaskEndedResult": "Task ended · View result",
    "phoneBackgroundGuideTitle": "Confirmations and return",
    "phoneBackgroundGuideSubtitle": "See confirmations and task results in time",
@@ -2610,7 +2612,7 @@ index 4c1bc9e..41b9761 100644
    "phonePrivilegedSui": "Sui",
    "phonePrivilegedRoot": "Root",
    "phonePrivilegedSuiDescription": "Use the Sui module interface. Authorization is requested only when you tap.",
-@@ -3619,8 +3714,8 @@
+@@ -3619,8 +3716,8 @@
    "phonePrivilegedGrantSui": "Grant with Sui",
    "phonePrivilegedGrantSuiPermission": "Authorize Sui, then grant",
    "phonePrivilegedSuggested": "Suggested",
@@ -2621,7 +2623,7 @@ index 4c1bc9e..41b9761 100644
    "phoneGateCleanupTitle": "Probe cleanup not confirmed",
    "phoneGateCleanupUnknown": "New background resources are blocked. Retry only the original cleanup if its channel is still available. This does not rerun the probe.",
    "phoneGateCleanupRunning": "Waiting for the original probe and its cleanup. The channel stays pinned until cleanup is confirmed.",
-@@ -3628,9 +3723,9 @@
+@@ -3628,9 +3725,9 @@
    "phoneGateCleanupDone": "Cleanup confirmed. Choose the channel again explicitly to run a fresh check.",
    "phoneGateRetest": "Check this channel again",
    "phoneKeepTitle": "{mode, select, shizuku{Keep Shizuku channel} sui{Keep Sui channel} root{Keep root channel} adb{Keep Direct ADB channel} other{Keep this channel}}",
@@ -2634,7 +2636,7 @@ index 4c1bc9e..41b9761 100644
    "phoneKeepRestoring": "Reconnecting",
    "phoneKeepWaiting": "Waiting for the channel",
    "phoneKeepWaitingService": "Waiting for the service to run",
-@@ -3680,13 +3775,13 @@
+@@ -3680,13 +3777,13 @@
    "phoneModeAuto": "Fully automatic",
    "phoneModeAutoHint": "Never asks, never interrupts",
    "phoneModeAutoNoteTitle": "These stay with you",
@@ -2650,7 +2652,7 @@ index 4c1bc9e..41b9761 100644
    "phoneYoursDenyList": "Apps set to Hands off in App rules, banking and payment by default",
    "phoneUnlockTitle": "Lift limits",
    "phoneUnlockSubtitle": "Let AI do what’s yours by default",
-@@ -3694,8 +3789,8 @@
+@@ -3694,8 +3791,8 @@
    "phoneUnlockSystemHint": "Permissions, installers, security center, notifications",
    "phoneUnlockSecrets": "Passwords and codes",
    "phoneUnlockSecretsHint": "Fill in passwords, verification and payment codes",
@@ -2661,7 +2663,7 @@ index 4c1bc9e..41b9761 100644
    "phoneUnlockBusy": "Can’t turn on while a task is running",
    "phoneUnlockFootnote": "Once on, the consequences are yours. Turn on only when needed, and off when done.",
    "phoneUnlockBanks": "Banking and payment apps",
-@@ -3705,7 +3800,7 @@
+@@ -3705,7 +3802,7 @@
    "phoneUnlockedBadge": "Limits lifted",
    "phoneUnlockConfirmSystemTitle": "Let AI operate system settings?",
    "phoneUnlockConfirmSecretsTitle": "Let AI fill in passwords and codes?",
@@ -2670,7 +2672,7 @@ index 4c1bc9e..41b9761 100644
    "phoneUnlockCanTitle": "Once on, AI can",
    "phoneUnlockRiskTitle": "What could go wrong",
    "phoneUnlockDisclaimerTitle": "Disclaimer",
-@@ -3719,13 +3814,13 @@
+@@ -3719,13 +3816,13 @@
    "phoneUnlockSecretsCan3": "The action log shows •••• and never what was typed",
    "phoneUnlockSecretsRisk1": "Malicious instructions could lead AI to enter a code somewhere else, letting someone into your account",
    "phoneUnlockSecretsRisk2": "It could complete a payment or transfer you didn’t intend",
@@ -2687,7 +2689,7 @@ index 4c1bc9e..41b9761 100644
    "phoneUnlockDisclaimer4": "Turn it on only when you need it, and off when you’re done.",
    "phoneUnlockDisclaimer5": "We advise against turning it on for a device that holds payment or banking details.",
    "phoneUnlockHold": "I understand the risks, turn on",
-@@ -3882,7 +3977,7 @@
+@@ -3882,7 +3979,7 @@
    "pluginsWriteFailed": "Couldn’t write",
    "pluginsHostUnreachable": "Can’t reach the host",
    "pluginsFileWriteFailed": "Couldn’t write the file",
@@ -2696,7 +2698,7 @@ index 4c1bc9e..41b9761 100644
    "pluginsGistTokenInvalid": "GitHub token is invalid or lacks Gist permission",
    "pluginsGistCreateHttpFailed": "Couldn’t create Gist (HTTP {status})",
    "pluginsGistCreateFailed": "Couldn’t create Gist",
-@@ -4052,7 +4147,7 @@
+@@ -4052,7 +4149,7 @@
    "pluginsNotificationsBlocked": "Blocked by system",
    "pluginsTurnedOn": "On",
    "pluginsNotifications": "Notifications",
@@ -2705,7 +2707,7 @@ index 4c1bc9e..41b9761 100644
    "pluginsSystemNotificationsOff": "System notifications are off",
    "pluginsBackgroundNoAlerts": "You won’t get alerts while the app is in the background",
    "pluginsApprovalNotificationsOff": "“Needs approval” notifications are off",
-@@ -4130,7 +4225,7 @@
+@@ -4130,7 +4227,7 @@
    "pluginsShareDamaged": "This share code is incomplete or damaged",
    "pluginsShareFileReadFailed": "Couldn’t read this file",
    "pluginsShareOpenFailed": "Couldn’t open this share code",
@@ -2714,7 +2716,7 @@ index 4c1bc9e..41b9761 100644
    "pluginsShareSheetOpenFailed": "Couldn’t open sharing",
    "pluginsSavePermissionDenied": "Couldn’t save without storage permission",
    "pluginsQrCode": "QR code",
-@@ -4200,7 +4295,7 @@
+@@ -4200,7 +4297,7 @@
    "plugslotsPanelOffline": "Can't reach the plugin",
    "plugslotsIssueTooMany": "Up to {max}; the rest are hidden",
    "plugslotsIssueTrimmed": "Over {max} characters; shortened",
@@ -2723,7 +2725,7 @@ index 4c1bc9e..41b9761 100644
    "plugslotsIssueNewerProtocol": "Needs a newer app",
    "plugslotsIssueUnknownIcon": "Unknown icon; using the default",
    "plugslotsIssueUnknownEffect": "Unsupported effect \"{name}\"",
-@@ -4341,7 +4436,7 @@
+@@ -4341,7 +4438,7 @@
    "remoteErrConnectionReplaced": "Remote connection was replaced",
    "remoteErrHostRejected": "Host declined the connection",
    "remoteErrHostNotOwned": "Host isn’t in your DSH Remote account",
@@ -2732,7 +2734,7 @@ index 4c1bc9e..41b9761 100644
    "remoteErrVersionIncompatible": "Update DSH or the remote plugin on the host",
    "remoteErrSignInTimeout": "Sign-in timed out",
    "remoteSignInCancelled": "Sign-in cancelled",
-@@ -4758,7 +4853,7 @@
+@@ -4758,7 +4855,7 @@
    "remotePairTitle": "Pair a computer",
    "remotePairSubtitle": "No Remote account needed. Your DeepSeek password and sign-in tokens are never sent.",
    "remotePairNeedsDeepSeek": "Sign in to DeepSeek first",
@@ -2741,7 +2743,7 @@ index 4c1bc9e..41b9761 100644
    "remotePairScanHint": "Point the camera at the pairing code the Remote plugin shows on your computer",
    "remotePairPasteLink": "Paste pairing link",
    "remotePairPasteEmpty": "No pairing link on the clipboard",
-@@ -4785,10 +4880,10 @@
+@@ -4785,10 +4882,10 @@
    "remotePairCodeExpired": "The code expired. Show a new pairing code on the computer.",
    "remotePairConnecting": "Paired. Connecting to {name}…",
    "remotePairFailedTitle": "Couldn’t pair",
@@ -2754,7 +2756,7 @@ index 4c1bc9e..41b9761 100644
    "remotePairErrOtherServer": "This code is from another Remote server",
    "remotePairErrUnsupported": "This Remote server doesn’t support pairing by scanning yet",
    "remotePairErrExpired": "The code expired or was already used. Show a new pairing code on the computer.",
-@@ -4819,15 +4914,15 @@
+@@ -4819,15 +4916,15 @@
    "riskAllowForChatBody": "Commands and changes in this chat run without asking. Turn it off above the message box anytime.",
    "riskAllowForChatAction": "Allow all",
    "riskPetOverlayTitle": "Show over other apps?",
@@ -2775,7 +2777,7 @@ index 4c1bc9e..41b9761 100644
    "askAiQuestionPhoneControl": "How does phone control work, and what are the risks?",
    "askAiQuestionPhoneAlways": "What changes with “Always skip confirmation” in phone control, and how is it riskier than asking each time?",
    "askAiQuestionAppRules": "What is the app list in phone control for, and what are the risks of allowing banking and payment apps?",
-@@ -5255,7 +5350,7 @@
+@@ -5255,7 +5352,7 @@
    "shellJsonStringNewline": "Strings can’t contain literal line breaks",
    "shellJsonControlCharacter": "String contains a control character",
    "shellJsonBadNumber": "Invalid number format",
@@ -2784,7 +2786,7 @@ index 4c1bc9e..41b9761 100644
    "shellSkillInstallDirectory": "1. Create the target folder `$DSH_HOME/skills/{skill}/` if needed (or `~/.dsh/skills/{skill}/` if DSH_HOME isn’t set).",
    "shellSkillInstallFiles": "2. Write each file below at its given relative path, keeping the contents exactly as provided.",
    "shellSkillInstallConfirm": "4. Tell me when it’s installed.",
-@@ -5289,13 +5384,13 @@
+@@ -5289,13 +5386,13 @@
    "shellPanelNoPlugins": "No plugin panels for this chat yet",
    "shellQuickPanel": "Shortcuts",
    "shellQuickPanelHint": "Change these in {path}",
@@ -2801,7 +2803,7 @@ index 4c1bc9e..41b9761 100644
    "hubStartPage": "Start page",
    "hubChatSuggestions": "Chat suggestions",
    "hubChatSuggestionsHint": "Show chat suggestions on the start page",
-@@ -5304,7 +5399,7 @@
+@@ -5304,7 +5401,7 @@
    "phoneStartupFailureStoppingDetail": "Startup failed; stopping. {reason}",
    "phoneStartupTokenTimeout": "Startup timed out: no startup token arrived within 180 seconds. Check the logs.",
    "phoneStartupPortNotReady": "The startup token arrived, but the local service port did not become ready. Check the logs.",
@@ -2810,7 +2812,7 @@ index 4c1bc9e..41b9761 100644
    "stateStoragePermission": "No storage permission to save to Downloads",
    "stateDiagnosticsStorageFull": "Not enough storage to create the diagnostics bundle",
    "stateDiagnosticsExportFailed": "Couldn’t export diagnostics bundle",
-@@ -5376,11 +5471,11 @@
+@@ -5376,11 +5473,11 @@
    "stateSubagent": "Subagent",
    "stateParentChat": "Parent chat",
    "statePreparing": "Provisioning",
@@ -2827,7 +2829,7 @@ index 4c1bc9e..41b9761 100644
    "stateWallpaper": "Wallpaper",
    "stateFileMissing": "File not found. It may have been deleted or moved.",
    "stateFileNoApp": "No app on this phone can open this file type",
-@@ -5679,7 +5774,7 @@
+@@ -5679,7 +5776,7 @@
    "stateUiWeb": "Web",
    "statePluginRegistryProgressUnknown": "Downloading from {registry} (registry {attempt}/null)",
    "stateProviderTokenCountInvalid": "Enter a number, like 128K",
@@ -2836,7 +2838,7 @@ index 4c1bc9e..41b9761 100644
    "tavernTitle": "Tavern",
    "tavernImport": "Import",
    "tavernEmptyTitle": "No characters yet",
-@@ -6006,7 +6101,7 @@
+@@ -6006,7 +6103,7 @@
    "tavernStorybookShare": "Share the image",
    "tavernStorybookEarlier": "{count, plural, =1{1 earlier line is} other{{count} earlier lines are}} left out of the image; export the e-book for all of it.",
    "tavernStorybookEarlierShort": "… {count, plural, =1{1 line} other{{count} lines}} before this …",
@@ -2845,7 +2847,7 @@ index 4c1bc9e..41b9761 100644
    "tavernStorybookContents": "Contents",
    "tavernStorybookChapter": "Chapter {n}",
    "tavernStorybookSaved": "Saved to photos",
-@@ -6434,13 +6529,13 @@
+@@ -6434,13 +6531,13 @@
    "updateFreeSpaceRetry": "Free up space and try again.",
    "updateSpaceRequired": "About {size} of free space needed. Free up space and try again.",
    "updateSettingsOpenFailed": "Couldn’t open system settings",
@@ -2861,7 +2863,7 @@ index 4c1bc9e..41b9761 100644
    "updateWrongPackage": "This isn’t a DSH package",
    "updateWrongPackageMessage": "The wrong file was downloaded and deleted. Try again later.",
    "updateDowngradeBlocked": "Can’t install an older version",
-@@ -6459,7 +6554,7 @@
+@@ -6459,7 +6556,7 @@
    "updateNewVersionFound": "New version available",
    "updateReleaseNotes": "What’s new",
    "updateNoReleaseNotes": "No release notes for this version.",
@@ -2870,7 +2872,7 @@ index 4c1bc9e..41b9761 100644
    "updateNoCompatiblePackage": "No package for this phone",
    "updateDownloading": "Downloading",
    "updateDownloadSource": "Via {source}",
-@@ -6470,7 +6565,7 @@
+@@ -6470,7 +6567,7 @@
    "updateConfirmInstallNote": "Confirm installation in the system prompt",
    "updatePackageDownloaded": "Package downloaded",
    "updateReadyToInstall": "Verified and ready to install.",
@@ -2879,7 +2881,7 @@ index 4c1bc9e..41b9761 100644
    "updateAllowInstallMessage": "Turn on “Install unknown apps” in system settings. Installation resumes when you return.",
    "updateOpenReleasePage": "Open release page",
    "updateUpdateNow": "Update now",
-@@ -6479,7 +6574,7 @@
+@@ -6479,7 +6576,7 @@
    "updateSystemInstallerFailed": "Couldn't open the system installer",
    "updateExportApk": "Save the package",
    "updateExportApkTitle": "Save the package?",
@@ -2888,7 +2890,7 @@ index 4c1bc9e..41b9761 100644
    "updateExportApkDone": "Saved to Downloads/{path}",
    "updateExportApkFailed": "Couldn't save the package",
    "updateStarProject": "Star it",
-@@ -6491,11 +6586,13 @@
+@@ -6491,11 +6588,13 @@
    "updateNoAbiPackage": "No {abi} package for this release yet. Check the release page.",
    "updateNoPackage": "No package for this release yet. Check the release page.",
    "updateDownloadingPercent": "Downloading {percent}%",
@@ -2905,7 +2907,7 @@ index 4c1bc9e..41b9761 100644
    "usageUpgradeLearn": "Learn more",
    "usageUpgradeOff": "Turn off",
    "viewArtifactSaved": "Saved to {value}",
-@@ -6537,7 +6634,7 @@
+@@ -6537,7 +6636,7 @@
    "viewBalanceChecking": "Checking balance…",
    "viewBalanceCheckFailed": "Can’t check balance right now",
    "viewBalanceNoAlert": "Off",
@@ -2914,7 +2916,7 @@ index 4c1bc9e..41b9761 100644
    "viewBalanceTurnOff": "Turn off",
    "viewBalanceBelow": "Below {value}",
    "viewBalanceAlert": "Low balance alert",
-@@ -6677,7 +6774,7 @@
+@@ -6677,7 +6776,7 @@
    "viewTipImageZoom": "In the image viewer, double-tap or pinch to zoom; long-press to save",
    "viewTipQueuedRecall": "A queued message can be pulled back into the composer to edit",
    "viewTipKeyboard": "With a keyboard: Ctrl+Enter sends, Esc twice stops",
@@ -2923,7 +2925,7 @@ index 4c1bc9e..41b9761 100644
    "viewTipShareSelect": "When sharing a chat, long-press and slide to pick several messages at once",
    "viewTipChartDrag": "Drag across a chart in a reply to read each point",
    "viewTipCopyPath": "Long-press a file in a changes card to copy its path",
-@@ -6747,7 +6844,7 @@
+@@ -6747,7 +6846,7 @@
    "viewModelManageProviders": "Manage providers",
    "viewContinuePrompt": "Continue the chat attached here:",
    "viewContinueRange": "Turns {first}–{second} of {third, plural, =1{1 turn} other{{third} turns}}",
@@ -2932,7 +2934,7 @@ index 4c1bc9e..41b9761 100644
    "viewContinueUser": "\n## User\n\n",
    "viewImageCount": "{count, plural, =1{1 image} other{{count} images}}",
    "viewContinueAttachments": "\n(Attachments: {value})\n",
-@@ -6763,11 +6860,11 @@
+@@ -6763,11 +6862,11 @@
    "viewShareNoPermission": "No storage permission. Couldn’t save.",
    "viewShareOpenFailed": "Couldn’t open share sheet",
    "viewShareLinkFailed": "Couldn’t create link. Try again later.",
@@ -2946,7 +2948,7 @@ index 4c1bc9e..41b9761 100644
    "viewShareWebHint": "Opens in any browser, even offline",
    "viewShareMarkdownHint": "Plain text, readable anywhere",
    "viewShareLinkHint": "End-to-end encrypted. The server can’t see your content.",
-@@ -7062,7 +7159,7 @@
+@@ -7062,7 +7161,7 @@
    "workshopAbout": "About",
    "workshopNoDescription": "The author didn't write a description.",
    "workshopSource": "Source",
@@ -2956,7 +2958,7 @@ index 4c1bc9e..41b9761 100644
    "workshopUpdateTo": "Update to {version}",
    "workshopInstalledWithdrawn": "The version you installed has been withdrawn. It still works; update if a newer version is listed, otherwise consider removing it.",
 diff --git a/app/lib/l10n/app_zh.arb b/app/lib/l10n/app_zh.arb
-index fc65a9e..3721d6c 100644
+index fc65a9e..5f46381 100644
 --- a/app/lib/l10n/app_zh.arb
 +++ b/app/lib/l10n/app_zh.arb
 @@ -3,8 +3,8 @@
@@ -3024,7 +3026,7 @@ index fc65a9e..3721d6c 100644
    "companionMemoryLoadFailed": "没读到",
    "companionMemoryRetry": "重试",
    "companionMemoryConflict": "刚才另一处改过了，已经刷新",
-@@ -3486,6 +3486,115 @@
+@@ -3486,6 +3486,117 @@
    "companionAdaptUnreadable": "模型的回答看不懂",
    "companionAdaptEmpty": "模型没找到能用的对应",
    "companionAdaptNetwork": "网络不通",
@@ -3096,6 +3098,8 @@ index fc65a9e..3721d6c 100644
 +  "deepClubScanComputer": "扫一扫连接电脑",
 +  "deepClubScanDescription": "在电脑上打开「连接手机」。手机和电脑需要登录同一个深云账号。",
 +  "deepClubGatewayScanHint": "对准电脑「连接手机」中显示的二维码。",
++  "deepClubGatewayNetworkHint": "直接连接电脑或经深云中转；路径和状态来自当前连接。",
++  "deepClubRateLimited": "尝试次数过多，请稍后再试。",
 +  "deepClubGatewayConnecting": "连接中",
 +  "deepClubGatewayConnected": "已连接",
 +  "deepClubGatewayReconnecting": "重新连接中",
@@ -3140,7 +3144,7 @@ index fc65a9e..3721d6c 100644
    "systemImeTitle": "系统输入法诊断",
    "systemImeCollect": "采集本次日志",
    "systemImePrivacy": "复现后再采集。每次须在原生弹窗确认，仅读取最近 120 秒的固定事件（最多 64 条），不含输入内容或原始日志；不会自动申请权限。",
-@@ -3553,7 +3662,7 @@
+@@ -3553,7 +3664,7 @@
    "engineAccountPreparingSignIn": "正在准备登录",
    "engineAccountOpenDeepSeekNext": "马上打开 DeepSeek 登录页",
    "engineAccountFinishInBrowser": "在浏览器中完成登录",
@@ -3149,7 +3153,7 @@ index fc65a9e..3721d6c 100644
    "engineAccountFinishingSignIn": "正在完成登录",
    "engineAccountSavingSignIn": "正在保存登录信息",
    "engineAccountAwaitingResult": "还没收到登录结果",
-@@ -4886,7 +4995,7 @@
+@@ -4886,7 +4997,7 @@
    "featuresExportRemoteHint": "经 DSH Remote 中转时拿不到日志，可以在电脑上的网页版导出",
    "featuresExportShareHint": "附在问题反馈里，或发给自己",
    "featuresExportSaveDownloads": "存到「下载」",
@@ -3158,7 +3162,7 @@ index fc65a9e..3721d6c 100644
    "featuresExportContents": "含这个对话和子代理的全部记录与附件",
    "featuresSkillUseHere": "在对话里用",
    "featuresSkillUseNew": "新对话里用",
-@@ -5193,7 +5302,7 @@
+@@ -5193,7 +5304,7 @@
    "hubSettingsFullAccessBody": "AI 执行命令、改动文件前不再问你。",
    "hubSettingsStorageTitle": "让 AI 访问手机文件？",
    "hubSettingsStorageAllow": "允许读写",
@@ -3167,7 +3171,7 @@ index fc65a9e..3721d6c 100644
    "hubSettingsRestartRequired": "重启引擎后生效",
    "hubSettingsRestartNow": "立即重启",
    "hubSettingsInterface": "界面",
-@@ -5221,13 +5330,13 @@
+@@ -5221,13 +5332,13 @@
    "hubSettingsAbout": "关于",
    "hubSettingsCommunity": "社区",
    "hubSettingsLicenses": "开源许可",
@@ -3184,7 +3188,7 @@ index fc65a9e..3721d6c 100644
    "hubPluginShare": "分享插件",
    "hubPluginDetails": "插件详情",
    "hubPluginFeatured": "dshfind 推荐",
-@@ -5436,7 +5545,7 @@
+@@ -5436,7 +5547,7 @@
    "hubGroupAi": "AI",
    "hubGroupCapabilities": "能力",
    "hubGroupGeneral": "通用",
@@ -3193,7 +3197,7 @@ index fc65a9e..3721d6c 100644
    "hubGroupHelp": "帮助与关于",
    "hubPersonalization": "个性化",
    "hubPersonalizationAboutYou": "关于你",
-@@ -5455,8 +5564,8 @@
+@@ -5455,8 +5566,8 @@
    "hubTableTintFillHint": "隔行淡一档，长表格更好扫读",
    "hubTableTintFollowHint": "表头浅底，表身跟随正文",
    "hubTableTintNoneHint": "只剩网格线，最轻",
@@ -3204,7 +3208,7 @@ index fc65a9e..3721d6c 100644
    "hubAboutBilibili": "B站主页",
    "hubAboutX": "X 主页",
    "hubAboutGithub": "GitHub 主页",
-@@ -5530,10 +5639,10 @@
+@@ -5530,10 +5641,10 @@
    "iconShortcutHint": "拖动或双指缩放",
    "iconShortcutName": "名称",
    "iconShortcutAdd": "添加到桌面",
@@ -3217,7 +3221,7 @@ index fc65a9e..3721d6c 100644
    "iconShortcutSettings": "去设置",
    "iconShortcutUnsupported": "这个桌面不支持添加快捷方式",
    "iconShortcutFailed": "没能添加，稍后再试",
-@@ -5569,7 +5678,7 @@
+@@ -5569,7 +5680,7 @@
    "liveSettingsFooter": "Android 16 的实时活动（Live Updates）：小米 HyperOS 3.1+、OPPO / 一加 ColorOS 16、荣耀 MagicOS 10 和 Pixel 会显示；vivo 原子岛和三星 Now Bar 目前只对厂商合作的应用开放。",
    "liveUnsupported": "这台手机的系统还不支持实时活动",
    "liveBlockedTitle": "系统没有允许实时活动",
@@ -3226,7 +3230,7 @@ index fc65a9e..3721d6c 100644
    "localeTitle": "语言",
    "localeSystem": "跟随系统",
    "localeZh": "简体中文",
-@@ -5635,13 +5744,13 @@
+@@ -5635,13 +5746,13 @@
    "localEnvSignInNeedsRuntime": "需要本机运行环境",
    "localEnvSignInInstallFirst": "安装后即可登录",
    "marketSectionOfficial": "官方",
@@ -3242,7 +3246,7 @@ index fc65a9e..3721d6c 100644
    "marketRiskMedium": "中风险",
    "marketRiskHigh": "高风险",
    "marketFlagInstallScripts": "安装时运行脚本",
-@@ -5656,8 +5765,8 @@
+@@ -5656,8 +5767,8 @@
    "marketFlagFilesystemBody": "会写入工作区以外的路径",
    "marketFlagObfuscated": "代码难以审阅",
    "marketFlagObfuscatedBody": "有压缩或混淆过的大文件，看不出它做什么",
@@ -3253,7 +3257,7 @@ index fc65a9e..3721d6c 100644
    "marketFlagOtherBody": "自动检查报告的其他特征",
    "marketChecksTitle": "自动检查",
    "marketChecksClean": "没有发现风险特征",
-@@ -5688,8 +5797,8 @@
+@@ -5688,8 +5799,8 @@
    },
    "marketRiskConfirmAction": "仍然安装",
    "marketPinnedVersion": "锁定版本",
@@ -3264,7 +3268,7 @@ index fc65a9e..3721d6c 100644
    "@marketNeedsApp": {
      "placeholders": {
        "version": {
-@@ -6115,7 +6224,7 @@
+@@ -6115,7 +6226,7 @@
    "phoneDiagnosticsShare": "分享诊断包",
    "phoneDiagnosticsShareHint": "附在问题反馈里",
    "phoneDiagnosticsSave": "存到「下载」",
@@ -3273,7 +3277,7 @@ index fc65a9e..3721d6c 100644
    "phoneDiagnosticsNote": "含版本、设备、日志和最近一次崩溃，不含 Key 和令牌",
    "phoneDiagnosticsExport": "导出诊断包",
    "phoneSafeMode": "安全模式",
-@@ -6223,7 +6332,7 @@
+@@ -6223,7 +6334,7 @@
    "phoneActionFailedLater": "没有成功，稍后再试",
    "phoneDndDisabled": "不打扰模式已关闭",
    "phoneDndEnabled": "不打扰模式已启用",
@@ -3282,7 +3286,7 @@ index fc65a9e..3721d6c 100644
    "phoneDndPairedConnect": "配对成功，点「连接」",
    "phoneDndTitle": "不打扰模式",
    "phoneDndSubtitle": "在看不见的屏幕上操作，不耽误你用手机",
-@@ -6257,18 +6366,18 @@
+@@ -6257,18 +6368,18 @@
    "phoneDndSuiAllSet": "Sui 这边准备好了。",
    "phoneDndSuiPermissionFailed": "没能请求 Sui 授权。确认 Sui 模块已启用后再试。",
    "phoneDndRootWaiting": "正在等待 root 授权，请在 root 管理器的弹窗里选择。",
@@ -3306,7 +3310,7 @@ index fc65a9e..3721d6c 100644
    "phoneDndShizukuCompatibility": "这版 Android 与官方版 Shizuku 存在兼容问题。",
    "phoneDndWirelessDebuggingOn": "无线调试已打开",
    "phoneDndPaired": "已配对",
-@@ -6304,7 +6413,7 @@
+@@ -6304,7 +6415,7 @@
    "phoneEnabled": "已开启",
    "phoneDisabled": "已关闭",
    "phoneOpenAccessibilityFailed": "打不开系统设置，请到「设置 → 无障碍」里找到 DSH",
@@ -3315,7 +3319,7 @@ index fc65a9e..3721d6c 100644
    "phoneStopFailed": "没能停止，可以点悬浮条或通知上的「停止」",
    "phoneControlTitle": "手机操控",
    "phoneControlSubtitle": "看屏幕、帮你点按，随时可以停",
-@@ -6382,9 +6491,9 @@
+@@ -6382,9 +6493,9 @@
    "phoneRestrictedOpenInfoStep": "回到这里，点「打开应用信息」。",
    "phoneRestrictedBackAccessibility": "回到「无障碍」，打开 DSH。",
    "phoneRestrictedMenuStep": "点右上角的三个点，选「允许受限制的设置」，按提示验证锁屏密码。",
@@ -3328,7 +3332,7 @@ index fc65a9e..3721d6c 100644
    "phoneRestrictedHuaweiAccessibility": "华为 HarmonyOS 4 及更早的系统大多没有这一步，直接去「无障碍」打开 DSH。",
    "phoneRestrictedVivoNote": "不同 OriginOS 版本位置可能不同。右上角没有三个点时，把应用信息页往下翻到底找一找。",
    "phoneRestrictedAdvancedStep": "在「高级设置」里找到「允许受限制的设置」，打开它。",
-@@ -6469,7 +6578,7 @@
+@@ -6469,7 +6580,7 @@
    "phoneSafeStartSettingsHint": "不加载插件，排查启动问题",
    "phoneSafeAutoSettings": "自动进入安全模式",
    "phoneSafeAutoSettingsHint": "连续启动失败时自动启用",
@@ -3337,7 +3341,7 @@ index fc65a9e..3721d6c 100644
    "phoneAccentDaiqing": "黛青",
    "phoneAccentDusk": "暮紫",
    "phoneAccentTurquoise": "松石",
-@@ -6735,7 +6844,7 @@
+@@ -6735,7 +6846,7 @@
    "phoneControlEnabledRestarting": "已开启，引擎正在重启",
    "phoneControlDisabledRestarting": "已关闭，引擎正在重启",
    "phoneControlEnabledPending": "已开启，引擎启动后生效",
@@ -3346,7 +3350,7 @@ index fc65a9e..3721d6c 100644
    "phoneReturnAfterDoneHint": "收起悬浮条，回到对话看结果",
    "phoneFloatingBar": "悬浮条",
    "phoneIdleOpacity": "闲置时不透明度",
-@@ -6832,7 +6941,7 @@
+@@ -6832,7 +6943,7 @@
    "phoneSelfCheckRefresh": "刷新状态",
    "phoneSelfCheckSave": "保存脱敏报告",
    "phoneSelfCheckSaving": "保存中…",
@@ -3355,7 +3359,7 @@ index fc65a9e..3721d6c 100644
    "phoneSelfCheckSaveFailed": "报告保存失败。",
    "phoneSelfCheckReportHint": "仅在你点击保存时导出。本机报告只含固定结果，不含截图、识别文字、日志、账户数据或运行标识。",
    "phoneSelfCheckRunState": "{state, select, idle{尚未开始} running{部分自检进行中} cleaning{正在清理；取消不代表已撤销派发的输入} done{执行和清理已结束，请逐项查看下方结果} cancelled{已取消，已观察到的操作仍保留} cleanup_pending{清理尚未确认，资源仍保留} other{状态不可用}}",
-@@ -7005,13 +7114,13 @@
+@@ -7005,13 +7116,13 @@
    "phoneTaskEndedResult": "任务已结束 · 查看结果",
    "phoneBackgroundGuideTitle": "后台确认与返回",
    "phoneBackgroundGuideSubtitle": "让确认卡和任务结果及时出现",
@@ -3373,7 +3377,7 @@ index fc65a9e..3721d6c 100644
    "phonePrivilegedSui": "Sui",
    "phonePrivilegedRoot": "Root",
    "phonePrivilegedSuiDescription": "使用 Sui 模块提供的接口，仅在主动点击时申请授权。",
-@@ -7022,8 +7131,8 @@
+@@ -7022,8 +7133,8 @@
    "phonePrivilegedGrantSui": "通过 Sui 授予",
    "phonePrivilegedGrantSuiPermission": "先授权 Sui，再授予权限",
    "phonePrivilegedSuggested": "建议",
@@ -3384,7 +3388,7 @@ index fc65a9e..3721d6c 100644
    "phoneGateCleanupTitle": "探针清理尚未确认",
    "phoneGateCleanupUnknown": "新后台资源已被阻止。原通道仍可用时，只能重试原清理，不会重跑探针。",
    "phoneGateCleanupRunning": "正在等待原探针及清理完成；清理确认前保留原通道。",
-@@ -7038,9 +7147,9 @@
+@@ -7038,9 +7149,9 @@
        }
      }
    },
@@ -3397,7 +3401,7 @@ index fc65a9e..3721d6c 100644
    "phoneKeepRestoring": "正在重新连接",
    "phoneKeepWaiting": "等通道可用后再连",
    "phoneKeepWaitingService": "等所选服务运行后再连",
-@@ -7107,13 +7216,13 @@
+@@ -7107,13 +7218,13 @@
    "phoneModeAuto": "全程自动",
    "phoneModeAutoHint": "不再询问，全程免打扰",
    "phoneModeAutoNoteTitle": "这些仍由你来操作",
@@ -3413,7 +3417,7 @@ index fc65a9e..3721d6c 100644
    "phoneYoursDenyList": "应用名单里「不碰」的 App，默认含银行、支付类",
    "phoneUnlockTitle": "解除限制",
    "phoneUnlockSubtitle": "让 AI 去做默认由你来做的事",
-@@ -7121,8 +7230,8 @@
+@@ -7121,8 +7232,8 @@
    "phoneUnlockSystemHint": "含权限页、安装器、安全中心、通知栏",
    "phoneUnlockSecrets": "密码和验证码",
    "phoneUnlockSecretsHint": "填写密码、验证码和支付密码",
@@ -3424,7 +3428,7 @@ index fc65a9e..3721d6c 100644
    "phoneUnlockBusy": "任务进行中，结束后才能开启",
    "phoneUnlockFootnote": "开启后的后果由你承担。建议只在需要时开启，用完关闭。",
    "phoneUnlockBanks": "银行、支付类 App",
-@@ -7139,7 +7248,7 @@
+@@ -7139,7 +7250,7 @@
    "phoneUnlockedBadge": "已解除限制",
    "phoneUnlockConfirmSystemTitle": "允许 AI 操作系统设置？",
    "phoneUnlockConfirmSecretsTitle": "允许 AI 填写密码和验证码？",
@@ -3433,7 +3437,7 @@ index fc65a9e..3721d6c 100644
    "phoneUnlockCanTitle": "开启后，AI 可以",
    "phoneUnlockRiskTitle": "可能出什么事",
    "phoneUnlockDisclaimerTitle": "免责声明",
-@@ -7153,13 +7262,13 @@
+@@ -7153,13 +7264,13 @@
    "phoneUnlockSecretsCan3": "操作记录里只显示 ••••，不记下填写的内容",
    "phoneUnlockSecretsRisk1": "恶意指令可能诱导 AI 把验证码填到别处，让他人登录你的账号",
    "phoneUnlockSecretsRisk2": "可能完成你并不想要的付款或转账",
@@ -3450,7 +3454,7 @@ index fc65a9e..3721d6c 100644
    "phoneUnlockDisclaimer4": "建议只在需要时临时开启，用完关闭。",
    "phoneUnlockDisclaimer5": "不建议在存有支付或银行信息的设备上开启。",
    "phoneUnlockHold": "我了解风险，开启",
-@@ -7429,7 +7538,7 @@
+@@ -7429,7 +7540,7 @@
    "pluginsWriteFailed": "没能写入",
    "pluginsHostUnreachable": "没能连上主机",
    "pluginsFileWriteFailed": "没能写入文件",
@@ -3459,7 +3463,7 @@ index fc65a9e..3721d6c 100644
    "pluginsGistTokenInvalid": "GitHub 令牌无效或没有 Gist 权限",
    "pluginsGistCreateHttpFailed": "没能创建 Gist（HTTP {status}）",
    "@pluginsGistCreateHttpFailed": {
-@@ -7867,7 +7976,7 @@
+@@ -7867,7 +7978,7 @@
    "pluginsNotificationsBlocked": "系统已关闭",
    "pluginsTurnedOn": "已开启",
    "pluginsNotifications": "通知",
@@ -3468,7 +3472,7 @@ index fc65a9e..3721d6c 100644
    "pluginsSystemNotificationsOff": "系统通知已关闭",
    "pluginsBackgroundNoAlerts": "App 在后台时收不到任何提醒",
    "pluginsApprovalNotificationsOff": "「等你确认」通知已关闭",
-@@ -8015,7 +8124,7 @@
+@@ -8015,7 +8126,7 @@
    "pluginsShareDamaged": "这个分享码不完整或已损坏",
    "pluginsShareFileReadFailed": "没能读取这个文件",
    "pluginsShareOpenFailed": "没能打开这个分享码",
@@ -3477,7 +3481,7 @@ index fc65a9e..3721d6c 100644
    "pluginsShareSheetOpenFailed": "没能打开分享",
    "pluginsSavePermissionDenied": "没有存储权限，没能保存",
    "pluginsQrCode": "二维码",
-@@ -8271,7 +8380,7 @@
+@@ -8271,7 +8382,7 @@
        }
      }
    },
@@ -3486,7 +3490,7 @@ index fc65a9e..3721d6c 100644
    "@plugslotsIssueNeedsApp": {
      "placeholders": {
        "version": {
-@@ -8634,7 +8743,7 @@
+@@ -8634,7 +8745,7 @@
    "remoteErrConnectionReplaced": "远程连接已被替换",
    "remoteErrHostRejected": "主机拒绝了连接",
    "remoteErrHostNotOwned": "主机不在你的 DSH Remote 账号下",
@@ -3495,7 +3499,7 @@ index fc65a9e..3721d6c 100644
    "remoteErrVersionIncompatible": "主机上的 DSH 或远程插件需要更新",
    "remoteErrSignInTimeout": "登录超时",
    "remoteSignInCancelled": "已取消登录",
-@@ -9648,7 +9757,7 @@
+@@ -9648,7 +9759,7 @@
    "remotePairTitle": "扫码配对电脑",
    "remotePairSubtitle": "不用注册 Remote 账号，也不会传 DeepSeek 密码或登录凭据",
    "remotePairNeedsDeepSeek": "先登录 DeepSeek 账号",
@@ -3504,7 +3508,7 @@ index fc65a9e..3721d6c 100644
    "remotePairScanHint": "对准电脑上 Remote 插件显示的配对二维码",
    "remotePairPasteLink": "粘贴配对链接",
    "remotePairPasteEmpty": "剪贴板里没有配对链接",
-@@ -9696,7 +9805,7 @@
+@@ -9696,7 +9807,7 @@
      }
    },
    "remotePairFailedTitle": "没能配对",
@@ -3513,7 +3517,7 @@ index fc65a9e..3721d6c 100644
    "@remotePairOtherServerBody": {
      "placeholders": {
        "server": {
-@@ -9706,7 +9815,7 @@
+@@ -9706,7 +9817,7 @@
    },
    "remotePairSwitchServer": "切换服务器并继续",
    "remotePairScanAgain": "重新扫码",
@@ -3522,7 +3526,7 @@ index fc65a9e..3721d6c 100644
    "remotePairErrOtherServer": "这个二维码来自另一个 Remote 服务器",
    "remotePairErrUnsupported": "这个 Remote 服务器还不支持扫码配对",
    "remotePairErrExpired": "二维码已过期或已经用过了。请在电脑上重新生成二维码",
-@@ -9744,12 +9853,12 @@
+@@ -9744,12 +9855,12 @@
    "riskAllowForChatBody": "这个对话之后的命令和改动都直接放行，可在输入框上方随时关闭。",
    "riskAllowForChatAction": "全部允许",
    "riskPetOverlayTitle": "显示在其他应用上层？",
@@ -3537,7 +3541,7 @@ index fc65a9e..3721d6c 100644
    "@askAiAboutApp": {
      "placeholders": {
        "question": {
-@@ -9757,7 +9866,7 @@
+@@ -9757,7 +9868,7 @@
        }
      }
    },
@@ -3546,7 +3550,7 @@ index fc65a9e..3721d6c 100644
    "@askAiWithGuide": {
      "placeholders": {
        "question": {
-@@ -9765,8 +9874,8 @@
+@@ -9765,8 +9876,8 @@
        }
      }
    },
@@ -3557,7 +3561,7 @@ index fc65a9e..3721d6c 100644
    "askAiQuestionPhoneControl": "手机操控是怎么工作的？有什么风险？",
    "askAiQuestionPhoneAlways": "手机操控选「始终免确认」会怎样？和「每次都询问」比风险在哪？",
    "askAiQuestionAppRules": "手机操控的应用名单有什么用？放开银行、支付类 App 有什么风险？",
-@@ -9912,7 +10021,7 @@
+@@ -9912,7 +10023,7 @@
    "searchKwPersonalization": "个性化,偏好,风格,习惯",
    "searchKwInterface": "原生,网页,网页模式,网页版,通用设置",
    "searchKwPrivacy": "隐私,数据,日志,分享,统计",
@@ -3566,7 +3570,7 @@ index fc65a9e..3721d6c 100644
    "searchKwPhoneConfirmEntry": "确认方式,手机操控,免确认",
    "searchKwWebCodingView": "代码视图,工作视图,网页版",
    "searchKwWebCollapse": "工作步骤,收起,折叠,网页版",
-@@ -10547,7 +10656,7 @@
+@@ -10547,7 +10658,7 @@
    "shellJsonStringNewline": "字符串里不能直接换行",
    "shellJsonControlCharacter": "字符串里有控制字符",
    "shellJsonBadNumber": "数字格式不对",
@@ -3575,7 +3579,7 @@ index fc65a9e..3721d6c 100644
    "@shellSkillInstallPrompt": {
      "placeholders": {
        "skill": {
-@@ -10653,7 +10762,7 @@
+@@ -10653,7 +10764,7 @@
        }
      }
    },
@@ -3584,7 +3588,7 @@ index fc65a9e..3721d6c 100644
    "@starPromptTitle": {
      "description": "The star prompt's first line. hours is the whole hours of use so far, rounded down; 0 is half an hour (the first ask comes after 30 minutes). The word joiner keeps the ~ on the line of the word before it.",
      "placeholders": {
-@@ -10667,7 +10776,7 @@
+@@ -10667,7 +10778,7 @@
    "starPromptStar": "去 GitHub 点 Star",
    "starPromptDone": "已经点过啦",
    "starPromptLater": "下次再说",
@@ -3593,7 +3597,7 @@ index fc65a9e..3721d6c 100644
    "hubStartPage": "起始页",
    "hubChatSuggestions": "聊天建议",
    "hubChatSuggestionsHint": "显示起始页的聊天建议",
-@@ -10683,7 +10792,7 @@
+@@ -10683,7 +10794,7 @@
    },
    "phoneStartupTokenTimeout": "启动等待已超时（180 秒内未收到启动标记），请查看日志",
    "phoneStartupPortNotReady": "已收到启动标记，但本机服务端口尚未就绪，请查看日志",
@@ -3602,7 +3606,7 @@ index fc65a9e..3721d6c 100644
    "stateStoragePermission": "没有存储权限，存不进「下载」",
    "stateDiagnosticsStorageFull": "存储空间不足，没能生成诊断包",
    "stateDiagnosticsExportFailed": "没能导出诊断包",
-@@ -10755,11 +10864,11 @@
+@@ -10755,11 +10866,11 @@
    "stateSubagent": "子代理",
    "stateParentChat": "上级对话",
    "statePreparing": "准备中",
@@ -3619,7 +3623,7 @@ index fc65a9e..3721d6c 100644
    "stateWallpaper": "壁纸",
    "stateFileMissing": "找不到这个文件了，可能已被删除或移走",
    "stateFileNoApp": "手机上没有能打开这类文件的应用",
-@@ -11468,7 +11577,7 @@
+@@ -11468,7 +11579,7 @@
      }
    },
    "stateProviderTokenCountInvalid": "填写数字，如 128K",
@@ -3628,7 +3632,7 @@ index fc65a9e..3721d6c 100644
    "tavernTitle": "酒馆",
    "tavernImport": "导入",
    "tavernEmptyTitle": "还没有角色",
-@@ -12141,7 +12250,7 @@
+@@ -12141,7 +12252,7 @@
        }
      }
    },
@@ -3637,7 +3641,7 @@ index fc65a9e..3721d6c 100644
    "tavernStorybookContents": "目录",
    "tavernStorybookChapter": "第 {n} 章",
    "@tavernStorybookChapter": {
-@@ -12997,13 +13106,13 @@
+@@ -12997,13 +13108,13 @@
      }
    },
    "updateSettingsOpenFailed": "没能打开系统设置",
@@ -3653,7 +3657,7 @@ index fc65a9e..3721d6c 100644
    "updateWrongPackage": "不是 DSH 的安装包",
    "updateWrongPackageMessage": "下载到的文件不对，已删除，请稍后重试。",
    "updateDowngradeBlocked": "不能降级安装",
-@@ -13046,7 +13155,7 @@
+@@ -13046,7 +13157,7 @@
    "updateNewVersionFound": "发现新版本",
    "updateReleaseNotes": "更新内容",
    "updateNoReleaseNotes": "这个版本没有写更新说明。",
@@ -3662,7 +3666,7 @@ index fc65a9e..3721d6c 100644
    "updateNoCompatiblePackage": "没有适合本机的安装包",
    "updateDownloading": "正在下载",
    "updateDownloadSource": "经由 {source}",
-@@ -13064,7 +13173,7 @@
+@@ -13064,7 +13175,7 @@
    "updateConfirmInstallNote": "在系统弹窗里确认安装",
    "updatePackageDownloaded": "安装包已下载",
    "updateReadyToInstall": "校验通过，可以安装了。",
@@ -3671,7 +3675,7 @@ index fc65a9e..3721d6c 100644
    "updateAllowInstallMessage": "在系统设置里打开「安装未知应用」，回来后自动继续。",
    "updateOpenReleasePage": "打开发布页",
    "updateUpdateNow": "立即更新",
-@@ -13073,7 +13182,7 @@
+@@ -13073,7 +13184,7 @@
    "updateSystemInstallerFailed": "没能打开系统安装器",
    "updateExportApk": "导出安装包",
    "updateExportApkTitle": "导出安装包？",
@@ -3680,7 +3684,7 @@ index fc65a9e..3721d6c 100644
    "updateExportApkDone": "已存到 下载/{path}",
    "@updateExportApkDone": {
      "placeholders": {
-@@ -13106,11 +13215,20 @@
+@@ -13106,11 +13217,20 @@
        }
      }
    },
@@ -3704,7 +3708,7 @@ index fc65a9e..3721d6c 100644
    "usageUpgradeLearn": "了解",
    "usageUpgradeOff": "关闭",
    "viewArtifactSaved": "已存到 {value}",
-@@ -13819,7 +13937,7 @@
+@@ -13819,7 +13939,7 @@
    "viewTipImageZoom": "看图时双击放大、双指缩放，长按可以保存",
    "viewTipQueuedRecall": "排队中的消息可以撤回到输入框再改",
    "viewTipKeyboard": "接了键盘：Ctrl+Enter 发送，连按两次 Esc 停止",
@@ -3713,7 +3717,7 @@ index fc65a9e..3721d6c 100644
    "viewTipShareSelect": "分享对话时长按再滑动，可以一次选中多条消息",
    "viewTipChartDrag": "回复里的图表可以左右拖动，看每个点的数值",
    "viewTipCopyPath": "改动卡里长按某个文件，可以复制它的路径",
-@@ -13989,7 +14107,7 @@
+@@ -13989,7 +14109,7 @@
        }
      }
    },
@@ -3722,7 +3726,7 @@ index fc65a9e..3721d6c 100644
    "@viewContinueHeader": {
      "placeholders": {
        "value": {
-@@ -14026,7 +14144,7 @@
+@@ -14026,7 +14146,7 @@
    "viewShareNoPermission": "没有存储权限，没能保存",
    "viewShareOpenFailed": "没能打开分享",
    "viewShareLinkFailed": "没能生成链接，稍后再试",
@@ -3731,7 +3735,7 @@ index fc65a9e..3721d6c 100644
    "@viewShareLinkText": {
      "placeholders": {
        "first": {
-@@ -14054,7 +14172,7 @@
+@@ -14054,7 +14174,7 @@
        }
      }
    },
@@ -3740,7 +3744,7 @@ index fc65a9e..3721d6c 100644
    "viewShareWebHint": "任何浏览器都能打开，不用联网",
    "viewShareMarkdownHint": "纯文本，随处可读",
    "viewShareLinkHint": "端到端加密，服务器看不到内容",
-@@ -14774,7 +14892,7 @@
+@@ -14774,7 +14894,7 @@
    "workshopAbout": "简介",
    "workshopNoDescription": "作者没有写简介。",
    "workshopSource": "来源",
@@ -3750,7 +3754,7 @@ index fc65a9e..3721d6c 100644
      "placeholders": {
        "version": {
 diff --git a/app/lib/l10n/gen/app_localizations.dart b/app/lib/l10n/gen/app_localizations.dart
-index 8514ee1..cb25fff 100644
+index 8514ee1..fa98ac5 100644
 --- a/app/lib/l10n/gen/app_localizations.dart
 +++ b/app/lib/l10n/gen/app_localizations.dart
 @@ -113,13 +113,13 @@ abstract class L10n {
@@ -3823,7 +3827,7 @@ index 8514ee1..cb25fff 100644
    String get companionMemoryUnsupportedHint;
  
    /// No description provided for @companionMemoryLoadFailed.
-@@ -10712,6 +10712,576 @@ abstract class L10n {
+@@ -10712,6 +10712,588 @@ abstract class L10n {
    /// **'网络不通'**
    String get companionAdaptNetwork;
  
@@ -4193,6 +4197,18 @@ index 8514ee1..cb25fff 100644
 +  /// **'对准电脑「连接手机」中显示的二维码。'**
 +  String get deepClubGatewayScanHint;
 +
++  /// No description provided for @deepClubGatewayNetworkHint.
++  ///
++  /// In zh, this message translates to:
++  /// **'直接连接电脑或经深云中转；路径和状态来自当前连接。'**
++  String get deepClubGatewayNetworkHint;
++
++  /// No description provided for @deepClubRateLimited.
++  ///
++  /// In zh, this message translates to:
++  /// **'尝试次数过多，请稍后再试。'**
++  String get deepClubRateLimited;
++
 +  /// No description provided for @deepClubGatewayConnecting.
 +  ///
 +  /// In zh, this message translates to:
@@ -4400,7 +4416,7 @@ index 8514ee1..cb25fff 100644
    /// No description provided for @systemImeTitle.
    ///
    /// In zh, this message translates to:
-@@ -11117,7 +11687,7 @@ abstract class L10n {
+@@ -11117,7 +11699,7 @@ abstract class L10n {
    /// No description provided for @engineAccountReturnToDsh.
    ///
    /// In zh, this message translates to:
@@ -4409,7 +4425,7 @@ index 8514ee1..cb25fff 100644
    String get engineAccountReturnToDsh;
  
    /// No description provided for @engineAccountFinishingSignIn.
-@@ -15047,7 +15617,7 @@ abstract class L10n {
+@@ -15047,7 +15629,7 @@ abstract class L10n {
    /// No description provided for @featuresExportDownloadsHint.
    ///
    /// In zh, this message translates to:
@@ -4418,7 +4434,7 @@ index 8514ee1..cb25fff 100644
    String get featuresExportDownloadsHint;
  
    /// No description provided for @featuresExportContents.
-@@ -15569,7 +16139,7 @@ abstract class L10n {
+@@ -15569,7 +16151,7 @@ abstract class L10n {
    /// No description provided for @hubSettingsStorageDenied.
    ///
    /// In zh, this message translates to:
@@ -4427,7 +4443,7 @@ index 8514ee1..cb25fff 100644
    String get hubSettingsStorageDenied;
  
    /// No description provided for @hubSettingsRestartRequired.
-@@ -15737,7 +16307,7 @@ abstract class L10n {
+@@ -15737,7 +16319,7 @@ abstract class L10n {
    /// No description provided for @hubSettingsAccount.
    ///
    /// In zh, this message translates to:
@@ -4436,7 +4452,7 @@ index 8514ee1..cb25fff 100644
    String get hubSettingsAccount;
  
    /// No description provided for @hubSettingsSigningIn.
-@@ -15767,13 +16337,13 @@ abstract class L10n {
+@@ -15767,13 +16349,13 @@ abstract class L10n {
    /// No description provided for @hubSettingsSignInAccount.
    ///
    /// In zh, this message translates to:
@@ -4452,7 +4468,7 @@ index 8514ee1..cb25fff 100644
    String get hubSettingsOrApiKey;
  
    /// No description provided for @hubPluginShare.
-@@ -16097,7 +16667,7 @@ abstract class L10n {
+@@ -16097,7 +16679,7 @@ abstract class L10n {
    /// No description provided for @hubGroupHosts.
    ///
    /// In zh, this message translates to:
@@ -4461,7 +4477,7 @@ index 8514ee1..cb25fff 100644
    String get hubGroupHosts;
  
    /// No description provided for @hubGroupHelp.
-@@ -16211,13 +16781,13 @@ abstract class L10n {
+@@ -16211,13 +16793,13 @@ abstract class L10n {
    /// No description provided for @hubAbout.
    ///
    /// In zh, this message translates to:
@@ -4477,7 +4493,7 @@ index 8514ee1..cb25fff 100644
    String get hubAboutAuthor;
  
    /// No description provided for @hubAboutBilibili.
-@@ -16535,7 +17105,7 @@ abstract class L10n {
+@@ -16535,7 +17117,7 @@ abstract class L10n {
    /// No description provided for @iconShortcutNote.
    ///
    /// In zh, this message translates to:
@@ -4486,7 +4502,7 @@ index 8514ee1..cb25fff 100644
    String get iconShortcutNote;
  
    /// No description provided for @iconShortcutAdded.
-@@ -16553,7 +17123,7 @@ abstract class L10n {
+@@ -16553,7 +17135,7 @@ abstract class L10n {
    /// No description provided for @iconShortcutNoDialog.
    ///
    /// In zh, this message translates to:
@@ -4495,7 +4511,7 @@ index 8514ee1..cb25fff 100644
    String get iconShortcutNoDialog;
  
    /// No description provided for @iconShortcutSettings.
-@@ -16727,7 +17297,7 @@ abstract class L10n {
+@@ -16727,7 +17309,7 @@ abstract class L10n {
    /// No description provided for @liveBlockedText.
    ///
    /// In zh, this message translates to:
@@ -4504,7 +4520,7 @@ index 8514ee1..cb25fff 100644
    String get liveBlockedText;
  
    /// No description provided for @localeTitle.
-@@ -16895,7 +17465,7 @@ abstract class L10n {
+@@ -16895,7 +17477,7 @@ abstract class L10n {
    /// No description provided for @marketSectionAdapted.
    ///
    /// In zh, this message translates to:
@@ -4513,7 +4529,7 @@ index 8514ee1..cb25fff 100644
    String get marketSectionAdapted;
  
    /// No description provided for @marketSectionAll.
-@@ -16931,7 +17501,7 @@ abstract class L10n {
+@@ -16931,7 +17513,7 @@ abstract class L10n {
    /// No description provided for @marketTierAdapted.
    ///
    /// In zh, this message translates to:
@@ -4522,7 +4538,7 @@ index 8514ee1..cb25fff 100644
    String get marketTierAdapted;
  
    /// No description provided for @marketRiskMedium.
-@@ -17021,13 +17591,13 @@ abstract class L10n {
+@@ -17021,13 +17603,13 @@ abstract class L10n {
    /// No description provided for @marketFlagNotAdapted.
    ///
    /// In zh, this message translates to:
@@ -4538,7 +4554,7 @@ index 8514ee1..cb25fff 100644
    String get marketFlagNotAdaptedBody;
  
    /// No description provided for @marketFlagOtherBody.
-@@ -17087,13 +17657,13 @@ abstract class L10n {
+@@ -17087,13 +17669,13 @@ abstract class L10n {
    /// No description provided for @marketRequiresApp.
    ///
    /// In zh, this message translates to:
@@ -4554,7 +4570,7 @@ index 8514ee1..cb25fff 100644
    String marketNeedsApp(String version);
  
    /// No description provided for @marketUpdateAvailable.
-@@ -18527,7 +19097,7 @@ abstract class L10n {
+@@ -18527,7 +19109,7 @@ abstract class L10n {
    /// No description provided for @phoneDiagnosticsSaveHint.
    ///
    /// In zh, this message translates to:
@@ -4563,7 +4579,7 @@ index 8514ee1..cb25fff 100644
    String get phoneDiagnosticsSaveHint;
  
    /// No description provided for @phoneDiagnosticsNote.
-@@ -19175,7 +19745,7 @@ abstract class L10n {
+@@ -19175,7 +19757,7 @@ abstract class L10n {
    /// No description provided for @phoneDndShizukuPermissionFailed.
    ///
    /// In zh, this message translates to:
@@ -4572,7 +4588,7 @@ index 8514ee1..cb25fff 100644
    String get phoneDndShizukuPermissionFailed;
  
    /// No description provided for @phoneDndPairedConnect.
-@@ -19379,13 +19949,13 @@ abstract class L10n {
+@@ -19379,13 +19961,13 @@ abstract class L10n {
    /// No description provided for @phoneDndRootConnected.
    ///
    /// In zh, this message translates to:
@@ -4588,7 +4604,7 @@ index 8514ee1..cb25fff 100644
    String get phoneDndRootConnectedKept;
  
    /// No description provided for @phoneDndRootRetry.
-@@ -19415,13 +19985,13 @@ abstract class L10n {
+@@ -19415,13 +19997,13 @@ abstract class L10n {
    /// No description provided for @phoneDndGrantShizukuHint.
    ///
    /// In zh, this message translates to:
@@ -4604,7 +4620,7 @@ index 8514ee1..cb25fff 100644
    String get phoneDndGrantShizuku;
  
    /// No description provided for @phoneDndShizukuAllSet.
-@@ -19445,7 +20015,7 @@ abstract class L10n {
+@@ -19445,7 +20027,7 @@ abstract class L10n {
    /// No description provided for @phoneDndShizukuGranted.
    ///
    /// In zh, this message translates to:
@@ -4613,7 +4629,7 @@ index 8514ee1..cb25fff 100644
    String get phoneDndShizukuGranted;
  
    /// No description provided for @phoneDndShizukuCompatibility.
-@@ -19661,7 +20231,7 @@ abstract class L10n {
+@@ -19661,7 +20243,7 @@ abstract class L10n {
    /// No description provided for @phoneOpenAppInfoFailed.
    ///
    /// In zh, this message translates to:
@@ -4622,7 +4638,7 @@ index 8514ee1..cb25fff 100644
    String get phoneOpenAppInfoFailed;
  
    /// No description provided for @phoneStopFailed.
-@@ -20129,19 +20699,19 @@ abstract class L10n {
+@@ -20129,19 +20711,19 @@ abstract class L10n {
    /// No description provided for @phoneRestrictedTryOverlay.
    ///
    /// In zh, this message translates to:
@@ -4645,7 +4661,7 @@ index 8514ee1..cb25fff 100644
    String get phoneRestrictedHuaweiOverlay;
  
    /// No description provided for @phoneRestrictedHuaweiAccessibility.
-@@ -20651,7 +21221,7 @@ abstract class L10n {
+@@ -20651,7 +21233,7 @@ abstract class L10n {
    /// No description provided for @phoneAccentMist.
    ///
    /// In zh, this message translates to:
@@ -4654,7 +4670,7 @@ index 8514ee1..cb25fff 100644
    String get phoneAccentMist;
  
    /// No description provided for @phoneAccentDaiqing.
-@@ -20957,7 +21527,7 @@ abstract class L10n {
+@@ -20957,7 +21539,7 @@ abstract class L10n {
    /// No description provided for @phoneReturnAfterDone.
    ///
    /// In zh, this message translates to:
@@ -4663,7 +4679,7 @@ index 8514ee1..cb25fff 100644
    String get phoneReturnAfterDone;
  
    /// No description provided for @phoneReturnAfterDoneHint.
-@@ -21371,7 +21941,7 @@ abstract class L10n {
+@@ -21371,7 +21953,7 @@ abstract class L10n {
    /// No description provided for @phoneSelfCheckSaved.
    ///
    /// In zh, this message translates to:
@@ -4672,7 +4688,7 @@ index 8514ee1..cb25fff 100644
    String get phoneSelfCheckSaved;
  
    /// No description provided for @phoneSelfCheckSaveFailed.
-@@ -21707,19 +22277,19 @@ abstract class L10n {
+@@ -21707,19 +22289,19 @@ abstract class L10n {
    /// No description provided for @phoneBackgroundGuideBody.
    ///
    /// In zh, this message translates to:
@@ -4695,7 +4711,7 @@ index 8514ee1..cb25fff 100644
    String get phoneBackgroundReturnHint;
  
    /// No description provided for @phoneBackgroundGotIt.
-@@ -21743,7 +22313,7 @@ abstract class L10n {
+@@ -21743,7 +22325,7 @@ abstract class L10n {
    /// No description provided for @phonePrivilegedUpgrade.
    ///
    /// In zh, this message translates to:
@@ -4704,7 +4720,7 @@ index 8514ee1..cb25fff 100644
    String get phonePrivilegedUpgrade;
  
    /// No description provided for @phonePrivilegedSui.
-@@ -21809,13 +22379,13 @@ abstract class L10n {
+@@ -21809,13 +22391,13 @@ abstract class L10n {
    /// No description provided for @phonePrivilegedRootRiskTitle.
    ///
    /// In zh, this message translates to:
@@ -4720,7 +4736,7 @@ index 8514ee1..cb25fff 100644
    String get phonePrivilegedRootRiskBody;
  
    /// No description provided for @phoneGateCleanupTitle.
-@@ -21863,19 +22433,19 @@ abstract class L10n {
+@@ -21863,19 +22445,19 @@ abstract class L10n {
    /// No description provided for @phoneKeepRootDescription.
    ///
    /// In zh, this message translates to:
@@ -4743,7 +4759,7 @@ index 8514ee1..cb25fff 100644
    String get phoneKeepAdbDescription;
  
    /// No description provided for @phoneKeepRestoring.
-@@ -22175,7 +22745,7 @@ abstract class L10n {
+@@ -22175,7 +22757,7 @@ abstract class L10n {
    /// No description provided for @phoneModeAutoNote.
    ///
    /// In zh, this message translates to:
@@ -4752,7 +4768,7 @@ index 8514ee1..cb25fff 100644
    String get phoneModeAutoNote;
  
    /// No description provided for @phoneModeAutoUnlockNote.
-@@ -22211,7 +22781,7 @@ abstract class L10n {
+@@ -22211,7 +22793,7 @@ abstract class L10n {
    /// No description provided for @phoneYoursOwnApp.
    ///
    /// In zh, this message translates to:
@@ -4761,7 +4777,7 @@ index 8514ee1..cb25fff 100644
    String get phoneYoursOwnApp;
  
    /// No description provided for @phoneYoursDenyList.
-@@ -22259,13 +22829,13 @@ abstract class L10n {
+@@ -22259,13 +22841,13 @@ abstract class L10n {
    /// No description provided for @phoneUnlockOwnApp.
    ///
    /// In zh, this message translates to:
@@ -4777,7 +4793,7 @@ index 8514ee1..cb25fff 100644
    String get phoneUnlockOwnAppHint;
  
    /// No description provided for @phoneUnlockBusy.
-@@ -22325,7 +22895,7 @@ abstract class L10n {
+@@ -22325,7 +22907,7 @@ abstract class L10n {
    /// No description provided for @phoneUnlockConfirmOwnAppTitle.
    ///
    /// In zh, this message translates to:
@@ -4786,7 +4802,7 @@ index 8514ee1..cb25fff 100644
    String get phoneUnlockConfirmOwnAppTitle;
  
    /// No description provided for @phoneUnlockCanTitle.
-@@ -22409,13 +22979,13 @@ abstract class L10n {
+@@ -22409,13 +22991,13 @@ abstract class L10n {
    /// No description provided for @phoneUnlockOwnAppCan1.
    ///
    /// In zh, this message translates to:
@@ -4802,7 +4818,7 @@ index 8514ee1..cb25fff 100644
    String get phoneUnlockOwnAppCan2;
  
    /// No description provided for @phoneUnlockOwnAppRisk1.
-@@ -22445,7 +23015,7 @@ abstract class L10n {
+@@ -22445,7 +23027,7 @@ abstract class L10n {
    /// No description provided for @phoneUnlockDisclaimer3.
    ///
    /// In zh, this message translates to:
@@ -4811,7 +4827,7 @@ index 8514ee1..cb25fff 100644
    String get phoneUnlockDisclaimer3;
  
    /// No description provided for @phoneUnlockDisclaimer4.
-@@ -23387,7 +23957,7 @@ abstract class L10n {
+@@ -23387,7 +23969,7 @@ abstract class L10n {
    /// No description provided for @pluginsProfileTitle.
    ///
    /// In zh, this message translates to:
@@ -4820,7 +4836,7 @@ index 8514ee1..cb25fff 100644
    String get pluginsProfileTitle;
  
    /// No description provided for @pluginsGistTokenInvalid.
-@@ -24407,7 +24977,7 @@ abstract class L10n {
+@@ -24407,7 +24989,7 @@ abstract class L10n {
    /// No description provided for @pluginsNotificationSettingsFailed.
    ///
    /// In zh, this message translates to:
@@ -4829,7 +4845,7 @@ index 8514ee1..cb25fff 100644
    String get pluginsNotificationSettingsFailed;
  
    /// No description provided for @pluginsSystemNotificationsOff.
-@@ -24875,7 +25445,7 @@ abstract class L10n {
+@@ -24875,7 +25457,7 @@ abstract class L10n {
    /// No description provided for @pluginsPluginShareTitle.
    ///
    /// In zh, this message translates to:
@@ -4838,7 +4854,7 @@ index 8514ee1..cb25fff 100644
    String get pluginsPluginShareTitle;
  
    /// No description provided for @pluginsShareSheetOpenFailed.
-@@ -25295,7 +25865,7 @@ abstract class L10n {
+@@ -25295,7 +25877,7 @@ abstract class L10n {
    /// No description provided for @plugslotsIssueNeedsApp.
    ///
    /// In zh, this message translates to:
@@ -4847,7 +4863,7 @@ index 8514ee1..cb25fff 100644
    String plugslotsIssueNeedsApp(String version);
  
    /// No description provided for @plugslotsIssueNewerProtocol.
-@@ -26141,7 +26711,7 @@ abstract class L10n {
+@@ -26141,7 +26723,7 @@ abstract class L10n {
    /// No description provided for @remoteErrUpdateNeeded.
    ///
    /// In zh, this message translates to:
@@ -4856,7 +4872,7 @@ index 8514ee1..cb25fff 100644
    String get remoteErrUpdateNeeded;
  
    /// No description provided for @remoteErrVersionIncompatible.
-@@ -28643,7 +29213,7 @@ abstract class L10n {
+@@ -28643,7 +29225,7 @@ abstract class L10n {
    /// No description provided for @remotePairNeedsDeepSeekBody.
    ///
    /// In zh, this message translates to:
@@ -4865,7 +4881,7 @@ index 8514ee1..cb25fff 100644
    String get remotePairNeedsDeepSeekBody;
  
    /// No description provided for @remotePairScanHint.
-@@ -28805,7 +29375,7 @@ abstract class L10n {
+@@ -28805,7 +29387,7 @@ abstract class L10n {
    /// No description provided for @remotePairOtherServerBody.
    ///
    /// In zh, this message translates to:
@@ -4874,7 +4890,7 @@ index 8514ee1..cb25fff 100644
    String remotePairOtherServerBody(String server);
  
    /// No description provided for @remotePairSwitchServer.
-@@ -28823,7 +29393,7 @@ abstract class L10n {
+@@ -28823,7 +29405,7 @@ abstract class L10n {
    /// No description provided for @remotePairErrInvalidCode.
    ///
    /// In zh, this message translates to:
@@ -4883,7 +4899,7 @@ index 8514ee1..cb25fff 100644
    String get remotePairErrInvalidCode;
  
    /// No description provided for @remotePairErrOtherServer.
-@@ -29009,7 +29579,7 @@ abstract class L10n {
+@@ -29009,7 +29591,7 @@ abstract class L10n {
    /// No description provided for @riskPetOverlayBody.
    ///
    /// In zh, this message translates to:
@@ -4892,7 +4908,7 @@ index 8514ee1..cb25fff 100644
    String get riskPetOverlayBody;
  
    /// No description provided for @riskPetOverlayAction.
-@@ -29039,25 +29609,25 @@ abstract class L10n {
+@@ -29039,25 +29621,25 @@ abstract class L10n {
    /// No description provided for @askAiAboutApp.
    ///
    /// In zh, this message translates to:
@@ -4922,7 +4938,7 @@ index 8514ee1..cb25fff 100644
    String get askAiQuestionOverview;
  
    /// No description provided for @askAiQuestionPhoneControl.
-@@ -29807,7 +30377,7 @@ abstract class L10n {
+@@ -29807,7 +30389,7 @@ abstract class L10n {
    /// No description provided for @searchKwAbout.
    ///
    /// In zh, this message translates to:
@@ -4931,7 +4947,7 @@ index 8514ee1..cb25fff 100644
    String get searchKwAbout;
  
    /// No description provided for @searchKwPhoneConfirmEntry.
-@@ -31625,7 +32195,7 @@ abstract class L10n {
+@@ -31625,7 +32207,7 @@ abstract class L10n {
    /// No description provided for @shellSkillInstallPrompt.
    ///
    /// In zh, this message translates to:
@@ -4940,7 +4956,7 @@ index 8514ee1..cb25fff 100644
    String shellSkillInstallPrompt(String skill);
  
    /// No description provided for @shellSkillInstallDirectory.
-@@ -31829,7 +32399,7 @@ abstract class L10n {
+@@ -31829,7 +32411,7 @@ abstract class L10n {
    /// The star prompt's first line. hours is the whole hours of use so far, rounded down; 0 is half an hour (the first ask comes after 30 minutes). The word joiner keeps the ~ on the line of the word before it.
    ///
    /// In zh, this message translates to:
@@ -4949,7 +4965,7 @@ index 8514ee1..cb25fff 100644
    String starPromptTitle(int hours);
  
    /// No description provided for @starPromptBody.
-@@ -31865,7 +32435,7 @@ abstract class L10n {
+@@ -31865,7 +32447,7 @@ abstract class L10n {
    /// No description provided for @starSettingsTitle.
    ///
    /// In zh, this message translates to:
@@ -4958,7 +4974,7 @@ index 8514ee1..cb25fff 100644
    String get starSettingsTitle;
  
    /// No description provided for @hubStartPage.
-@@ -31919,7 +32489,7 @@ abstract class L10n {
+@@ -31919,7 +32501,7 @@ abstract class L10n {
    /// No description provided for @stateDiagnosticsSubject.
    ///
    /// In zh, this message translates to:
@@ -4967,7 +4983,7 @@ index 8514ee1..cb25fff 100644
    String get stateDiagnosticsSubject;
  
    /// No description provided for @stateStoragePermission.
-@@ -32351,31 +32921,31 @@ abstract class L10n {
+@@ -32351,31 +32933,31 @@ abstract class L10n {
    /// No description provided for @stateIconMist.
    ///
    /// In zh, this message translates to:
@@ -5004,7 +5020,7 @@ index 8514ee1..cb25fff 100644
    String get stateAppDisclaimer;
  
    /// No description provided for @stateWallpaper.
-@@ -34169,7 +34739,7 @@ abstract class L10n {
+@@ -34169,7 +34751,7 @@ abstract class L10n {
    /// No description provided for @appSlogan.
    ///
    /// In zh, this message translates to:
@@ -5013,7 +5029,7 @@ index 8514ee1..cb25fff 100644
    String get appSlogan;
  
    /// No description provided for @tavernTitle.
-@@ -36131,7 +36701,7 @@ abstract class L10n {
+@@ -36131,7 +36713,7 @@ abstract class L10n {
    /// No description provided for @tavernStorybookMadeWith.
    ///
    /// In zh, this message translates to:
@@ -5022,7 +5038,7 @@ index 8514ee1..cb25fff 100644
    String get tavernStorybookMadeWith;
  
    /// No description provided for @tavernStorybookContents.
-@@ -38699,7 +39269,7 @@ abstract class L10n {
+@@ -38699,7 +39281,7 @@ abstract class L10n {
    /// No description provided for @updateSettingsOpenFailedMessage.
    ///
    /// In zh, this message translates to:
@@ -5031,7 +5047,7 @@ index 8514ee1..cb25fff 100644
    String get updateSettingsOpenFailedMessage;
  
    /// No description provided for @updateInstallCancelled.
-@@ -38735,7 +39305,7 @@ abstract class L10n {
+@@ -38735,7 +39317,7 @@ abstract class L10n {
    /// No description provided for @updateSignatureMismatchMessage.
    ///
    /// In zh, this message translates to:
@@ -5040,7 +5056,7 @@ index 8514ee1..cb25fff 100644
    String get updateSignatureMismatchMessage;
  
    /// No description provided for @updateWrongPackage.
-@@ -38849,7 +39419,7 @@ abstract class L10n {
+@@ -38849,7 +39431,7 @@ abstract class L10n {
    /// No description provided for @updateInstallKeepsData.
    ///
    /// In zh, this message translates to:
@@ -5049,7 +5065,7 @@ index 8514ee1..cb25fff 100644
    String get updateInstallKeepsData;
  
    /// No description provided for @updateNoCompatiblePackage.
-@@ -38915,7 +39485,7 @@ abstract class L10n {
+@@ -38915,7 +39497,7 @@ abstract class L10n {
    /// No description provided for @updateAllowInstall.
    ///
    /// In zh, this message translates to:
@@ -5058,7 +5074,7 @@ index 8514ee1..cb25fff 100644
    String get updateAllowInstall;
  
    /// No description provided for @updateAllowInstallMessage.
-@@ -38969,7 +39539,7 @@ abstract class L10n {
+@@ -38969,7 +39551,7 @@ abstract class L10n {
    /// No description provided for @updateExportApkMessage.
    ///
    /// In zh, this message translates to:
@@ -5067,7 +5083,7 @@ index 8514ee1..cb25fff 100644
    String get updateExportApkMessage;
  
    /// No description provided for @updateExportApkDone.
-@@ -39038,6 +39608,18 @@ abstract class L10n {
+@@ -39038,6 +39620,18 @@ abstract class L10n {
    /// **'正在下载 {percent}%'**
    String updateDownloadingPercent(int percent);
  
@@ -5086,7 +5102,7 @@ index 8514ee1..cb25fff 100644
    /// No description provided for @usageStatsTitle.
    ///
    /// In zh, this message translates to:
-@@ -39047,13 +39629,13 @@ abstract class L10n {
+@@ -39047,13 +39641,13 @@ abstract class L10n {
    /// No description provided for @usageStatsSection.
    ///
    /// In zh, this message translates to:
@@ -5102,7 +5118,7 @@ index 8514ee1..cb25fff 100644
    String get usageStatsFooter;
  
    /// No description provided for @usageNoticeBody.
-@@ -39065,7 +39647,7 @@ abstract class L10n {
+@@ -39065,7 +39659,7 @@ abstract class L10n {
    /// No description provided for @usageUpgradeNotice.
    ///
    /// In zh, this message translates to:
@@ -5111,7 +5127,7 @@ index 8514ee1..cb25fff 100644
    String get usageUpgradeNotice;
  
    /// No description provided for @usageUpgradeLearn.
-@@ -40157,7 +40739,7 @@ abstract class L10n {
+@@ -40157,7 +40751,7 @@ abstract class L10n {
    /// No description provided for @viewTipShareIn.
    ///
    /// In zh, this message translates to:
@@ -5120,7 +5136,7 @@ index 8514ee1..cb25fff 100644
    String get viewTipShareIn;
  
    /// No description provided for @viewTipShareSelect.
-@@ -40577,7 +41159,7 @@ abstract class L10n {
+@@ -40577,7 +41171,7 @@ abstract class L10n {
    /// No description provided for @viewContinueHeader.
    ///
    /// In zh, this message translates to:
@@ -5129,7 +5145,7 @@ index 8514ee1..cb25fff 100644
    String viewContinueHeader(String value);
  
    /// No description provided for @viewContinueUser.
-@@ -40673,7 +41255,7 @@ abstract class L10n {
+@@ -40673,7 +41267,7 @@ abstract class L10n {
    /// No description provided for @viewShareLinkText.
    ///
    /// In zh, this message translates to:
@@ -5138,7 +5154,7 @@ index 8514ee1..cb25fff 100644
    String viewShareLinkText(String first, String second);
  
    /// No description provided for @viewShareEmpty.
-@@ -40697,7 +41279,7 @@ abstract class L10n {
+@@ -40697,7 +41291,7 @@ abstract class L10n {
    /// No description provided for @viewShareFileHint.
    ///
    /// In zh, this message translates to:
@@ -5147,7 +5163,7 @@ index 8514ee1..cb25fff 100644
    String get viewShareFileHint;
  
    /// No description provided for @viewShareWebHint.
-@@ -42467,7 +43049,7 @@ abstract class L10n {
+@@ -42467,7 +43061,7 @@ abstract class L10n {
    /// No description provided for @workshopMinApp.
    ///
    /// In zh, this message translates to:
@@ -5157,7 +5173,7 @@ index 8514ee1..cb25fff 100644
  
    /// No description provided for @workshopInstalledVersion.
 diff --git a/app/lib/l10n/gen/app_localizations_en.dart b/app/lib/l10n/gen/app_localizations_en.dart
-index d1173f7..2c259ef 100644
+index d1173f7..47c1d59 100644
 --- a/app/lib/l10n/gen/app_localizations_en.dart
 +++ b/app/lib/l10n/gen/app_localizations_en.dart
 @@ -21,10 +21,10 @@ class L10nEn extends L10n {
@@ -5236,7 +5252,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get companionMemoryLoadFailed => 'Couldn\'t load';
-@@ -6118,6 +6118,311 @@ class L10nEn extends L10n {
+@@ -6118,6 +6118,318 @@ class L10nEn extends L10n {
    @override
    String get companionAdaptNetwork => 'no connection';
  
@@ -5439,6 +5455,13 @@ index d1173f7..2c259ef 100644
 +  String get deepClubGatewayScanHint => 'Point your camera at the QR code shown in Connect phone on your computer.';
 +
 +  @override
++  String get deepClubGatewayNetworkHint =>
++      'Connects directly to your computer or through the DeepClub relay. The route and status reflect the active connection.';
++
++  @override
++  String get deepClubRateLimited => 'Too many attempts. Try again later.';
++
++  @override
 +  String get deepClubGatewayConnecting => 'Connecting';
 +
 +  @override
@@ -5548,7 +5571,7 @@ index d1173f7..2c259ef 100644
    @override
    String get systemImeTitle => 'System input-method diagnostics';
  
-@@ -6334,7 +6639,7 @@ class L10nEn extends L10n {
+@@ -6334,7 +6646,7 @@ class L10nEn extends L10n {
    String get engineAccountFinishInBrowser => 'Finish sign-in in your browser';
  
    @override
@@ -5557,7 +5580,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get engineAccountFinishingSignIn => 'Finishing sign-in';
-@@ -8537,7 +8842,7 @@ class L10nEn extends L10n {
+@@ -8537,7 +8849,7 @@ class L10nEn extends L10n {
    String get featuresExportSaveDownloads => 'Save to Downloads';
  
    @override
@@ -5566,7 +5589,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get featuresExportContents => 'All records and attachments from this chat and its subagents';
-@@ -8887,7 +9192,7 @@ class L10nEn extends L10n {
+@@ -8887,7 +9199,7 @@ class L10nEn extends L10n {
  
    @override
    String get hubSettingsStorageDenied =>
@@ -5575,7 +5598,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubSettingsRestartRequired => 'Takes effect after restarting the engine';
-@@ -8971,7 +9276,7 @@ class L10nEn extends L10n {
+@@ -8971,7 +9283,7 @@ class L10nEn extends L10n {
    String get hubSettingsLicenses => 'Open-source licenses';
  
    @override
@@ -5584,7 +5607,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubSettingsSigningIn => 'Signing in…';
-@@ -8986,10 +9291,10 @@ class L10nEn extends L10n {
+@@ -8986,10 +9298,10 @@ class L10nEn extends L10n {
    String get hubSettingsApiKeyHint => 'Add an API key to start chatting';
  
    @override
@@ -5597,7 +5620,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubPluginShare => 'Share plugin';
-@@ -9223,7 +9528,7 @@ class L10nEn extends L10n {
+@@ -9223,7 +9535,7 @@ class L10nEn extends L10n {
    String get hubGroupGeneral => 'General';
  
    @override
@@ -5606,7 +5629,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubGroupHelp => 'Help and about';
-@@ -9280,10 +9585,10 @@ class L10nEn extends L10n {
+@@ -9280,10 +9592,10 @@ class L10nEn extends L10n {
    String get hubTableTintNoneHint => 'Grid lines only, the lightest';
  
    @override
@@ -5619,7 +5642,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubAboutBilibili => 'Bilibili profile';
-@@ -9454,7 +9759,7 @@ class L10nEn extends L10n {
+@@ -9454,7 +9766,7 @@ class L10nEn extends L10n {
  
    @override
    String get iconShortcutNote =>
@@ -5628,7 +5651,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get iconShortcutAdded => 'Added to your home screen';
-@@ -9463,7 +9768,7 @@ class L10nEn extends L10n {
+@@ -9463,7 +9775,7 @@ class L10nEn extends L10n {
    String get iconShortcutConfirm => 'Confirm in the dialog that appears';
  
    @override
@@ -5637,7 +5660,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get iconShortcutSettings => 'Settings';
-@@ -9557,11 +9862,11 @@ class L10nEn extends L10n {
+@@ -9557,11 +9869,11 @@ class L10nEn extends L10n {
    String get liveUnsupported => 'This phone\'s system doesn\'t support live activities yet';
  
    @override
@@ -5651,7 +5674,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get localeTitle => 'Language';
-@@ -9656,7 +9961,7 @@ class L10nEn extends L10n {
+@@ -9656,7 +9968,7 @@ class L10nEn extends L10n {
    String get marketSectionOfficial => 'Official';
  
    @override
@@ -5660,7 +5683,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get marketSectionAll => 'All';
-@@ -9674,7 +9979,7 @@ class L10nEn extends L10n {
+@@ -9674,7 +9986,7 @@ class L10nEn extends L10n {
    String get marketTierOfficial => 'Official';
  
    @override
@@ -5669,7 +5692,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get marketRiskMedium => 'Medium risk';
-@@ -9721,10 +10026,10 @@ class L10nEn extends L10n {
+@@ -9721,10 +10033,10 @@ class L10nEn extends L10n {
    String get marketFlagObfuscatedBody => 'Has large minified or obfuscated files; hard to tell what they do';
  
    @override
@@ -5682,7 +5705,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get marketFlagOtherBody => 'Another trait the automatic checks reported';
-@@ -9760,11 +10065,11 @@ class L10nEn extends L10n {
+@@ -9760,11 +10072,11 @@ class L10nEn extends L10n {
    String get marketPinnedVersion => 'Pinned version';
  
    @override
@@ -5696,7 +5719,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -10551,7 +10856,7 @@ class L10nEn extends L10n {
+@@ -10551,7 +10863,7 @@ class L10nEn extends L10n {
    String get phoneDiagnosticsSave => 'Save to Downloads';
  
    @override
@@ -5705,7 +5728,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneDiagnosticsNote =>
-@@ -10597,7 +10902,7 @@ class L10nEn extends L10n {
+@@ -10597,7 +10909,7 @@ class L10nEn extends L10n {
    String get phoneEngineLogs => 'Logs';
  
    @override
@@ -5714,7 +5737,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneEngineKeepAlive => 'Background running';
-@@ -10878,7 +11183,7 @@ class L10nEn extends L10n {
+@@ -10878,7 +11190,7 @@ class L10nEn extends L10n {
  
    @override
    String get phoneDndShizukuPermissionFailed =>
@@ -5723,7 +5746,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneDndPairedConnect => 'Paired. Tap “Connect”.';
-@@ -10984,11 +11289,11 @@ class L10nEn extends L10n {
+@@ -10984,11 +11296,11 @@ class L10nEn extends L10n {
  
    @override
    String get phoneDndRootConnected =>
@@ -5737,7 +5760,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneDndRootRetry => 'Ask for root again';
-@@ -11005,10 +11310,10 @@ class L10nEn extends L10n {
+@@ -11005,10 +11317,10 @@ class L10nEn extends L10n {
        'Open Shizuku and follow “Start via Wireless debugging” (requires Wi-Fi). This page refreshes when you return.';
  
    @override
@@ -5750,7 +5773,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneDndShizukuAllSet => 'Shizuku is ready.';
-@@ -11020,7 +11325,7 @@ class L10nEn extends L10n {
+@@ -11020,7 +11332,7 @@ class L10nEn extends L10n {
    String get phoneDndShizukuRunning => 'Shizuku running';
  
    @override
@@ -5759,7 +5782,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneDndShizukuCompatibility =>
-@@ -11134,7 +11439,7 @@ class L10nEn extends L10n {
+@@ -11134,7 +11446,7 @@ class L10nEn extends L10n {
    String get phoneOpenAccessibilityFailed => 'Can’t open settings. Find DSH in Settings → Accessibility.';
  
    @override
@@ -5768,7 +5791,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneStopFailed => 'Couldn’t stop. Tap “Stop” on the floating bar or notification.';
-@@ -11378,14 +11683,14 @@ class L10nEn extends L10n {
+@@ -11378,14 +11690,14 @@ class L10nEn extends L10n {
  
    @override
    String get phoneRestrictedTryOverlay =>
@@ -5786,7 +5809,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneRestrictedHuaweiAccessibility =>
-@@ -11656,7 +11961,7 @@ class L10nEn extends L10n {
+@@ -11656,7 +11968,7 @@ class L10nEn extends L10n {
    String get phoneSafeAutoSettingsHint => 'Turn on after repeated startup failures';
  
    @override
@@ -5795,7 +5818,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneAccentDaiqing => 'Teal';
-@@ -11905,7 +12210,7 @@ class L10nEn extends L10n {
+@@ -11905,7 +12217,7 @@ class L10nEn extends L10n {
    String get phoneControlEnabledPending => 'On · Takes effect when the engine starts';
  
    @override
@@ -5804,7 +5827,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneReturnAfterDoneHint => 'Closes the bar, opens the chat';
-@@ -12135,7 +12440,7 @@ class L10nEn extends L10n {
+@@ -12135,7 +12447,7 @@ class L10nEn extends L10n {
    String get phoneSelfCheckSaving => 'Saving…';
  
    @override
@@ -5813,7 +5836,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneSelfCheckSaveFailed => 'Could not save the report.';
-@@ -12432,15 +12737,15 @@ class L10nEn extends L10n {
+@@ -12432,15 +12744,15 @@ class L10nEn extends L10n {
  
    @override
    String get phoneBackgroundGuideBody =>
@@ -5832,7 +5855,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneBackgroundGotIt => 'Got it';
-@@ -12453,7 +12758,7 @@ class L10nEn extends L10n {
+@@ -12453,7 +12765,7 @@ class L10nEn extends L10n {
  
    @override
    String get phonePrivilegedUpgrade =>
@@ -5841,7 +5864,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phonePrivilegedSui => 'Sui';
-@@ -12488,11 +12793,11 @@ class L10nEn extends L10n {
+@@ -12488,11 +12800,11 @@ class L10nEn extends L10n {
    String get phonePrivilegedSuggested => 'Suggested';
  
    @override
@@ -5855,7 +5878,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneGateCleanupTitle => 'Probe cleanup not confirmed';
-@@ -12528,15 +12833,15 @@ class L10nEn extends L10n {
+@@ -12528,15 +12840,15 @@ class L10nEn extends L10n {
  
    @override
    String get phoneKeepRootDescription =>
@@ -5874,7 +5897,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneKeepRestoring => 'Reconnecting';
-@@ -12704,7 +13009,7 @@ class L10nEn extends L10n {
+@@ -12704,7 +13016,7 @@ class L10nEn extends L10n {
  
    @override
    String get phoneModeAutoNote =>
@@ -5883,7 +5906,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneModeAutoUnlockNote =>
-@@ -12723,7 +13028,7 @@ class L10nEn extends L10n {
+@@ -12723,7 +13035,7 @@ class L10nEn extends L10n {
    String get phoneYoursSecrets => 'Passwords and verification codes';
  
    @override
@@ -5892,7 +5915,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneYoursDenyList => 'Apps set to Hands off in App rules, banking and payment by default';
-@@ -12747,10 +13052,10 @@ class L10nEn extends L10n {
+@@ -12747,10 +13059,10 @@ class L10nEn extends L10n {
    String get phoneUnlockSecretsHint => 'Fill in passwords, verification and payment codes';
  
    @override
@@ -5905,7 +5928,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneUnlockBusy => 'Can’t turn on while a task is running';
-@@ -12783,7 +13088,7 @@ class L10nEn extends L10n {
+@@ -12783,7 +13095,7 @@ class L10nEn extends L10n {
    String get phoneUnlockConfirmSecretsTitle => 'Let AI fill in passwords and codes?';
  
    @override
@@ -5914,7 +5937,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneUnlockCanTitle => 'Once on, AI can';
-@@ -12829,10 +13134,10 @@ class L10nEn extends L10n {
+@@ -12829,10 +13141,10 @@ class L10nEn extends L10n {
    String get phoneUnlockSecretsRisk2 => 'It could complete a payment or transfer you didn’t intend';
  
    @override
@@ -5927,7 +5950,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneUnlockOwnAppRisk1 =>
-@@ -12849,7 +13154,7 @@ class L10nEn extends L10n {
+@@ -12849,7 +13161,7 @@ class L10nEn extends L10n {
  
    @override
    String get phoneUnlockDisclaimer3 =>
@@ -5936,7 +5959,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get phoneUnlockDisclaimer4 => 'Turn it on only when you need it, and off when you’re done.';
-@@ -13352,7 +13657,7 @@ class L10nEn extends L10n {
+@@ -13352,7 +13664,7 @@ class L10nEn extends L10n {
    String get pluginsFileWriteFailed => 'Couldn’t write the file';
  
    @override
@@ -5945,7 +5968,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get pluginsGistTokenInvalid => 'GitHub token is invalid or lacks Gist permission';
-@@ -13950,7 +14255,7 @@ class L10nEn extends L10n {
+@@ -13950,7 +14262,7 @@ class L10nEn extends L10n {
  
    @override
    String get pluginsNotificationSettingsFailed =>
@@ -5954,7 +5977,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get pluginsSystemNotificationsOff => 'System notifications are off';
-@@ -14228,7 +14533,7 @@ class L10nEn extends L10n {
+@@ -14228,7 +14540,7 @@ class L10nEn extends L10n {
    String get pluginsShareOpenFailed => 'Couldn’t open this share code';
  
    @override
@@ -5963,7 +5986,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get pluginsShareSheetOpenFailed => 'Couldn’t open sharing';
-@@ -14505,7 +14810,7 @@ class L10nEn extends L10n {
+@@ -14505,7 +14817,7 @@ class L10nEn extends L10n {
  
    @override
    String plugslotsIssueNeedsApp(String version) {
@@ -5972,7 +5995,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -15003,7 +15308,7 @@ class L10nEn extends L10n {
+@@ -15003,7 +15315,7 @@ class L10nEn extends L10n {
    String get remoteErrHostNotOwned => 'Host isn’t in your DSH Remote account';
  
    @override
@@ -5981,7 +6004,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get remoteErrVersionIncompatible => 'Update DSH or the remote plugin on the host';
-@@ -16509,7 +16814,7 @@ class L10nEn extends L10n {
+@@ -16509,7 +16821,7 @@ class L10nEn extends L10n {
  
    @override
    String get remotePairNeedsDeepSeekBody =>
@@ -5990,7 +6013,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get remotePairScanHint => 'Point the camera at the pairing code the Remote plugin shows on your computer';
-@@ -16601,7 +16906,7 @@ class L10nEn extends L10n {
+@@ -16601,7 +16913,7 @@ class L10nEn extends L10n {
  
    @override
    String remotePairOtherServerBody(String server) {
@@ -5999,7 +6022,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -16611,7 +16916,7 @@ class L10nEn extends L10n {
+@@ -16611,7 +16923,7 @@ class L10nEn extends L10n {
    String get remotePairScanAgain => 'Scan again';
  
    @override
@@ -6008,7 +6031,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get remotePairErrOtherServer => 'This code is from another Remote server';
-@@ -16714,7 +17019,7 @@ class L10nEn extends L10n {
+@@ -16714,7 +17026,7 @@ class L10nEn extends L10n {
  
    @override
    String get riskPetOverlayBody =>
@@ -6017,7 +6040,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get riskPetOverlayAction => 'Open settings';
-@@ -16730,19 +17035,19 @@ class L10nEn extends L10n {
+@@ -16730,19 +17042,19 @@ class L10nEn extends L10n {
  
    @override
    String askAiAboutApp(String question) {
@@ -6041,7 +6064,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get askAiQuestionPhoneControl => 'How does phone control work, and what are the risks?';
-@@ -18232,7 +18537,7 @@ class L10nEn extends L10n {
+@@ -18232,7 +18544,7 @@ class L10nEn extends L10n {
  
    @override
    String shellSkillInstallPrompt(String skill) {
@@ -6050,7 +6073,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -18380,16 +18685,16 @@ class L10nEn extends L10n {
+@@ -18380,16 +18692,16 @@ class L10nEn extends L10n {
      String _temp0 = intl.Intl.pluralLogic(
        hours,
        locale: localeName,
@@ -6071,7 +6094,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get starPromptPlea => 'Pretty please~ It really matters!!';
-@@ -18404,7 +18709,7 @@ class L10nEn extends L10n {
+@@ -18404,7 +18716,7 @@ class L10nEn extends L10n {
    String get starPromptLater => 'Maybe later';
  
    @override
@@ -6080,7 +6103,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get hubStartPage => 'Start page';
-@@ -18435,7 +18740,7 @@ class L10nEn extends L10n {
+@@ -18435,7 +18747,7 @@ class L10nEn extends L10n {
        'The startup token arrived, but the local service port did not become ready. Check the logs.';
  
    @override
@@ -6089,7 +6112,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get stateStoragePermission => 'No storage permission to save to Downloads';
-@@ -18651,19 +18956,19 @@ class L10nEn extends L10n {
+@@ -18651,19 +18963,19 @@ class L10nEn extends L10n {
    String get statePreparing => 'Provisioning';
  
    @override
@@ -6114,7 +6137,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get stateWallpaper => 'Wallpaper';
-@@ -19734,7 +20039,7 @@ class L10nEn extends L10n {
+@@ -19734,7 +20046,7 @@ class L10nEn extends L10n {
    String get stateProviderTokenCountInvalid => 'Enter a number, like 128K';
  
    @override
@@ -6123,7 +6146,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get tavernTitle => 'Tavern';
-@@ -20869,7 +21174,7 @@ class L10nEn extends L10n {
+@@ -20869,7 +21181,7 @@ class L10nEn extends L10n {
    }
  
    @override
@@ -6132,7 +6155,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get tavernStorybookContents => 'Contents';
-@@ -22342,7 +22647,7 @@ class L10nEn extends L10n {
+@@ -22342,7 +22654,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateSettingsOpenFailedMessage =>
@@ -6141,7 +6164,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get updateInstallCancelled => 'Installation cancelled';
-@@ -22362,7 +22667,7 @@ class L10nEn extends L10n {
+@@ -22362,7 +22674,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateSignatureMismatchMessage =>
@@ -6150,7 +6173,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get updateWrongPackage => 'This isn’t a DSH package';
-@@ -22427,7 +22732,7 @@ class L10nEn extends L10n {
+@@ -22427,7 +22739,7 @@ class L10nEn extends L10n {
    String get updateNoReleaseNotes => 'No release notes for this version.';
  
    @override
@@ -6159,7 +6182,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get updateNoCompatiblePackage => 'No package for this phone';
-@@ -22462,7 +22767,7 @@ class L10nEn extends L10n {
+@@ -22462,7 +22774,7 @@ class L10nEn extends L10n {
    String get updateReadyToInstall => 'Verified and ready to install.';
  
    @override
@@ -6168,7 +6191,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get updateAllowInstallMessage =>
-@@ -22491,7 +22796,7 @@ class L10nEn extends L10n {
+@@ -22491,7 +22803,7 @@ class L10nEn extends L10n {
  
    @override
    String get updateExportApkMessage =>
@@ -6177,7 +6200,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String updateExportApkDone(String path) {
-@@ -22532,21 +22837,29 @@ class L10nEn extends L10n {
+@@ -22532,21 +22844,29 @@ class L10nEn extends L10n {
      return 'Downloading $percent%';
    }
  
@@ -6210,7 +6233,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get usageUpgradeLearn => 'Learn more';
-@@ -22691,7 +23004,7 @@ class L10nEn extends L10n {
+@@ -22691,7 +23011,7 @@ class L10nEn extends L10n {
    String get viewBalanceNoAlert => 'Off';
  
    @override
@@ -6219,7 +6242,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get viewBalanceTurnOff => 'Turn off';
-@@ -23304,7 +23617,7 @@ class L10nEn extends L10n {
+@@ -23304,7 +23624,7 @@ class L10nEn extends L10n {
    String get viewTipKeyboard => 'With a keyboard: Ctrl+Enter sends, Esc twice stops';
  
    @override
@@ -6228,7 +6251,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get viewTipShareSelect => 'When sharing a chat, long-press and slide to pick several messages at once';
-@@ -23545,7 +23858,7 @@ class L10nEn extends L10n {
+@@ -23545,7 +23865,7 @@ class L10nEn extends L10n {
  
    @override
    String viewContinueHeader(String value) {
@@ -6237,7 +6260,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -23600,7 +23913,7 @@ class L10nEn extends L10n {
+@@ -23600,7 +23920,7 @@ class L10nEn extends L10n {
  
    @override
    String viewShareLinkText(String first, String second) {
@@ -6246,7 +6269,7 @@ index d1173f7..2c259ef 100644
    }
  
    @override
-@@ -23619,7 +23932,7 @@ class L10nEn extends L10n {
+@@ -23619,7 +23939,7 @@ class L10nEn extends L10n {
    }
  
    @override
@@ -6255,7 +6278,7 @@ index d1173f7..2c259ef 100644
  
    @override
    String get viewShareWebHint => 'Opens in any browser, even offline';
-@@ -24656,7 +24969,7 @@ class L10nEn extends L10n {
+@@ -24656,7 +24976,7 @@ class L10nEn extends L10n {
  
    @override
    String workshopMinApp(String version) {
@@ -6265,7 +6288,7 @@ index d1173f7..2c259ef 100644
  
    @override
 diff --git a/app/lib/l10n/gen/app_localizations_zh.dart b/app/lib/l10n/gen/app_localizations_zh.dart
-index bee7e25..f692adb 100644
+index bee7e25..a847f84 100644
 --- a/app/lib/l10n/gen/app_localizations_zh.dart
 +++ b/app/lib/l10n/gen/app_localizations_zh.dart
 @@ -19,10 +19,10 @@ class L10nZh extends L10n {
@@ -6335,7 +6358,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get companionMemoryLoadFailed => '没读到';
-@@ -5772,6 +5772,295 @@ class L10nZh extends L10n {
+@@ -5772,6 +5772,301 @@ class L10nZh extends L10n {
    @override
    String get companionAdaptNetwork => '网络不通';
  
@@ -6525,6 +6548,12 @@ index bee7e25..f692adb 100644
 +  String get deepClubGatewayScanHint => '对准电脑「连接手机」中显示的二维码。';
 +
 +  @override
++  String get deepClubGatewayNetworkHint => '直接连接电脑或经深云中转；路径和状态来自当前连接。';
++
++  @override
++  String get deepClubRateLimited => '尝试次数过多，请稍后再试。';
++
++  @override
 +  String get deepClubGatewayConnecting => '连接中';
 +
 +  @override
@@ -6631,7 +6660,7 @@ index bee7e25..f692adb 100644
    @override
    String get systemImeTitle => '系统输入法诊断';
  
-@@ -5974,7 +6263,7 @@ class L10nZh extends L10n {
+@@ -5974,7 +6269,7 @@ class L10nZh extends L10n {
    String get engineAccountFinishInBrowser => '在浏览器中完成登录';
  
    @override
@@ -6640,7 +6669,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get engineAccountFinishingSignIn => '正在完成登录';
-@@ -8119,7 +8408,7 @@ class L10nZh extends L10n {
+@@ -8119,7 +8414,7 @@ class L10nZh extends L10n {
    String get featuresExportSaveDownloads => '存到「下载」';
  
    @override
@@ -6649,7 +6678,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get featuresExportContents => '含这个对话和子代理的全部记录与附件';
-@@ -8430,7 +8719,7 @@ class L10nZh extends L10n {
+@@ -8430,7 +8725,7 @@ class L10nZh extends L10n {
    String get hubSettingsStorageAllow => '允许读写';
  
    @override
@@ -6658,7 +6687,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubSettingsRestartRequired => '重启引擎后生效';
-@@ -8514,7 +8803,7 @@ class L10nZh extends L10n {
+@@ -8514,7 +8809,7 @@ class L10nZh extends L10n {
    String get hubSettingsLicenses => '开源许可';
  
    @override
@@ -6667,7 +6696,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubSettingsSigningIn => '正在登录…';
-@@ -8529,10 +8818,10 @@ class L10nZh extends L10n {
+@@ -8529,10 +8824,10 @@ class L10nZh extends L10n {
    String get hubSettingsApiKeyHint => '填写 Key 后即可对话';
  
    @override
@@ -6680,7 +6709,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubPluginShare => '分享插件';
-@@ -8734,7 +9023,7 @@ class L10nZh extends L10n {
+@@ -8734,7 +9029,7 @@ class L10nZh extends L10n {
    String get hubGroupGeneral => '通用';
  
    @override
@@ -6689,7 +6718,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubGroupHelp => '帮助与关于';
-@@ -8791,10 +9080,10 @@ class L10nZh extends L10n {
+@@ -8791,10 +9086,10 @@ class L10nZh extends L10n {
    String get hubTableTintNoneHint => '只剩网格线，最轻';
  
    @override
@@ -6702,7 +6731,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubAboutBilibili => 'B站主页';
-@@ -8959,7 +9248,7 @@ class L10nZh extends L10n {
+@@ -8959,7 +9254,7 @@ class L10nZh extends L10n {
    String get iconShortcutAdd => '添加到桌面';
  
    @override
@@ -6711,7 +6740,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get iconShortcutAdded => '已添加到桌面';
-@@ -8968,7 +9257,7 @@ class L10nZh extends L10n {
+@@ -8968,7 +9263,7 @@ class L10nZh extends L10n {
    String get iconShortcutConfirm => '在弹出的窗口里确认';
  
    @override
@@ -6720,7 +6749,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get iconShortcutSettings => '去设置';
-@@ -9058,7 +9347,7 @@ class L10nZh extends L10n {
+@@ -9058,7 +9353,7 @@ class L10nZh extends L10n {
    String get liveBlockedTitle => '系统没有允许实时活动';
  
    @override
@@ -6729,7 +6758,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get localeTitle => '语言';
-@@ -9152,7 +9441,7 @@ class L10nZh extends L10n {
+@@ -9152,7 +9447,7 @@ class L10nZh extends L10n {
    String get marketSectionOfficial => '官方';
  
    @override
@@ -6738,7 +6767,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get marketSectionAll => '全部';
-@@ -9170,7 +9459,7 @@ class L10nZh extends L10n {
+@@ -9170,7 +9465,7 @@ class L10nZh extends L10n {
    String get marketTierOfficial => '官方';
  
    @override
@@ -6747,7 +6776,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get marketRiskMedium => '中风险';
-@@ -9215,10 +9504,10 @@ class L10nZh extends L10n {
+@@ -9215,10 +9510,10 @@ class L10nZh extends L10n {
    String get marketFlagObfuscatedBody => '有压缩或混淆过的大文件，看不出它做什么';
  
    @override
@@ -6760,7 +6789,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get marketFlagOtherBody => '自动检查报告的其他特征';
-@@ -9254,11 +9543,11 @@ class L10nZh extends L10n {
+@@ -9254,11 +9549,11 @@ class L10nZh extends L10n {
    String get marketPinnedVersion => '锁定版本';
  
    @override
@@ -6774,7 +6803,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -10024,7 +10313,7 @@ class L10nZh extends L10n {
+@@ -10024,7 +10319,7 @@ class L10nZh extends L10n {
    String get phoneDiagnosticsSave => '存到「下载」';
  
    @override
@@ -6783,7 +6812,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneDiagnosticsNote => '含版本、设备、日志和最近一次崩溃，不含 Key 和令牌';
-@@ -10348,7 +10637,7 @@ class L10nZh extends L10n {
+@@ -10348,7 +10643,7 @@ class L10nZh extends L10n {
    String get phoneDndEnabled => '不打扰模式已启用';
  
    @override
@@ -6792,7 +6821,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneDndPairedConnect => '配对成功，点「连接」';
-@@ -10450,10 +10739,10 @@ class L10nZh extends L10n {
+@@ -10450,10 +10745,10 @@ class L10nZh extends L10n {
    String get phoneDndRootWaiting => '正在等待 root 授权，请在 root 管理器的弹窗里选择。';
  
    @override
@@ -6805,7 +6834,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneDndRootRetry => '重新申请 root 授权';
-@@ -10468,10 +10757,10 @@ class L10nZh extends L10n {
+@@ -10468,10 +10763,10 @@ class L10nZh extends L10n {
    String get phoneDndStartShizuku => '打开 Shizuku，按里面「通过无线调试启动」的说明做一遍（要连 Wi‑Fi）。回到这里会自动刷新。';
  
    @override
@@ -6818,7 +6847,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneDndShizukuAllSet => 'Shizuku 这边准备好了。';
-@@ -10483,7 +10772,7 @@ class L10nZh extends L10n {
+@@ -10483,7 +10778,7 @@ class L10nZh extends L10n {
    String get phoneDndShizukuRunning => 'Shizuku 正在运行';
  
    @override
@@ -6827,7 +6856,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneDndShizukuCompatibility => '这版 Android 与官方版 Shizuku 存在兼容问题。';
-@@ -10591,7 +10880,7 @@ class L10nZh extends L10n {
+@@ -10591,7 +10886,7 @@ class L10nZh extends L10n {
    String get phoneOpenAccessibilityFailed => '打不开系统设置，请到「设置 → 无障碍」里找到 DSH';
  
    @override
@@ -6836,7 +6865,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneStopFailed => '没能停止，可以点悬浮条或通知上的「停止」';
-@@ -10825,13 +11114,13 @@ class L10nZh extends L10n {
+@@ -10825,13 +11120,13 @@ class L10nZh extends L10n {
    String get phoneRestrictedMenuStep => '点右上角的三个点，选「允许受限制的设置」，按提示验证锁屏密码。';
  
    @override
@@ -6853,7 +6882,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneRestrictedHuaweiAccessibility => '华为 HarmonyOS 4 及更早的系统大多没有这一步，直接去「无障碍」打开 DSH。';
-@@ -11086,7 +11375,7 @@ class L10nZh extends L10n {
+@@ -11086,7 +11381,7 @@ class L10nZh extends L10n {
    String get phoneSafeAutoSettingsHint => '连续启动失败时自动启用';
  
    @override
@@ -6862,7 +6891,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneAccentDaiqing => '黛青';
-@@ -11311,7 +11600,7 @@ class L10nZh extends L10n {
+@@ -11311,7 +11606,7 @@ class L10nZh extends L10n {
    String get phoneControlEnabledPending => '已开启，引擎启动后生效';
  
    @override
@@ -6871,7 +6900,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneReturnAfterDoneHint => '收起悬浮条，回到对话看结果';
-@@ -11527,7 +11816,7 @@ class L10nZh extends L10n {
+@@ -11527,7 +11822,7 @@ class L10nZh extends L10n {
    String get phoneSelfCheckSaving => '保存中…';
  
    @override
@@ -6880,7 +6909,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneSelfCheckSaveFailed => '报告保存失败。';
-@@ -11808,13 +12097,13 @@ class L10nZh extends L10n {
+@@ -11808,13 +12103,13 @@ class L10nZh extends L10n {
    String get phoneBackgroundGuideSubtitle => '让确认卡和任务结果及时出现';
  
    @override
@@ -6897,7 +6926,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneBackgroundGotIt => '知道了';
-@@ -11826,7 +12115,7 @@ class L10nZh extends L10n {
+@@ -11826,7 +12121,7 @@ class L10nZh extends L10n {
    String get phoneBackgroundNotificationBlocked => '请允许手机操控通知的弹出提醒';
  
    @override
@@ -6906,7 +6935,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phonePrivilegedSui => 'Sui';
-@@ -11859,11 +12148,11 @@ class L10nZh extends L10n {
+@@ -11859,11 +12154,11 @@ class L10nZh extends L10n {
    String get phonePrivilegedSuggested => '建议';
  
    @override
@@ -6920,7 +6949,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneGateCleanupTitle => '探针清理尚未确认';
-@@ -11896,13 +12185,13 @@ class L10nZh extends L10n {
+@@ -11896,13 +12191,13 @@ class L10nZh extends L10n {
    }
  
    @override
@@ -6937,7 +6966,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneKeepRestoring => '正在重新连接';
-@@ -12057,7 +12346,7 @@ class L10nZh extends L10n {
+@@ -12057,7 +12352,7 @@ class L10nZh extends L10n {
    String get phoneModeAutoNoteTitle => '这些仍由你来操作';
  
    @override
@@ -6946,7 +6975,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneModeAutoUnlockNote => '如需让 AI 操作系统设置、密码等，可在 设置 › 手机操控 › 解除限制 中开启。';
-@@ -12075,7 +12364,7 @@ class L10nZh extends L10n {
+@@ -12075,7 +12370,7 @@ class L10nZh extends L10n {
    String get phoneYoursSecrets => '密码和验证码';
  
    @override
@@ -6955,7 +6984,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneYoursDenyList => '应用名单里「不碰」的 App，默认含银行、支付类';
-@@ -12099,10 +12388,10 @@ class L10nZh extends L10n {
+@@ -12099,10 +12394,10 @@ class L10nZh extends L10n {
    String get phoneUnlockSecretsHint => '填写密码、验证码和支付密码';
  
    @override
@@ -6968,7 +6997,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneUnlockBusy => '任务进行中，结束后才能开启';
-@@ -12135,7 +12424,7 @@ class L10nZh extends L10n {
+@@ -12135,7 +12430,7 @@ class L10nZh extends L10n {
    String get phoneUnlockConfirmSecretsTitle => '允许 AI 填写密码和验证码？';
  
    @override
@@ -6977,7 +7006,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneUnlockCanTitle => '开启后，AI 可以';
-@@ -12177,10 +12466,10 @@ class L10nZh extends L10n {
+@@ -12177,10 +12472,10 @@ class L10nZh extends L10n {
    String get phoneUnlockSecretsRisk2 => '可能完成你并不想要的付款或转账';
  
    @override
@@ -6990,7 +7019,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneUnlockOwnAppRisk1 => '恶意指令可能诱导 AI 批准它自己发起的操作，或关掉确认';
-@@ -12195,7 +12484,7 @@ class L10nZh extends L10n {
+@@ -12195,7 +12490,7 @@ class L10nZh extends L10n {
    String get phoneUnlockDisclaimer2 => 'AI 可能被网页、消息或文件中的内容误导。';
  
    @override
@@ -6999,7 +7028,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get phoneUnlockDisclaimer4 => '建议只在需要时临时开启，用完关闭。';
-@@ -12694,7 +12983,7 @@ class L10nZh extends L10n {
+@@ -12694,7 +12989,7 @@ class L10nZh extends L10n {
    String get pluginsFileWriteFailed => '没能写入文件';
  
    @override
@@ -7008,7 +7037,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get pluginsGistTokenInvalid => 'GitHub 令牌无效或没有 Gist 权限';
-@@ -13278,7 +13567,7 @@ class L10nZh extends L10n {
+@@ -13278,7 +13573,7 @@ class L10nZh extends L10n {
    String get pluginsNotifications => '通知';
  
    @override
@@ -7017,7 +7046,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get pluginsSystemNotificationsOff => '系统通知已关闭';
-@@ -13532,7 +13821,7 @@ class L10nZh extends L10n {
+@@ -13532,7 +13827,7 @@ class L10nZh extends L10n {
    String get pluginsShareOpenFailed => '没能打开这个分享码';
  
    @override
@@ -7026,7 +7055,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get pluginsShareSheetOpenFailed => '没能打开分享';
-@@ -13792,7 +14081,7 @@ class L10nZh extends L10n {
+@@ -13792,7 +14087,7 @@ class L10nZh extends L10n {
  
    @override
    String plugslotsIssueNeedsApp(String version) {
@@ -7035,7 +7064,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -14275,7 +14564,7 @@ class L10nZh extends L10n {
+@@ -14275,7 +14570,7 @@ class L10nZh extends L10n {
    String get remoteErrHostNotOwned => '主机不在你的 DSH Remote 账号下';
  
    @override
@@ -7044,7 +7073,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get remoteErrVersionIncompatible => '主机上的 DSH 或远程插件需要更新';
-@@ -15682,7 +15971,8 @@ class L10nZh extends L10n {
+@@ -15682,7 +15977,8 @@ class L10nZh extends L10n {
    String get remotePairNeedsDeepSeek => '先登录 DeepSeek 账号';
  
    @override
@@ -7054,7 +7083,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get remotePairScanHint => '对准电脑上 Remote 插件显示的配对二维码';
-@@ -15770,7 +16060,7 @@ class L10nZh extends L10n {
+@@ -15770,7 +16066,7 @@ class L10nZh extends L10n {
  
    @override
    String remotePairOtherServerBody(String server) {
@@ -7063,7 +7092,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -15780,7 +16070,7 @@ class L10nZh extends L10n {
+@@ -15780,7 +16076,7 @@ class L10nZh extends L10n {
    String get remotePairScanAgain => '重新扫码';
  
    @override
@@ -7072,7 +7101,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get remotePairErrOtherServer => '这个二维码来自另一个 Remote 服务器';
-@@ -15875,7 +16165,7 @@ class L10nZh extends L10n {
+@@ -15875,7 +16171,7 @@ class L10nZh extends L10n {
    String get riskPetOverlayTitle => '显示在其他应用上层？';
  
    @override
@@ -7081,7 +7110,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get riskPetOverlayAction => '去设置';
-@@ -15891,19 +16181,19 @@ class L10nZh extends L10n {
+@@ -15891,19 +16187,19 @@ class L10nZh extends L10n {
  
    @override
    String askAiAboutApp(String question) {
@@ -7105,7 +7134,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get askAiQuestionPhoneControl => '手机操控是怎么工作的？有什么风险？';
-@@ -16284,7 +16574,7 @@ class L10nZh extends L10n {
+@@ -16284,7 +16580,7 @@ class L10nZh extends L10n {
    String get searchKwPrivacy => '隐私,数据,日志,分享,统计';
  
    @override
@@ -7114,7 +7143,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get searchKwPhoneConfirmEntry => '确认方式,手机操控,免确认';
-@@ -17284,7 +17574,7 @@ class L10nZh extends L10n {
+@@ -17284,7 +17580,7 @@ class L10nZh extends L10n {
  
    @override
    String shellSkillInstallPrompt(String skill) {
@@ -7123,7 +7152,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -17407,9 +17697,9 @@ class L10nZh extends L10n {
+@@ -17407,9 +17703,9 @@ class L10nZh extends L10n {
      String _temp0 = intl.Intl.pluralLogic(
        hours,
        locale: localeName,
@@ -7136,7 +7165,7 @@ index bee7e25..f692adb 100644
      );
      return '$_temp0';
    }
-@@ -17430,7 +17720,7 @@ class L10nZh extends L10n {
+@@ -17430,7 +17726,7 @@ class L10nZh extends L10n {
    String get starPromptLater => '下次再说';
  
    @override
@@ -7145,7 +7174,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get hubStartPage => '起始页';
-@@ -17459,7 +17749,7 @@ class L10nZh extends L10n {
+@@ -17459,7 +17755,7 @@ class L10nZh extends L10n {
    String get phoneStartupPortNotReady => '已收到启动标记，但本机服务端口尚未就绪，请查看日志';
  
    @override
@@ -7154,7 +7183,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get stateStoragePermission => '没有存储权限，存不进「下载」';
-@@ -17675,19 +17965,19 @@ class L10nZh extends L10n {
+@@ -17675,19 +17971,19 @@ class L10nZh extends L10n {
    String get statePreparing => '准备中';
  
    @override
@@ -7179,7 +7208,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get stateWallpaper => '壁纸';
-@@ -18690,7 +18980,7 @@ class L10nZh extends L10n {
+@@ -18690,7 +18986,7 @@ class L10nZh extends L10n {
    String get stateProviderTokenCountInvalid => '填写数字，如 128K';
  
    @override
@@ -7188,7 +7217,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get tavernTitle => '酒馆';
-@@ -19764,7 +20054,7 @@ class L10nZh extends L10n {
+@@ -19764,7 +20060,7 @@ class L10nZh extends L10n {
    }
  
    @override
@@ -7197,7 +7226,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get tavernStorybookContents => '目录';
-@@ -21177,7 +21467,7 @@ class L10nZh extends L10n {
+@@ -21177,7 +21473,7 @@ class L10nZh extends L10n {
    String get updateSettingsOpenFailed => '没能打开系统设置';
  
    @override
@@ -7206,7 +7235,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get updateInstallCancelled => '已取消安装';
-@@ -21195,7 +21485,7 @@ class L10nZh extends L10n {
+@@ -21195,7 +21491,7 @@ class L10nZh extends L10n {
    String get updateSignatureMismatch => '签名不一致，不能直接覆盖';
  
    @override
@@ -7215,7 +7244,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get updateWrongPackage => '不是 DSH 的安装包';
-@@ -21258,7 +21548,7 @@ class L10nZh extends L10n {
+@@ -21258,7 +21554,7 @@ class L10nZh extends L10n {
    String get updateNoReleaseNotes => '这个版本没有写更新说明。';
  
    @override
@@ -7224,7 +7253,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get updateNoCompatiblePackage => '没有适合本机的安装包';
-@@ -21293,7 +21583,7 @@ class L10nZh extends L10n {
+@@ -21293,7 +21589,7 @@ class L10nZh extends L10n {
    String get updateReadyToInstall => '校验通过，可以安装了。';
  
    @override
@@ -7233,7 +7262,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get updateAllowInstallMessage => '在系统设置里打开「安装未知应用」，回来后自动继续。';
-@@ -21321,7 +21611,7 @@ class L10nZh extends L10n {
+@@ -21321,7 +21617,7 @@ class L10nZh extends L10n {
  
    @override
    String get updateExportApkMessage =>
@@ -7242,7 +7271,7 @@ index bee7e25..f692adb 100644
  
    @override
    String updateExportApkDone(String path) {
-@@ -21362,20 +21652,28 @@ class L10nZh extends L10n {
+@@ -21362,20 +21658,28 @@ class L10nZh extends L10n {
      return '正在下载 $percent%';
    }
  
@@ -7274,7 +7303,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get usageUpgradeLearn => '了解';
-@@ -22057,7 +22355,7 @@ class L10nZh extends L10n {
+@@ -22057,7 +22361,7 @@ class L10nZh extends L10n {
    String get viewTipKeyboard => '接了键盘：Ctrl+Enter 发送，连按两次 Esc 停止';
  
    @override
@@ -7283,7 +7312,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get viewTipShareSelect => '分享对话时长按再滑动，可以一次选中多条消息';
-@@ -22294,7 +22592,7 @@ class L10nZh extends L10n {
+@@ -22294,7 +22598,7 @@ class L10nZh extends L10n {
  
    @override
    String viewContinueHeader(String value) {
@@ -7292,7 +7321,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -22348,7 +22646,7 @@ class L10nZh extends L10n {
+@@ -22348,7 +22652,7 @@ class L10nZh extends L10n {
  
    @override
    String viewShareLinkText(String first, String second) {
@@ -7301,7 +7330,7 @@ index bee7e25..f692adb 100644
    }
  
    @override
-@@ -22365,7 +22663,7 @@ class L10nZh extends L10n {
+@@ -22365,7 +22669,7 @@ class L10nZh extends L10n {
    }
  
    @override
@@ -7310,7 +7339,7 @@ index bee7e25..f692adb 100644
  
    @override
    String get viewShareWebHint => '任何浏览器都能打开，不用联网';
-@@ -23366,7 +23664,7 @@ class L10nZh extends L10n {
+@@ -23366,7 +23670,7 @@ class L10nZh extends L10n {
  
    @override
    String workshopMinApp(String version) {
@@ -9936,7 +9965,7 @@ index 64dce73..86d7ce5 100644
  
  final communityProvider = AsyncNotifierProvider<CommunityController, CommunityState>(CommunityController.new);
 diff --git a/app/lib/state/connection_state.dart b/app/lib/state/connection_state.dart
-index 332f68a..486a136 100644
+index 332f68a..95b7a7b 100644
 --- a/app/lib/state/connection_state.dart
 +++ b/app/lib/state/connection_state.dart
 @@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9963,7 +9992,32 @@ index 332f68a..486a136 100644
      case HostKind.relay:
        final backend = ref.watch(relayBackendProvider);
        final link = RelayHostLink(
-@@ -240,6 +250,7 @@ final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus,
+@@ -227,19 +237,25 @@ final hostLinkProvider = Provider.autoDispose.family<HostLink?, HostRef>((ref, h
+ });
+ 
+ /// Status of a host's link for the UI (idle for 本机).
+-final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus, HostRef>((ref, host) async* {
++final hostLinkStatusProvider = StreamProvider.autoDispose.family<HostLinkStatus, HostRef>((ref, host) {
+   final link = ref.watch(hostLinkProvider(host));
+-  if (link == null) {
+-    yield HostLinkStatus.idle;
+-    return;
+-  }
+-  yield link.status;
+-  yield* link.statuses;
++  if (link == null) return Stream.value(HostLinkStatus.idle);
++  return Stream.multi((controller) {
++    // Subscribe before reading the snapshot so a connection update cannot be missed.
++    final subscription = link.statuses.listen(
++      controller.addSync,
++      onError: controller.addErrorSync,
++      onDone: controller.closeSync,
++    );
++    controller.onCancel = subscription.cancel;
++    controller.addSync(link.status);
++  });
+ });
+ 
  /// Display name of a host as currently known.
  final hostNameProvider = Provider.autoDispose.family<String?, HostRef>((ref, host) {
    return switch (host.kind) {
@@ -9971,7 +10025,7 @@ index 332f68a..486a136 100644
      HostKind.local => appL10n.commonThisPhone,
      HostKind.ssh => ref.watch(hostsProvider.select((s) => s.sshById(host.id)?.name)),
      HostKind.relay => ref.watch(relayAccountProvider.select((a) => a.value?.hostById(host.id)?.name)) ?? host.name,
-@@ -541,6 +552,7 @@ AsyncValue<HostConnection?> _connectionForHost(Ref ref, HostRef host) {
+@@ -541,6 +557,7 @@ AsyncValue<HostConnection?> _connectionForHost(Ref ref, HostRef host) {
        final loaded = ref.watch(hostsProvider.select((s) => s.loaded));
        if (!loaded) return const AsyncLoading();
        return ref.watch(remoteConnectionProvider(host));
@@ -10176,6 +10230,57 @@ index dd13f6f..49d1d1b 100644
      case HostKind.relay:
        final account = ref.watch(relayAccountProvider);
        if (account.isLoading || account.hasError) return null;
+diff --git a/app/lib/state/terminal_state.dart b/app/lib/state/terminal_state.dart
+index b5e0ea0..d8a4bfe 100644
+--- a/app/lib/state/terminal_state.dart
++++ b/app/lib/state/terminal_state.dart
+@@ -313,6 +313,11 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+   /// Bumped on every build and dispose: async work of an older one stops.
+   int _epoch = 0;
+ 
++  /// True while the emulator parses Host output. Its synchronous replies
++  /// (device attributes, cursor position, size) are terminal protocol, not
++  /// the person's input, so they never take over an agent terminal.
++  bool _parsingHostOutput = false;
++
+   @override
+   TerminalWorkspaceState build() {
+     final backend = ref.watch(terminalBackendProvider(sessionId));
+@@ -534,8 +539,9 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+     }
+   }
+ 
+-  /// Input from the screen (keys, paste, emulator replies).
+-  void send(String id, String data) => _links[id]?.attachment?.write(data);
++  /// Input from the screen: keys, paste and pointer are [typed]; emulator
++  /// replies are not.
++  void send(String id, String data, {bool typed = false}) => _links[id]?.attachment?.write(data, typed: typed);
+ 
+   /// The visible screen measured [cols] × [rows]; the PTY follows when this
+   /// phone holds input.
+@@ -579,7 +585,7 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+     final terminal = Terminal(maxLines: (scrollback < 200 ? 200 : scrollback) + 200);
+     if (info != null) terminal.resize(info.cols, info.rows);
+     if (screen != null && screen.isNotEmpty) terminal.write(screen);
+-    terminal.onOutput = (data) => send(id, data);
++    terminal.onOutput = (data) => send(id, data, typed: !_parsingHostOutput);
+     terminal.onResize = (cols, rows, _, _) => resize(id, cols, rows);
+     return terminal;
+   }
+@@ -714,7 +720,12 @@ class TerminalWorkspace extends Notifier<TerminalWorkspaceState> {
+           ),
+         );
+       case TerminalOutput(:final data):
+-        _tab(id)?.terminal.write(data);
++        _parsingHostOutput = true;
++        try {
++          _tab(id)?.terminal.write(data);
++        } finally {
++          _parsingHostOutput = false;
++        }
+       case TerminalStatus(:final info):
+         _update(
+           id,
 diff --git a/app/lib/ui/chat/chat_screen.dart b/app/lib/ui/chat/chat_screen.dart
 index e10a8a1..50e507f 100644
 --- a/app/lib/ui/chat/chat_screen.dart
@@ -13048,6 +13153,63 @@ index 05cb724..cabc4d5 100644
      return Semantics(
        key: ValueKey('host-row-${host.kind.name}-${host.id}'),
        selected: active,
+diff --git a/app/lib/ui/remote/network_details_sheet.dart b/app/lib/ui/remote/network_details_sheet.dart
+index 8c1ea3f..c161606 100644
+--- a/app/lib/ui/remote/network_details_sheet.dart
++++ b/app/lib/ui/remote/network_details_sheet.dart
+@@ -6,6 +6,7 @@ import '../../remote/link_status.dart';
+ import '../../state/connection_state.dart';
+ import '../../state/hosts_state.dart';
+ import '../common/app_sheet.dart';
++import 'host_status.dart' show watchHostStatus;
+ import '../theme/app_icons.dart';
+ import '../theme/theme.dart';
+ 
+@@ -62,9 +63,10 @@ class _RemoteNetworkDetailsSheetState extends ConsumerState<RemoteNetworkDetails
+     final status = ref.watch(hostLinkStatusProvider(widget.host)).value ?? HostLinkStatus.idle;
+     final name = ref.watch(hostNameProvider(widget.host)) ?? l10n.commonRemoteHost;
+     final relay = widget.host.kind == HostKind.relay;
++    final gateway = widget.host.kind == HostKind.gateway;
+     final connected = status.isConnected;
+-    final network = connected && relay ? status.network : null;
+-    final path = connected && relay ? network?.path ?? status.path : null;
++    final network = connected && (relay || gateway) ? status.network : null;
++    final path = connected && (relay || gateway) ? network?.path ?? status.path : null;
+     final observedAt = network?.observedAt?.toLocal();
+     final material = MaterialLocalizations.of(context);
+     final observedLabel = observedAt == null
+@@ -88,7 +90,9 @@ class _RemoteNetworkDetailsSheetState extends ConsumerState<RemoteNetworkDetails
+             Padding(
+               padding: const EdgeInsets.fromLTRB(kSheetGutter, 0, kSheetGutter, 12),
+               child: Text(
+-                relay
++                gateway
++                    ? l10n.deepClubGatewayNetworkHint
++                    : relay
+                     ? '${l10n.remoteNetworkAutomatic}\n${l10n.remoteNetworkSnapshotHint}'
+                     : l10n.hostDetailsSshNetworkHint,
+                 style: TextStyle(color: colors.textTertiary),
+@@ -97,8 +101,18 @@ class _RemoteNetworkDetailsSheetState extends ConsumerState<RemoteNetworkDetails
+             SheetGroup(
+               children: [
+                 _NetworkValue(label: l10n.remoteHost, value: name),
+-                _NetworkValue(label: l10n.hostDetailsConnectionType, value: relay ? 'DSH Remote' : 'SSH'),
+-                _NetworkValue(label: l10n.commonStatus, value: status.summary),
++                _NetworkValue(
++                  label: l10n.hostDetailsConnectionType,
++                  value: gateway
++                      ? l10n.deepClubMyComputer
++                      : relay
++                      ? 'DSH Remote'
++                      : 'SSH',
++                ),
++                _NetworkValue(
++                  label: l10n.commonStatus,
++                  value: gateway ? watchHostStatus(ref, widget.host).label : status.summary,
++                ),
+                 _NetworkValue(
+                   label: l10n.remoteNetworkCurrentPath,
+                   value: connected && widget.host.kind == HostKind.ssh
 diff --git a/app/lib/ui/remote/pairing_page.dart b/app/lib/ui/remote/pairing_page.dart
 index 07c7a55..29c3347 100644
 --- a/app/lib/ui/remote/pairing_page.dart
@@ -16023,7 +16185,7 @@ index cdd3a0f..e868060 100644
                ),
              ),
 diff --git a/app/lib/ui/shell/sessions_drawer.dart b/app/lib/ui/shell/sessions_drawer.dart
-index 20b29b3..6f0a02b 100644
+index 20b29b3..6586c54 100644
 --- a/app/lib/ui/shell/sessions_drawer.dart
 +++ b/app/lib/ui/shell/sessions_drawer.dart
 @@ -32,7 +32,6 @@ import '../common/smooth_size.dart';
@@ -16080,6 +16242,17 @@ index 20b29b3..6f0a02b 100644
    final VoidCallback onFeatures;
    final VoidCallback onSettings;
  
+@@ -971,7 +961,9 @@ class IdentityBar extends ConsumerWidget {
+     final host = ref.watch(activeHostProvider);
+     final name = ref.watch(hostNameProvider(host)) ?? (host.isLocal ? l10n.commonThisPhone : l10n.commonRemoteHost);
+     final view = watchHostStatus(ref, host);
+-    final link = host.kind == HostKind.relay ? ref.watch(hostLinkStatusProvider(host)).value : null;
++    final link = host.kind == HostKind.relay || host.kind == HostKind.gateway
++        ? ref.watch(hostLinkStatusProvider(host)).value
++        : null;
+     final path = link?.isConnected == true ? link?.network?.path ?? link?.path : null;
+     final statusLabel = path == null ? view.label : path.label;
+     final tint = hostKindTint(host.kind);
 diff --git a/app/lib/ui/theme/accent.dart b/app/lib/ui/theme/accent.dart
 index ddce42b..6db6dde 100644
 --- a/app/lib/ui/theme/accent.dart
@@ -17220,6 +17393,60 @@ index 3cafd1e..cabb7b6 100644
      chatClock = () => DateTime(2026, 10, 24, 15, 20);
    });
    setUp(() => SharedPreferences.setMockInitialValues({}));
+diff --git a/app/test/terminal/support.dart b/app/test/terminal/support.dart
+index 28e3a4c..ff861e2 100644
+--- a/app/test/terminal/support.dart
++++ b/app/test/terminal/support.dart
+@@ -119,6 +119,9 @@ class FakeTerminalBackend implements TerminalBackend {
+   Object? listError;
+   Object? createError;
+   bool autoSnapshot = true;
++
++  /// As [DshCarrier.acceptsTypedTerminalInput] of the connected Host.
++  bool marksTypedInput = false;
+   final created = <Map<String, Object?>>[];
+ 
+   FakeAttach attachOf(String id) => attaches.lastWhere((a) => a.id == id);
+@@ -190,6 +193,7 @@ class FakeTerminalBackend implements TerminalBackend {
+       send: fake.receive,
+       cancel: () async => fake.cancelled = true,
+       environment: environment,
++      marksTypedInput: marksTypedInput,
+     );
+     final info = host[id];
+     if (info == null) {
+diff --git a/app/test/terminal/terminal_state_test.dart b/app/test/terminal/terminal_state_test.dart
+index e37497a..20f5d43 100644
+--- a/app/test/terminal/terminal_state_test.dart
++++ b/app/test/terminal/terminal_state_test.dart
+@@ -97,6 +97,27 @@ void main() {
+     expect(tab.terminal.buffer.lines[0].toString().trim(), 'hello');
+   });
+ 
++  for (final marks in [true, false]) {
++    test('person input is typed only where the Host accepts it; emulator replies never (marks: $marks)', () async {
++      await open(FakeTerminalBackend()..marksTypedInput = marks);
++      final tab = read().selected!;
++      final attach = backend.attachOf(tab.id);
++      tab.terminal.textInput('ls\r');
++      await _settle();
++      // Device status report: the emulator answers with the cursor position.
++      attach.output('\x1b[6n');
++      await _settle();
++      tab.terminal.paste('pwd');
++      await _settle();
++      final writes = [
++        for (final c in attach.sent)
++          if (c['type'] == 'write') c,
++      ];
++      expect(writes.map((c) => c['data']), ['ls\r', matches(r'^\x1b\[\d+;\d+R$'), 'pwd']);
++      expect(writes.map((c) => c['typed']), marks ? [true, null, true] : [null, null, null]);
++    });
++  }
++
+   test('a second terminal is created at the measured screen size', () async {
+     final workspace = await open(FakeTerminalBackend());
+     workspace.resize(read().selected!.id, 47, 31);
 diff --git a/app/test/theme/palette_preview_test.dart b/app/test/theme/palette_preview_test.dart
 index 64bc905..84cd2c2 100644
 --- a/app/test/theme/palette_preview_test.dart
@@ -17655,6 +17882,126 @@ index 27076af..e02519c 100644
      print(f'wrote {DART.relative_to(ROOT)} and {out}')
  
  
+diff --git a/packages/dsh_client/lib/src/carrier.dart b/packages/dsh_client/lib/src/carrier.dart
+index cf401d0..55be27e 100644
+--- a/packages/dsh_client/lib/src/carrier.dart
++++ b/packages/dsh_client/lib/src/carrier.dart
+@@ -58,6 +58,13 @@ abstract class DshCarrier {
+   /// carrier has no such probe: [allowsEndpoint] alone decides.
+   Set<String>? get peerCapabilities => null;
+ 
++  /// Whether this link's Host accepts `typed: true` on `terminal/attach`
++  /// writes produced by the person (keyboard, paste, IME, pointer), which
++  /// passes an agent terminal's input control to the person. Older Hosts
++  /// validate a closed input shape, so this stays off unless the carrier
++  /// verified the Host release.
++  bool get acceptsTypedTerminalInput => false;
++
+   /// One unary call. Host failures come back as [RpcError]; carrier
+   /// failures throw ([DshHttpException], [DshTransportException],
+   /// [DshProtocolException], [DshCarrierRefusedException]).
+diff --git a/packages/dsh_client/lib/src/terminal_api.dart b/packages/dsh_client/lib/src/terminal_api.dart
+index 2f5cd7f..bdb5c41 100644
+--- a/packages/dsh_client/lib/src/terminal_api.dart
++++ b/packages/dsh_client/lib/src/terminal_api.dart
+@@ -324,6 +324,7 @@ class TerminalAttachment {
+     required void Function(Object? value) send,
+     required Future<void> Function() cancel,
+     TerminalEnvironment environment = TerminalEnvironment.defaults,
++    this.marksTypedInput = false,
+   }) : _send = send,
+        _cancel = cancel,
+        _environment = environment {
+@@ -335,6 +336,9 @@ class TerminalAttachment {
+   /// frame never approaches the carrier window.
+   static const chunkBytes = 8192;
+ 
++  /// The Host accepts `typed` on writes ([DshCarrier.acceptsTypedTerminalInput]).
++  final bool marksTypedInput;
++
+   final void Function(Object? value) _send;
+   final Future<void> Function() _cancel;
+   final TerminalEnvironment _environment;
+@@ -366,9 +370,11 @@ class TerminalAttachment {
+   bool get isClosed => _closed;
+ 
+   /// Sends [data] to the shell as typed (control characters included).
+-  /// False when this attachment cannot write; a buffer overflow fails
+-  /// [frames] with `inputFull`.
+-  bool write(String data) {
++  /// [typed] marks input the person produced (keys, paste, IME, pointer);
++  /// terminal-protocol replies leave it false. It reaches the Host only when
++  /// [marksTypedInput]. False when this attachment cannot write; a buffer
++  /// overflow fails [frames] with `inputFull`.
++  bool write(String data, {bool typed = false}) {
+     if (!writable || data.isEmpty) return false;
+     final limit = _environment.maxInputBytes < chunkBytes ? _environment.maxInputBytes : chunkBytes;
+     if (limit < 4) {
+@@ -381,7 +387,14 @@ class TerminalAttachment {
+       }
+     }
+     for (final chunk in _chunks(data, limit)) {
+-      if (!_enqueue({'type': 'write', 'sequence': _sequence + 1, 'data': chunk})) return false;
++      if (!_enqueue({
++        'type': 'write',
++        'sequence': _sequence + 1,
++        'data': chunk,
++        if (typed && marksTypedInput) 'typed': true,
++      })) {
++        return false;
++      }
+     }
+     _flush();
+     return true;
+@@ -670,6 +683,7 @@ extension TerminalApi on DshClient {
+       send: stream.send,
+       cancel: stream.cancel,
+       environment: environment,
++      marksTypedInput: carrier.acceptsTypedTerminalInput,
+     );
+   }
+ }
+diff --git a/packages/dsh_client/test/terminal_api_test.dart b/packages/dsh_client/test/terminal_api_test.dart
+index b86410b..843208d 100644
+--- a/packages/dsh_client/test/terminal_api_test.dart
++++ b/packages/dsh_client/test/terminal_api_test.dart
+@@ -56,12 +56,13 @@ Map<String, Object?> snapshotJson({
+ /// An attachment over in-memory pipes: [down] plays the Host, [sent] records
+ /// the uplink.
+ class Pipe {
+-  Pipe({TerminalEnvironment environment = TerminalEnvironment.defaults}) {
++  Pipe({TerminalEnvironment environment = TerminalEnvironment.defaults, bool marksTypedInput = false}) {
+     attachment = TerminalAttachment.over(
+       items: down.stream,
+       send: sent.add,
+       cancel: () async => cancelled++,
+       environment: environment,
++      marksTypedInput: marksTypedInput,
+     );
+     sub = attachment.frames.listen(frames.add, onError: errors.add, onDone: () => done = true);
+   }
+@@ -315,6 +316,21 @@ void main() {
+       expect(pipe.commands.single, {'type': 'write', 'sequence': 1, 'data': 'x'});
+     });
+ 
++    test('typed reaches only a Host that accepts it, and only on person input', () async {
++      final marking = Pipe(marksTypedInput: true);
++      await marking.host(snapshotJson());
++      expect(marking.attachment.write('ls\r', typed: true), isTrue);
++      expect(marking.attachment.write('\x1b[1;3R'), isTrue);
++      expect(marking.commands, [
++        {'type': 'write', 'sequence': 1, 'data': 'ls\r', 'typed': true},
++        {'type': 'write', 'sequence': 2, 'data': '\x1b[1;3R'},
++      ]);
++      final closed = Pipe();
++      await closed.host(snapshotJson());
++      expect(closed.attachment.write('ls\r', typed: true), isTrue);
++      expect(closed.commands.single, {'type': 'write', 'sequence': 1, 'data': 'ls\r'});
++    });
++
+     test('an exited process is never writable', () async {
+       final pipe = Pipe();
+       await pipe.host(snapshotJson(info: infoJson(state: 'exited', exitCode: 1)));
 diff --git a/site/share/viewer.js b/site/share/viewer.js
 index 6eb6527..9237af1 100644
 --- a/site/share/viewer.js

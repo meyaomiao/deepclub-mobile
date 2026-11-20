@@ -1,0 +1,18 @@
+{
+  "label": "android-rc3-baseline",
+  "observed_at": "2026-11-18T14:29:29.595Z",
+  "hostPid": 40512,
+  "online": "online",
+  "connectedClients": 0,
+  "model": {
+    "requests": 0,
+    "completed": 0,
+    "cancelled": 0,
+    "active": 0,
+    "toolCalls": 0,
+    "catalogReads": 12
+  },
+  "goCompletedRelayRequests": 3,
+  "goCompletedRelayStreams": 3,
+  "note": "Go access entries are written when a WebSocket finishes; compare snapshots around App connection/close. Model counters reset on manager restart."
+}

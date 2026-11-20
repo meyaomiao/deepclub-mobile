@@ -1,0 +1,4 @@
+[21,96][98,173] C  | Back
+[42,194][269,253]   | Workspace
+[0,288][720,748]   | No workspaces yet / Add the folders you use most
+[233,622][487,706] C  | Add workspace

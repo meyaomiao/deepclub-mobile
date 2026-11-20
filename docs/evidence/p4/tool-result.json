@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-11-16T05:42:53.669Z",
+  "hasToolResult": true,
+  "results": [
+    {
+      "type": "tool/result",
+      "isError": false,
+      "hasExpectedFileMarker": true
+    }
+  ]
+}

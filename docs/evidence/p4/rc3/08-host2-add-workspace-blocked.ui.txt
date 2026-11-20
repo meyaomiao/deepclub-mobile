@@ -1,0 +1,4 @@
+[42,194][328,253]   | Choose folder
+[0,288][720,584]   | This host can’t browse folders here
+[21,96][98,173] C  | Back
+[28,1408][692,1495]   | Add

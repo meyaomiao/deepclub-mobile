@@ -152,7 +152,146 @@ void main() {
     expect(carrier.peerCapabilities, isNot(contains('harness.terminal.v1')));
   });
 
-  for (final version in ['0.2.2-rc.1', '0.3.0-unknown']) {
+  for (final (version, validated) in [
+    ('0.2.2-alpha.2', true),
+    ('0.2.2-rc.1', true),
+    ('0.2.2-rc.3', true),
+    ('0.2.2-rc.2', false),
+    ('0.2.2-rc.4', false),
+    ('0.3.0-unknown', false),
+  ]) {
+    test('Host $version ${validated ? 'enables' : 'restricts'} workspace, folder and terminal control', () async {
+      final fixture = await NativeGatewayFixture.start();
+      addTearDown(fixture.close);
+      fixture.helloVersion = version;
+      const gated = [
+        'workspace/create',
+        'workspace/rename',
+        'workspace/delete',
+        'directoryPicker/createDirectory',
+        'terminal/list',
+        'terminal/create',
+        'terminal/close',
+        'agentPresets/select',
+      ];
+      fixture.advertisedUnary.addAll([...gated, 'directoryPicker/list', 'credentials/set']);
+      final carrier = fixture.carrier();
+      addTearDown(carrier.close);
+      await carrier.authenticate();
+      expect(carrier.hostVersion, version);
+      expect(carrier.allowsEndpoint('directoryPicker/list'), isTrue);
+      expect(carrier.allowsEndpoint('session/list'), isTrue);
+      for (final endpoint in [...gated, 'terminal/attach']) {
+        expect(carrier.allowsEndpoint(endpoint), validated, reason: endpoint);
+      }
+      expect(carrier.peerCapabilities?.contains('harness.terminal.v1'), validated);
+      expect(carrier.allowsEndpoint('credentials/set'), isFalse);
+    });
+  }
+
+  test('rc.3 terminal info with origin/control/sandboxMode parses and attaches', () async {
+    final fixture = await NativeGatewayFixture.start();
+    addTearDown(fixture.close);
+    fixture.helloVersion = '0.2.2-rc.3';
+    final client = DshClient.withCarrier(fixture.carrier());
+    addTearDown(client.close);
+    await client.mux.ready(timeout: const Duration(seconds: 3));
+    const rc3 = {
+      'id': 'terminal-agent',
+      'title': 'Agent build',
+      'shell': {'path': '/bin/zsh', 'name': 'zsh'},
+      'cwd': '/fixture',
+      'cols': 100,
+      'rows': 30,
+      'state': 'running',
+      'exitCode': null,
+      'origin': 'agent',
+      'control': 'agent',
+      'sandboxMode': 'workspace-write',
+    };
+    final info = TerminalInfo.fromJson(rc3)!;
+    expect(
+      (info.id, info.title, info.shell.name, info.cwd, info.cols, info.rows, info.running),
+      ('terminal-agent', 'Agent build', 'zsh', '/fixture', 100, 30, true),
+    );
+    final user = TerminalInfo.fromJson(
+      {...rc3, 'id': 'terminal-user', 'origin': 'user', 'control': 'user'}..remove('sandboxMode'),
+    )!;
+    expect(user.id, 'terminal-user');
+    final frame = TerminalFrame.fromJson({
+      'type': 'snapshot',
+      'sequence': 4,
+      'screen': 'ok',
+      'info': rc3,
+      'writable': true,
+    });
+    expect(frame, isA<TerminalSnapshot>().having((s) => s.info.id, 'info.id', 'terminal-agent'));
+    final stream = client.mux.open('terminal/attach', {
+      'request': {'terminalId': 'terminal-agent'},
+    });
+    expect(await stream.items.first.timeout(const Duration(seconds: 2)), {'snapshot': 'terminal/attach'});
+  });
+
+  for (final (version, typed) in [('0.2.2-rc.3', true), ('0.2.2-rc.1', false), ('0.2.2-alpha.2', false)]) {
+    test(
+      'Host $version ${typed ? 'receives' : 'never receives'} typed on person input; replies stay unmarked',
+      () async {
+        final fixture = await NativeGatewayFixture.start();
+        addTearDown(fixture.close);
+        fixture.helloVersion = version;
+        fixture.attachSnapshot = {
+          'type': 'snapshot',
+          'sequence': 1,
+          'screen': r'$ ',
+          'info': {
+            'id': 'terminal-agent',
+            'title': 'Agent build',
+            'shell': {'path': '/bin/zsh', 'name': 'zsh'},
+            'cwd': '/fixture',
+            'cols': 80,
+            'rows': 24,
+            'state': 'running',
+            'exitCode': null,
+            if (typed) ...{'origin': 'agent', 'control': 'agent', 'sandboxMode': 'workspace-write'},
+          },
+          'writable': true,
+        };
+        final carrier = fixture.carrier();
+        final client = DshClient.withCarrier(carrier);
+        addTearDown(client.close);
+        await client.mux.ready(timeout: const Duration(seconds: 3));
+        expect(carrier.acceptsTypedTerminalInput, typed);
+        final attachment = client.attachTerminal('session-A', 'terminal-agent');
+        addTearDown(attachment.close);
+        attachment.frames.listen((_) {});
+        await untilGateway(() => attachment.writable);
+        expect(attachment.write('ls\r', typed: true), isTrue);
+        expect(attachment.write('\x1b[1;3R'), isTrue);
+        List<Object?> uplink() => [
+          for (final f in fixture.frames)
+            if (f['type'] == 'item') f['value'],
+        ];
+        await untilGateway(() => uplink().length == 2);
+        expect(uplink(), [
+          {'type': 'write', 'sequence': 1, 'data': 'ls\r', if (typed) 'typed': true},
+          {'type': 'write', 'sequence': 2, 'data': '\x1b[1;3R'},
+        ]);
+      },
+    );
+  }
+
+  test('a disconnected or unvalidated Host never accepts typed terminal input', () async {
+    final fixture = await NativeGatewayFixture.start();
+    addTearDown(fixture.close);
+    fixture.helloVersion = '0.3.0-unknown';
+    final carrier = fixture.carrier();
+    expect(carrier.acceptsTypedTerminalInput, isFalse);
+    await carrier.authenticate();
+    expect(carrier.acceptsTypedTerminalInput, isFalse);
+    await carrier.close();
+  });
+
+  for (final version in ['0.2.2-rc.1', '0.2.2-rc.3', '0.3.0-unknown']) {
     test('advertisedAllowlist intersects actual SDK permission/agent RPCs on $version', () async {
       final fixture = await NativeGatewayFixture.start();
       addTearDown(fixture.close);
@@ -172,8 +311,9 @@ void main() {
         expect(carrier.allowsEndpoint(endpoint), isTrue);
         expect(await client.rpc.call(endpoint), isEmpty);
       }
-      expect(carrier.allowsEndpoint('agentPresets/select'), version == '0.2.2-rc.1');
-      if (version == '0.2.2-rc.1') {
+      final validated = version != '0.3.0-unknown';
+      expect(carrier.allowsEndpoint('agentPresets/select'), validated);
+      if (validated) {
         await client.rpc.call('agentPresets/select', {'sessionId': 's', 'presetId': 'p'});
       }
       for (final endpoint in [

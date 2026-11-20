@@ -67,6 +67,8 @@
   "deepClubScanComputer": "扫一扫连接电脑",
   "deepClubScanDescription": "在电脑上打开「连接手机」。手机和电脑需要登录同一个深云账号。",
   "deepClubGatewayScanHint": "对准电脑「连接手机」中显示的二维码。",
+  "deepClubGatewayNetworkHint": "直接连接电脑或经深云中转；路径和状态来自当前连接。",
+  "deepClubRateLimited": "尝试次数过多，请稍后再试。",
   "deepClubGatewayConnecting": "连接中",
   "deepClubGatewayConnected": "已连接",
   "deepClubGatewayReconnecting": "重新连接中",

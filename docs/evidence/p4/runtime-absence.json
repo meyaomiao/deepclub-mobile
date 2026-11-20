@@ -1,0 +1,6 @@
+{
+  "device_scope": "task-owned Android 36 emulator",
+  "rootfs_installed": false,
+  "installed_apk_sha256": "6ef057ba78e0a1fcb827b9d6f76c23f3b5a9ac8e44cf69a34e3a9d42d093b7ea",
+  "mode": "remote-only"
+}

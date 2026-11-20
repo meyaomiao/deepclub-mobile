@@ -1,0 +1,18 @@
+{
+  "label": "android-lan-stop",
+  "observed_at": "2026-11-16T05:29:28.296Z",
+  "hostPid": 30501,
+  "online": "online",
+  "connectedClients": 1,
+  "model": {
+    "requests": 9,
+    "completed": 8,
+    "cancelled": 1,
+    "active": 0,
+    "toolCalls": 1,
+    "catalogReads": 66
+  },
+  "goCompletedRelayRequests": 2,
+  "goCompletedRelayStreams": 2,
+  "note": "Go access entries are written when a WebSocket finishes; compare snapshots around App connection/close. Model counters reset on manager restart."
+}

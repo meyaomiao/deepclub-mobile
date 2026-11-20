@@ -1,0 +1,16 @@
+[349,110][543,173] C  | New chat
+[86,120][231,159]   | DeepClub
+[35,122][74,162]   | DeepClub
+[18,194][543,264] C  | Search chats
+[18,274][230,337]   | Workspace: All chats. Switch workspace
+[18,341][94,390] C  | Filter: All
+[108,341][242,390] C  | Filter: Running
+[256,341][390,390] C  | Filter: Pending
+[404,341][527,390] C  | Filter: Unread
+[480,274][543,337] C  | Chats
+[18,404][543,470]   | Today
+[18,470][543,547] C  | P4 fixture session
+[28,1416][105,1493] C  | Network details
+[105,1416][361,1493] C  | Current host: P4 Host 2 isolated, LAN. Switch host
+[375,1416][452,1493] C  | All features
+[466,1416][543,1493] C  | Settings

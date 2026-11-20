@@ -8,6 +8,9 @@ import '../deepclub/client_api.dart';
 import '../deepclub/secure_store.dart' show secureDeviceId;
 import 'gateway_pairing.dart';
 
+/// Safe route metadata; never exposes an endpoint, account proof or token.
+enum GatewayRoute { lan, relay }
+
 // Intersect desktop-advertised support with this client's known protocol. An
 // unknown release cannot opt the phone into settings or credential management.
 const _nativeUnary = {
@@ -59,6 +62,17 @@ const _nativeStreams = {
   'workspaceFiles/changes',
   'terminal/retain',
   'terminal/attach',
+};
+
+// DSH releases whose gated contracts (workspace, directory picker, terminal,
+// permission/agent presets) were checked against this client. rc.3 adds
+// optional terminal origin/control/sandboxMode fields, which parsing ignores,
+// and an optional `typed` write flag; earlier releases validate a closed
+// write shape. Any other release keeps the restricted chat/read set below.
+const _validatedHostVersions = <String, ({bool typedTerminalInput})>{
+  '0.2.2-alpha.2': (typedTerminalInput: false),
+  '0.2.2-rc.1': (typedTerminalInput: false),
+  '0.2.2-rc.3': (typedTerminalInput: true),
 };
 
 const _compatibleChatReads = {
@@ -115,6 +129,8 @@ class GatewayCarrier extends DshCarrier {
   bool _closed = false;
   DshCarrierRefusedException? _refused;
   String? _version;
+  GatewayRoute? _route;
+  GatewayRoute? get route => _socket == null ? null : _route;
   Set<String>? _capabilities, _allowlist;
 
   @override
@@ -123,6 +139,9 @@ class GatewayCarrier extends DshCarrier {
   String? get hostVersion => _socket == null ? null : _version;
   @override
   Set<String>? get peerCapabilities => _socket == null ? null : _capabilities;
+  @override
+  bool get acceptsTypedTerminalInput =>
+      _socket != null && (_validatedHostVersions[_version]?.typedTerminalInput ?? false);
   @override
   DshTracer? get tracer => null;
   @override
@@ -140,6 +159,7 @@ class GatewayCarrier extends DshCarrier {
     try {
       return await opening;
     } on DeepClubFailure catch (error) {
+      if (error.code == 'rate_limited') rethrow;
       if (error.invalidSession || error.code == 'login_required') {
         _refuse('DEVICE_REVOKED');
         throw _refused!;
@@ -231,7 +251,7 @@ class GatewayCarrier extends DshCarrier {
         }
         if (_closed || physical.ended) throw const DshClosedException();
         _version = version;
-        final knownVersion = version == '0.2.2-alpha.2' || version == '0.2.2-rc.1';
+        final knownVersion = _validatedHostVersions.containsKey(version);
         _capabilities = knownVersion ? capabilities : capabilities.difference({'harness.terminal.v1'});
         final safeUnary = unary.intersection(knownVersion ? _nativeUnary : _compatibleChatReads);
         final safeStreams = streams.intersection(
@@ -239,11 +259,17 @@ class GatewayCarrier extends DshCarrier {
         );
         _allowlist = {...safeUnary, ...safeStreams};
         physical.streams = safeStreams;
+        _route = isGatewayRelay(endpoint) ? GatewayRoute.relay : GatewayRoute.lan;
         _socket = physical;
         _authenticating = null;
         return physical;
       } on DeepClubFailure catch (error) {
         await physical?.close(1000, 'authorization failed');
+        if (error.code == 'rate_limited') rethrow;
+        if (error.code == 'remote_identity_denied') {
+          _refuse(error.code);
+          throw _refused!;
+        }
         if (error.invalidSession || error.code == 'login_required') {
           _refuse('DEVICE_REVOKED');
           throw _refused!;

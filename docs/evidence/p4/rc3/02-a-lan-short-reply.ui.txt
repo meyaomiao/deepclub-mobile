@@ -1,0 +1,16 @@
+[271,211][692,285]   | Hello from Android rc3 LAN
+[28,299][692,460] C  | P4 local fixture streamed through the real Go model proxy. / This turn: 0.8 sec · 1 step · 56 tokens, view turn trajectory
+[28,397][77,460] C  | Copy
+[77,397][140,460] C  | Share
+[140,397][203,460] C  | Branch here
+[203,397][266,460] C  | Regenerate
+[266,397][329,460] C  | More
+[21,96][98,173] C  | Chats
+[112,96][428,173] C  | P4 fixture session /  · workspace, View chat details
+[159,139][288,164]   | This turn is complete
+[531,96][608,173]   | Agent team
+[622,96][699,173] C  | New chat
+[109,1428][506,1492] EDIT Message your Agent len=0
+[32,1429][95,1492] C  | Add image or file
+[520,1429][615,1492] C  | Context <1% used, view usage
+[626,1429][689,1492] C  | Send

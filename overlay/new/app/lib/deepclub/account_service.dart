@@ -151,18 +151,22 @@ class DeepClubAccountService {
     if (!_changes.isClosed) _changes.add(state);
   }
 
-  Future<T> _run<T>(Future<T> Function() operation, {bool invalidateSession = true}) {
+  /// [callerPresents] marks operations whose failure the calling screen shows
+  /// (computer pairing/connection). They neither clear nor leave an account
+  /// error; only an invalidated phone session changes the account state.
+  Future<T> _run<T>(Future<T> Function() operation, {bool invalidateSession = true, bool callerPresents = false}) {
     final result = _tail.then((_) async {
       _busy = true;
-      _error = null;
+      if (!callerPresents) _error = null;
       _publish();
       try {
         return await operation();
       } catch (error) {
-        _error = error is DeepClubFailure
-            ? (invalidateSession && error.invalidSession ? 'session_expired' : error.code)
-            : 'operation_failed';
-        if (invalidateSession && error is DeepClubFailure && error.invalidSession && _session != null) {
+        final expired = invalidateSession && error is DeepClubFailure && error.invalidSession;
+        if (!callerPresents || expired) {
+          _error = error is DeepClubFailure ? (expired ? 'session_expired' : error.code) : 'operation_failed';
+        }
+        if (expired && _session != null) {
           try {
             await _clearLocal();
           } catch (_) {
@@ -286,7 +290,7 @@ class DeepClubAccountService {
       body: {
         'grant_type': 'authorization_code',
         'client_id': pending.clientId,
-        if (pending.isUpgrade) 'client_type': 'agent',
+        'client_type': pending.remoteOnly ? 'android_remote' : 'agent',
         'redirect_uri': deepClubRedirect,
         'code': code,
         'code_verifier': pending.verifier,
@@ -364,7 +368,13 @@ class DeepClubAccountService {
     await _synchronize();
   }
 
-  Future<void> synchronize() => _run(_synchronize);
+  Future<void> synchronize() {
+    // Returning from the browser can race the queued callback. With no session
+    // there is nothing to refresh; a no-op must not erase its exchange error.
+    if (_session == null) return Future<void>.value();
+    return _run(_synchronize);
+  }
+
   Future<void> _synchronize() async {
     if (_session == null) return;
     if (!_session!.remoteOnly && _session!.apiKey == null) {
@@ -593,7 +603,7 @@ class DeepClubAccountService {
       throw const DeepClubFailure('invalid_response');
     }
     return proof;
-  });
+  }, callerPresents: true);
 
   /// Used only by the fixed DeepClub relay; never sent to a desktop endpoint.
   String relaySession() {

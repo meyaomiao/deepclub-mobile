@@ -67,6 +67,8 @@
   "deepClubScanComputer": "Scan to connect to your computer",
   "deepClubScanDescription": "Open Connect phone on your computer. Both devices must use the same DeepClub account.",
   "deepClubGatewayScanHint": "Point your camera at the QR code shown in Connect phone on your computer.",
+  "deepClubGatewayNetworkHint": "Connects directly to your computer or through the DeepClub relay. The route and status reflect the active connection.",
+  "deepClubRateLimited": "Too many attempts. Try again later.",
   "deepClubGatewayConnecting": "Connecting",
   "deepClubGatewayConnected": "Connected",
   "deepClubGatewayReconnecting": "Reconnecting",
