@@ -1,0 +1,3 @@
+# Unified-patch blank context lines contain a required space marker.
+# Check whitespace on the reconstructed source, not on patch syntax.
+overlay/*.patch -whitespace

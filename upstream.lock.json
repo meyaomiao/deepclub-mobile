@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/ccch1mneyyy/dsh-Go.git",
+  "commit": "288234ae52fdfcfc2b0a0388763c371d0b09ea7d",
+  "flutter": "3.47.7",
+  "dart": "3.13.5",
+  "dsh": "0.2.2-rc.1",
+  "runtimeSource": {
+    "version": "1.0.15",
+    "abi": "arm64-v8a",
+    "url": "https://github.com/ccch1mneyyy/dsh-Go/releases/download/v1.0.15/dsh-go-1.0.15-arm64.apk",
+    "mirror": "https://dl.dshtui.com/download/1.0.15/dsh-go-1.0.15-arm64.apk",
+    "bytes": 210847089,
+    "sha256": "231ac2a5155e5460466529b99790f111484378c3b1f579dc00cef0fe418928cb"
+  }
+}
