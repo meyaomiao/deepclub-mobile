@@ -55,7 +55,7 @@ def main():
             shutil.copy2(wrapper / relative, destination)
     (android / "gradlew").chmod(0o755)
     command = ["bash", str(checkout / "tooling/build-apk.sh"), "--debug" if args.debug else "--release",
-               "--flavor", "arm64", "--build-name", "0.1.0", "--keep-daemon", "--", "--no-pub",
+               "--flavor", "arm64", "--build-name", "0.1.0", "--no-companion", "--keep-daemon", "--", "--no-pub",
                f"--dart-define=DEEPCLUB_SOURCE_URL=https://github.com/meyaomiao/deepclub-mobile/tree/{head}"]
     if args.test_origin:
         command.append(f"--dart-define=DEEPCLUB_TEST_ORIGIN={args.test_origin}")
