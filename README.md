@@ -28,7 +28,7 @@
 
 ## 重建与验证
 
-详见 [BUILD.md](BUILD.md)。固定输入见 [upstream.lock.json](upstream.lock.json)：DSH Go `288234ae52fdfcfc2b0a0388763c371d0b09ea7d`、Flutter 3.47.7 / Dart 3.13.5、DSH 0.2.2-rc.1。
+详见 [BUILD.md](BUILD.md)。固定输入见 [upstream.lock.json](upstream.lock.json)：DSH Go `da798027013851328f83f59af4adb52c3afaab23`（v1.3.0）、Flutter 3.47.7 / Dart 3.13.5、DSH 0.2.2-rc.1。
 
 ```sh
 python3 scripts/prepare.py --checkout .work/dsh-go

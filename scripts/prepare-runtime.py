@@ -138,9 +138,15 @@ def main():
                     raise SystemExit("Unsafe runtime license path.")
                 safe_output(target, name).write_bytes(bundle.read(name))
 
-    # Keep the app bridge but omit its companion presets. Providers and tools
-    # get their mutable catalog from account sync, never from this static patch.
+    # Keep the app bridge and plugin-manager fallback registries, but omit companion
+    # presets. Providers and tools get their mutable catalog from account sync, never
+    # from this static patch.
     patch = """# DeepClub Android runtime; generated from the reviewed adaptation.
+- id: plugin-manager
+  config:
+    fallbackRegistries:
+      - https://registry.npmmirror.com/
+      - https://registry.npmjs.org/
 - id: llm-deepseek-account
   disabled: true
 - id: llm-deepseek
