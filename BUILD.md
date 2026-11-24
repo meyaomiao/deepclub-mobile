@@ -5,7 +5,7 @@
 - Flutter 3.47.7 / Dart 3.13.5，JDK 17，Android SDK 36、NDK 28.2.13676358。
 - Python 3.12+；Node.js 24 用于运行时与 helper 测试。
 - 原始源码和 runtime APK 的版本、长度与 SHA-256 位于 [upstream.lock.json](upstream.lock.json)。
-- 运行时原始下载：[GitHub v1.0.15 arm64 APK](https://github.com/ccch1mneyyy/dsh-Go/releases/download/v1.0.15/dsh-go-1.0.15-arm64.apk)；上游公开镜像 URL 也记录在 lock 中。下载后必须通过脚本摘要校验，不信任文件名。
+- 运行时原始下载：[GitHub v1.3.0 arm64 APK](https://github.com/ccch1mneyyy/dsh-Go/releases/download/v1.3.0/dsh-go-1.3.0-arm64.apk)；上游公开镜像 URL 也记录在 lock 中。下载后必须通过脚本摘要校验，不信任文件名。
 
 ## 准备源码
 
@@ -50,7 +50,7 @@ flutter test --no-pub --update-goldens \
 ## 准备运行时
 
 ```sh
-python3 scripts/prepare-runtime.py --checkout .work/dsh-go --apk /absolute/path/dsh-go-1.0.15-arm64.apk
+python3 scripts/prepare-runtime.py --checkout .work/dsh-go --apk /absolute/path/dsh-go-1.3.0-arm64.apk
 ```
 
 脚本只导入固定 APK 的 Linux runtime、许可证和声明的 Termux 库，不导入原 DEX/Flutter 资产。它把 `runtime/deepclub-tools` 放进 `/opt/dsh-go`，保留运行时升级的路径边界；构建配方、插件源和 lock 都纳入运行时版本摘要。

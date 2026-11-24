@@ -1,6 +1,6 @@
 # 来源、许可与修改声明 / Provenance and modifications
 
-本项目是 DeepClub 对 [ccch1mneyyy/dsh-Go](https://github.com/ccch1mneyyy/dsh-Go) 的修改版，不是 DeepSeek 官方产品，与原作者无隶属关系。上游固定提交为 `288234ae52fdfcfc2b0a0388763c371d0b09ea7d`，保留原项目 AGPL-3.0 及第三方声明。重建源码中的 `LICENSE`、`THIRD_PARTY_NOTICES.md`、依赖包内许可证和 App 许可证页均需随发行保留。
+本项目是 DeepClub 对 [ccch1mneyyy/dsh-Go](https://github.com/ccch1mneyyy/dsh-Go) 的修改版，不是 DeepSeek 官方产品，与原作者无隶属关系。上游固定提交为 `da798027013851328f83f59af4adb52c3afaab23`（v1.3.0），保留原项目 AGPL-3.0 及第三方声明。重建源码中的 `LICENSE`、`THIRD_PARTY_NOTICES.md`、依赖包内许可证和 App 许可证页均需随发行保留。
 
 DeepClub 修改包括账号与 PKCE 登录、设备凭据管理、服务端模型目录同步、品牌与菜单、深云工具、默认服务收敛，以及所需回归测试。修改版源代码和构建配方由本仓库提供；App 的来源链接可由 `DEEPCLUB_SOURCE_URL` 指向具体构建提交。
 
@@ -14,7 +14,7 @@ DeepClub 修改包括账号与 PKCE 登录、设备凭据管理、服务端模�
 
 ## 运行时
 
-固定运行时输入是上游 v1.0.15 arm64 APK 内的 Linux runtime 和其声明的四个 Termux 库，输入整体 SHA-256 校验后才提取。没有复用上游 APK 的 DEX、Flutter bundle、签名或品牌图像。原始 Ubuntu、Node、DSH、pnpm、Python、PRoot 和相关库的构建配方、版本/摘要及许可证位于重建树的 `runtime/` 与保留的第三方声明中。
+固定运行时输入是上游 v1.3.0 arm64 APK 内的 Linux runtime 和其声明的四个 Termux 库，输入整体 SHA-256 校验后才提取。没有复用上游 APK 的 DEX、Flutter bundle、签名或品牌图像。原始 Ubuntu、Node、DSH、pnpm、Python、PRoot 和相关库的构建配方、版本/摘要及许可证位于重建树的 `runtime/` 与保留的第三方声明中。
 
 深云重打运行时只增加自有工具，调整明确的默认插件策略，并对固定版本 standard/ptc/cordis preset 的 `tool-web` 关闭 search、保留 fetch；三个输入与输出文件摘要写入运行时清单。用户 profile 的插件注册由原生启动前 helper 完成，配置所有权不放进 CLI overlay。
 
